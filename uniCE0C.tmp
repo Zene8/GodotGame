@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://bdtwipk8p0bwo"]
+
+[ext_resource type="Script" path="res://unit_template.gd" id="1_63u0p"]
+[ext_resource type="Texture2D" uid="uid://befqidjogh7ob" path="res://unit template.png" id="1_jt0dc"]
+
+[node name="Unit Template" type="Node2D"]
+script = ExtResource("1_63u0p")
+
+[node name="Image" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(5, 5)
+texture = ExtResource("1_jt0dc")
+
+[node name="Camera2D" type="Camera2D" parent="."]
