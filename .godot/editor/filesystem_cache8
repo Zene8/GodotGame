@@ -1,9 +1,0 @@
-ea4bc82a6ad023ab7ee23ee620429895
-::res://::1739444829
-icon.svg::CompressedTexture2D::1933221997754134806::1739377044::1739444834::1::::<><>::
-map.gd::GDScript::-1::1739444829::0::1::::<>Node2D<>::
-map.tscn::PackedScene::-1::1739444829::0::1::::<><>::
-mock.png::CompressedTexture2D::197332370501950484::1739444829::1739444834::1::::<><>::
-unit template.png::CompressedTexture2D::2678483877368748789::1739444829::1739444834::1::::<><>::
-unit_template.gd::GDScript::-1::1739444829::0::1::::<>Node2D<>::
-unit_template.tscn::PackedScene::-1::1739444829::0::1::::<><>::
