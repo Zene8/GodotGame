@@ -1,7 +1,7 @@
 extends Node2D
 
 var MaxHealth := 100.0
-var Health := 10.0:
+var Health := 20.0:
 	set(value):
 		Health = clamp(value,0,MaxHealth)
 var selected := false
