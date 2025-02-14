@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://map.gd" id="1_pd8lm"]
 [ext_resource type="Texture2D" uid="uid://c2ubg25ddydg" path="res://mock.png" id="1_qn1v3"]
-[ext_resource type="PackedScene" uid="uid://bdtwipk8p0bwo" path="res://unit_template.tscn" id="2_m1kny"]
+[ext_resource type="PackedScene" uid="uid://c0ynell8yescv" path="res://unit_template.tscn" id="2_m1kny"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eyj48"]
 resource_name = "Grass"
@@ -18,6 +18,7 @@ tile_size = Vector2i(32, 32)
 sources/0 = SubResource("TileSetAtlasSource_eyj48")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_757db"]
+size = Vector2(0, 0)
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_pd8lm")
@@ -30,9 +31,17 @@ tile_set = SubResource("TileSet_4rgyy")
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4.01, 4.01)
 
-[node name="Unit Template" parent="." instance=ExtResource("2_m1kny")]
-
 [node name="Area2D" type="Area2D" parent="."]
+collision_mask = 64
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_757db")
+
+[node name="Unit Template" parent="." instance=ExtResource("2_m1kny")]
+position = Vector2(-15.1, 0)
+
+[node name="Unit Template2" parent="." instance=ExtResource("2_m1kny")]
+position = Vector2(48, -29)
+
+[node name="Unit Template3" parent="." instance=ExtResource("2_m1kny")]
+position = Vector2(-19, -43)
