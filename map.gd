@@ -10,7 +10,7 @@ func _ready() -> void:
 	select_area = $Area2D
 	pass # Replace with function body.
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	queue_redraw()
 	
 	
@@ -23,11 +23,10 @@ func _input(event: InputEvent) -> void:
 		selecting = false
 		var mousepos = get_global_mouse_position()
 		
-		select_area_shape.position = Vector2(min(mousepos.x,select_start.x),min(mousepos.y,select_start.y))
+		select_area_shape.position = Vector2(min(mousepos.x,select_start.x)+abs(select_start.x - mousepos.x)/2,min(mousepos.y,select_start.y)+abs(select_start.y - mousepos.y)/2)
 		select_area_shape.shape.size = abs(select_start - mousepos)
-		
-		for area in select_area.get_overlapping_areas():
-			print(area)
+		var areas = select_area.get_overlapping_areas()
+		for area in areas:
 			area.get_parent().toggle_select()
 
 

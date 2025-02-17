@@ -21,5 +21,3 @@ func toggle_select():
 		selected = false
 	else:
 		selected = true
-		
-	print(selected)
