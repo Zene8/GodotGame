@@ -56,7 +56,8 @@ func _input(event: InputEvent) -> void:
 		
 		select_area_shape.position = Vector2(min(mousepos.x,select_start.x)+abs(select_start.x - mousepos.x)/2,min(mousepos.y,select_start.y)+abs(select_start.y - mousepos.y)/2)
 		select_area_shape.shape.size = abs(select_start - mousepos)
-		await get_tree().create_timer(0.1).timeout
+		await get_tree().physics_frame
+		await get_tree().physics_frame
 		var areas = select_area.get_overlapping_areas()
 		for area in areas:
 			print(area)
