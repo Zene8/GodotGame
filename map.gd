@@ -4,6 +4,7 @@ var selecting := false
 var select_start := Vector2(0,0)
 var select_area_shape = CollisionShape2D
 var select_area = Area2D
+var shifting = false
 var moving := false
 var moving_to = null
 var moving_vector := 0.0
@@ -36,7 +37,16 @@ func _physics_process(delta: float) -> void:
 			moving_vector = 0.0
 
 func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("shift"):
+		shifting = true
+	if event.is_action_released("shift"):
+		shifting = false
+		
 	if event.is_action_pressed("L_click"):
+		if !shifting:
+			for unit in $enemies.get_children():
+				if unit.get("selected"):
+					unit.toggle_select()
 		selecting = true
 		select_start = get_global_mouse_position()
 	
@@ -46,6 +56,7 @@ func _input(event: InputEvent) -> void:
 		
 		select_area_shape.position = Vector2(min(mousepos.x,select_start.x)+abs(select_start.x - mousepos.x)/2,min(mousepos.y,select_start.y)+abs(select_start.y - mousepos.y)/2)
 		select_area_shape.shape.size = abs(select_start - mousepos)
+		await get_tree().create_timer(0.1).timeout
 		var areas = select_area.get_overlapping_areas()
 		for area in areas:
 			print(area)
