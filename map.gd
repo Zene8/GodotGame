@@ -43,7 +43,7 @@ func _input(event: InputEvent) -> void:
 					unit.toggle_select()
 		selecting = true
 		select_start = get_global_mouse_position()
-	
+
 	if event.is_action_released("L_click"):
 		selecting = false
 		var mousepos = get_global_mouse_position()
