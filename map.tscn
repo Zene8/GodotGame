@@ -47,3 +47,28 @@ position = Vector2(48, -29)
 
 [node name="Unit Template3" parent="enemies" instance=ExtResource("2_m1kny")]
 position = Vector2(-19, -43)
+
+[node name="Move Line" type="Button" parent="."]
+offset_left = 103.0
+offset_top = -81.0
+offset_right = 144.0
+offset_bottom = -50.0
+text = "Line"
+
+[node name="Move Direct" type="Button" parent="."]
+offset_left = 1.0
+offset_top = -81.0
+offset_right = 56.0
+offset_bottom = -50.0
+text = "Direct"
+
+[node name="Move Keep" type="Button" parent="."]
+offset_left = 56.0
+offset_top = -81.0
+offset_right = 103.0
+offset_bottom = -50.0
+text = "Keep"
+
+[connection signal="pressed" from="Move Line" to="." method="_on_move_line_pressed"]
+[connection signal="pressed" from="Move Direct" to="." method="_on_move_direct_pressed"]
+[connection signal="pressed" from="Move Keep" to="." method="_on_move_keep_pressed"]
