@@ -15,7 +15,10 @@ func _process(delta: float) -> void:
 		position = startpos + (dragstart - get_global_mouse_position())
 	if zoom < Vector2(maxzoom,maxzoom):
 		zoom = Vector2(maxzoom,maxzoom)
-
+	if abs(position.x) > 250:
+		position.x = position.x * abs(250/position.x)
+	if abs(position.y) > 150:
+		position.y = position.y * abs(150/position.y)
 	
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("Scroll_up"):
