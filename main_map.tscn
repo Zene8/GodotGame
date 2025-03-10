@@ -1,9 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://bca11qet1it2i"]
+[gd_scene load_steps=7 format=3 uid="uid://bca11qet1it2i"]
 
 [ext_resource type="Script" uid="uid://bficd2k176r4b" path="res://main_map.gd" id="1_arjcw"]
 [ext_resource type="Texture2D" uid="uid://dmd3pq1h23yrt" path="res://map biomes.png" id="1_robre"]
 [ext_resource type="Script" uid="uid://f7o2blk0elrh" path="res://camera_2d.gd" id="2_cxjh6"]
 [ext_resource type="PackedScene" uid="uid://bij712nq680ap" path="res://Zone.tscn" id="3_cjc14"]
+[ext_resource type="Theme" uid="uid://b8cdpud5xabcr" path="res://Main_Theme.tres" id="5_1ns3a"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ob7o4"]
+font_size = 27
 
 [node name="Main_map" type="Node2D"]
 script = ExtResource("1_arjcw")
@@ -31,3 +35,28 @@ position = Vector2(-52, -98)
 
 [node name="Zone4" parent="Zones" instance=ExtResource("3_cjc14")]
 position = Vector2(-201, -62)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
+custom_minimum_size = Vector2(0, 50)
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+
+[node name="Panel" type="Panel" parent="CanvasLayer/PanelContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Phase"
+label_settings = SubResource("LabelSettings_ob7o4")
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/PanelContainer"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+size_flags_vertical = 8
+theme = ExtResource("5_1ns3a")
+show_percentage = false
