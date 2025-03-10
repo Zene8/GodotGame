@@ -105,18 +105,22 @@ text = "Basic"
 label_settings = SubResource("LabelSettings_8sry5")
 vertical_alignment = 1
 
-[node name="Bnumber" type="Label" parent="CanvasLayer/Main panel/MainV/Troops/Basic"]
-layout_mode = 2
-size_flags_horizontal = 8
-text = "0"
-horizontal_alignment = 2
-
 [node name="Advanced" type="HBoxContainer" parent="CanvasLayer/Main panel/MainV/Troops"]
 layout_mode = 2
 
 [node name="Atext" type="Label" parent="CanvasLayer/Main panel/MainV/Troops/Advanced"]
 layout_mode = 2
 text = "ADVANCED"
+
+[node name="Bnumber" type="Label" parent="CanvasLayer/Main panel/MainV/Troops/Advanced/Atext"]
+layout_mode = 2
+offset_left = 47.0
+offset_top = -26.0
+offset_right = 57.0
+offset_bottom = -3.66667
+size_flags_horizontal = 8
+text = "0"
+horizontal_alignment = 2
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="CanvasLayer/Main panel/MainV/Troops"]
 layout_mode = 2

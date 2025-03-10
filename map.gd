@@ -42,15 +42,14 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_released("shift"):
 		shifting = false
 		
-	if event.is_action_pressed("L_click"):
-		if !shifting:
-			for unit in $enemies.get_children():
-				if unit.get("selected"):
-					unit.toggle_select()
+	if event.is_action_pressed("shift+L_click"):
+		for unit in $enemies.get_children():
+			if unit.get("selected"):
+				unit.toggle_select()
 		selecting = true
 		select_start = get_global_mouse_position()
 
-	if event.is_action_released("L_click"):
+	if event.is_action_released("shift+L_click"):
 		selecting = false
 		var mousepos = get_global_mouse_position()
 		
@@ -77,11 +76,11 @@ func _draw() -> void:
 		draw_rect(Rect2(mousepos,size),Color.BLACK,false)
 
 
-func _on_move_line_pressed() -> void:
+func _on_line_pressed() -> void:
 	moving_mode = "Line"
 
-func _on_move_direct_pressed() -> void:
+func _on_direct_pressed() -> void:
 	moving_mode = "Direct"
 
-func _on_move_keep_pressed() -> void:
+func _on_keep_pressed() -> void:
 	moving_mode = "Keep"
