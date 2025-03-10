@@ -1,14 +1,20 @@
 extends Node2D
 
+var Money = 100
 var edges
+var phaseProgressBar
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	phaseProgressBar = $CanvasLayer/PanelContainer/ProgressBar
 	edges = [[$Zones/Zone,$Zones/Zone2,0],[$Zones/Zone2,$Zones/Zone3,0],[$Zones/Zone3,$Zones/Zone4,1]]
 	var zones = $Zones
+	for zone in zones.get_children():
+		zone.Buy.connect(change_money)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	phaseProgressBar.value += delta*1
 	queue_redraw()
 	
 	
@@ -24,3 +30,6 @@ func _input(event: InputEvent) -> void:
 		var mousepos = get_global_mouse_position()
 		#for zone in zones.get_children():
 			#if zone.Area2D.c
+			
+func change_money(amount):
+	Money += amount
