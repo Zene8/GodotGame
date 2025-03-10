@@ -1,10 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://26f3hx8n0hyk"]
+[gd_scene load_steps=15 format=3 uid="uid://26f3hx8n0hyk"]
 
 [ext_resource type="Script" uid="uid://5kbvpjb0f2un" path="res://menu.gd" id="1_ouk20"]
 [ext_resource type="Script" uid="uid://qfud4fy6wxee" path="res://singleplayer.gd" id="2_mae5d"]
 [ext_resource type="FontFile" uid="uid://bm23rhih55byl" path="res://ArchitectsDaughter.ttf" id="2_ytr4m"]
 [ext_resource type="Texture2D" uid="uid://gea87h46k6r2" path="res://mainMenu.jpg" id="3_mae5d"]
-[ext_resource type="Script" uid="uid://bfa6w56emkkxk" path="res://background.gd" id="4_4hy44"]
+[ext_resource type="PackedScene" uid="uid://c7osil6s5ri2r" path="res://option_container.tscn" id="5_ytr4m"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ytr4m"]
 bg_color = Color(0.278431, 0.109804, 0.0509804, 0.752941)
@@ -59,7 +59,7 @@ resource_name = "slide_to_multiplayer"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("VBoxContainer:position")
+tracks/0/path = NodePath("MainMenuCont:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -71,7 +71,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("VBoxContainer2:position")
+tracks/1/path = NodePath("MultiplayerCont:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -86,7 +86,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("VBoxContainer:position")
+tracks/0/path = NodePath("MainMenuCont:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -98,7 +98,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("VBoxContainer2:position")
+tracks/1/path = NodePath("MultiplayerCont:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -108,10 +108,42 @@ tracks/1/keys = {
 "values": [Vector2(-350, 413)]
 }
 
+[sub_resource type="Animation" id="Animation_ecwwl"]
+resource_name = "slide_to_main"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MultiplayerCont:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-3, 413), Vector2(-350, 413)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MainMenuCont:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-350, 413), Vector2(-3, 413)]
+}
+
+[sub_resource type="Animation" id="Animation_kk3ma"]
+resource_name = "slide_to_options"
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ecwwl"]
 _data = {
 &"RESET": SubResource("Animation_l48gv"),
-&"slide_to_multiplayer": SubResource("Animation_ytr4m")
+&"slide_to_main": SubResource("Animation_ecwwl"),
+&"slide_to_multiplayer": SubResource("Animation_ytr4m"),
+&"slide_to_options": SubResource("Animation_kk3ma")
 }
 
 [node name="Menu" type="Control"]
@@ -121,47 +153,47 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 script = ExtResource("1_ouk20")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="MainMenuCont" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
 z_index = 1
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
 offset_left = -3.0
-offset_top = -235.0
+offset_top = 413.0
 offset_right = 338.0
-offset_bottom = -68.0
-grow_vertical = 0
+offset_bottom = 580.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme = SubResource("Theme_l48gv")
 
-[node name="Singleplayer" type="Button" parent="VBoxContainer"]
+[node name="Singleplayer" type="Button" parent="MainMenuCont"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../Exit")
 focus_neighbor_bottom = NodePath("../Multiplayer")
 text = "Singleplayer"
 script = ExtResource("2_mae5d")
 
-[node name="Multiplayer" type="Button" parent="VBoxContainer"]
+[node name="Multiplayer" type="Button" parent="MainMenuCont"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../Singleplayer")
 focus_neighbor_bottom = NodePath("../Options")
 text = "Multiplayer"
 
-[node name="Options" type="Button" parent="VBoxContainer"]
+[node name="Options" type="Button" parent="MainMenuCont"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../Multiplayer")
 focus_neighbor_bottom = NodePath("../Exit")
 text = "Options"
 
-[node name="Exit" type="Button" parent="VBoxContainer"]
+[node name="Exit" type="Button" parent="MainMenuCont"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../Options")
 focus_neighbor_bottom = NodePath("../Singleplayer")
 text = "Exit"
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+[node name="MultiplayerCont" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
 z_index = 1
 layout_mode = 1
 anchors_preset = 2
@@ -174,44 +206,51 @@ offset_bottom = -68.0
 grow_vertical = 0
 theme = SubResource("Theme_l48gv")
 
-[node name="JoinGame" type="Button" parent="VBoxContainer2"]
+[node name="JoinGame" type="Button" parent="MultiplayerCont"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../Back")
 focus_neighbor_bottom = NodePath("../CreateGame")
 text = "Join Game"
 script = ExtResource("2_mae5d")
 
-[node name="CreateGame" type="Button" parent="VBoxContainer2"]
+[node name="CreateGame" type="Button" parent="MultiplayerCont"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../JoinGame")
 text = "Create Game"
 
-[node name="Back" type="Button" parent="VBoxContainer2"]
+[node name="Back" type="Button" parent="MultiplayerCont"]
 layout_mode = 2
 focus_neighbor_bottom = NodePath("../JoinGame")
 text = "Back"
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-layer = -7
-
-[node name="background" type="Sprite2D" parent="CanvasLayer"]
-show_behind_parent = true
-z_index = -100
-position = Vector2(576, 324)
-scale = Vector2(1.125, 0.632813)
-texture = ExtResource("3_mae5d")
-script = ExtResource("4_4hy44")
-metadata/_edit_lock_ = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_ecwwl")
 }
 
-[connection signal="pressed" from="VBoxContainer/Singleplayer" to="." method="_on_singleplayer_pressed"]
-[connection signal="pressed" from="VBoxContainer/Multiplayer" to="." method="_on_multiplayer_pressed"]
-[connection signal="pressed" from="VBoxContainer/Options" to="." method="_on_options_pressed"]
-[connection signal="pressed" from="VBoxContainer/Exit" to="." method="_on_exit_pressed"]
-[connection signal="pressed" from="VBoxContainer2/JoinGame" to="." method="_on_singleplayer_pressed"]
-[connection signal="pressed" from="VBoxContainer2/CreateGame" to="." method="_on_multiplayer_pressed"]
-[connection signal="pressed" from="VBoxContainer2/Back" to="." method="_on_exit_pressed"]
+[node name="background1" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 1.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_mae5d")
+expand_mode = 1
+
+[node name="OptionContainer" parent="." instance=ExtResource("5_ytr4m")]
+layout_mode = 1
+offset_top = -269.5
+offset_bottom = 269.5
+mouse_filter = 2
+
+[connection signal="pressed" from="MainMenuCont/Singleplayer" to="." method="_on_singleplayer_pressed"]
+[connection signal="pressed" from="MainMenuCont/Multiplayer" to="." method="_on_multiplayer_pressed"]
+[connection signal="pressed" from="MainMenuCont/Options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="MainMenuCont/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="MultiplayerCont/JoinGame" to="." method="_on_singleplayer_pressed"]
+[connection signal="pressed" from="MultiplayerCont/CreateGame" to="." method="_on_multiplayer_pressed"]
+[connection signal="pressed" from="MultiplayerCont/Back" to="." method="_on_back_pressed"]
