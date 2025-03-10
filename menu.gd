@@ -1,6 +1,11 @@
 extends Control
 
+var current_vbox = null
+var animation_player = null
+
 func _ready():
+	current_vbox = $VBoxContainerMain
+	animation_player = $AnimationPlayer
 	$VBoxContainer/Singleplayer.grab_focus()
 
 func _input(event):
@@ -8,14 +13,30 @@ func _input(event):
 		show_quit_confirmation()
 
 func _on_singleplayer_pressed() -> void:
-	get_tree().change_scene()
+	get_tree().change_scene("res://path_to_game_setup_scene.tscn")
 
 func _on_multiplayer_pressed() -> void:
-	get_tree().change_scene()
+	slide_to("slide_to_multiplayer", $VBoxContainerMultiplayer)
 
 func _on_options_pressed() -> void:
-	var options = load("res://Menus/Options.tscn").instance()
-	get_tree().current_scene.add_child(options)
+	slide_to("slide_to_options", $VBoxContainerOptions)
+
+func slide_to(animation_name, target_vbox):
+	if current_vbox == target_vbox:
+		return
+
+	target_vbox.rect_position.x = get_viewport().size.x
+	target_vbox.show()
+
+	animation_player.play(animation_name)
+
+	await animation_player.animation_finished # Updated line
+
+	current_vbox.hide()
+	current_vbox = target_vbox
+
+func _on_back_pressed():
+	slide_to("slide_to_main", $VBoxContainerMain)
 
 func _on_exit_pressed() -> void:
 	show_quit_confirmation()
