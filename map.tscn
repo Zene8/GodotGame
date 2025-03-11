@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=4 uid="uid://b37invkti8n3b"]
+[gd_scene load_steps=9 format=4 uid="uid://b37invkti8n3b"]
 
 [ext_resource type="Script" uid="uid://djumuswhau7j5" path="res://map.gd" id="1_pd8lm"]
 [ext_resource type="Texture2D" uid="uid://c2ubg25ddydg" path="res://mock.png" id="1_qn1v3"]
 [ext_resource type="PackedScene" uid="uid://c0ynell8yescv" path="res://unit_template.tscn" id="2_m1kny"]
 [ext_resource type="Script" uid="uid://blrxwd7sud3vd" path="res://level_camera_2d.gd" id="3_p5pve"]
+[ext_resource type="Script" uid="uid://b7y536phuh8xl" path="res://enemies.gd" id="4_urblq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eyj48"]
 resource_name = "Grass"
@@ -36,12 +37,12 @@ position_smoothing_enabled = true
 script = ExtResource("3_p5pve")
 
 [node name="Area2D" type="Area2D" parent="."]
-collision_mask = 64
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_757db")
 
 [node name="enemies" type="Node" parent="."]
+script = ExtResource("4_urblq")
 
 [node name="Unit Template" parent="enemies" instance=ExtResource("2_m1kny")]
 position = Vector2(-19.205, 4.4)
@@ -73,6 +74,6 @@ text = "Direct"
 layout_mode = 2
 text = "Lines"
 
-[connection signal="pressed" from="CanvasLayer/Main Top/HBoxContainer/Keep" to="." method="_on_keep_pressed"]
-[connection signal="pressed" from="CanvasLayer/Main Top/HBoxContainer/Direct" to="." method="_on_direct_pressed"]
-[connection signal="pressed" from="CanvasLayer/Main Top/HBoxContainer/Line" to="." method="_on_line_pressed"]
+[connection signal="pressed" from="CanvasLayer/Main Top/HBoxContainer/Keep" to="enemies" method="_on_keep_pressed"]
+[connection signal="pressed" from="CanvasLayer/Main Top/HBoxContainer/Direct" to="enemies" method="_on_direct_pressed"]
+[connection signal="pressed" from="CanvasLayer/Main Top/HBoxContainer/Line" to="enemies" method="_on_line_pressed"]

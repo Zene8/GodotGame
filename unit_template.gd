@@ -1,4 +1,4 @@
-extends Node2D
+extends CharacterBody2D
 
 var MaxHealth := 100.0
 var Health := 100.0:
@@ -6,9 +6,19 @@ var Health := 100.0:
 		Health = clamp(value,0,MaxHealth)
 var selected := true
 var shifting := false
+var base_speed = 50
+var moving = false
+var move_to := Vector2(0, 0)
 
 func _process(delta: float) -> void:
 	queue_redraw()
+	
+func _physics_process(delta: float) -> void:
+	if moving:
+		if velocity.is_zero_approx():
+			moving = false
+		move_and_slide()
+		velocity = (move_to - position).normalized() * base_speed
 	
 func _draw() -> void:
 	if selected:
@@ -33,3 +43,12 @@ func toggle_select():
 		selected = false
 	else:
 		selected = true
+
+func set_current_velocity(mousepos):
+	velocity = (mousepos - position).normalized() * base_speed
+	move_to = mousepos
+
+func set_moving(val):
+	moving = val
+	
+	
