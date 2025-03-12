@@ -9,6 +9,8 @@ var shifting := false
 var base_speed = 50
 var moving = false
 var move_to := Vector2(0, 0)
+var last_pos := Vector2(0, 0)
+var last_pos_count = 1
 
 func _process(delta: float) -> void:
 	queue_redraw()
@@ -19,6 +21,13 @@ func _physics_process(delta: float) -> void:
 			moving = false
 		move_and_slide()
 		velocity = (move_to - position).normalized() * base_speed
+		if last_pos_count >= 2:
+			if (last_pos - position).length() < 0.01:
+				moving = false
+			else:
+				last_pos_count = 0
+				last_pos = position
+		last_pos_count += 1
 	
 func _draw() -> void:
 	if selected:

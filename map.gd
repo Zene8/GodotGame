@@ -21,6 +21,7 @@ func _input(event: InputEvent) -> void:
 		shifting = false
 		
 	if event.is_action_pressed("L_click"):
+		print(get_global_mouse_position())
 		select_area_shape.disabled = false
 		select_area_shape.position = get_global_mouse_position()
 		select_area_shape.shape.size = Vector2(1, 1)
