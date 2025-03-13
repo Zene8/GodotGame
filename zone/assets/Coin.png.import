@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c8vd6ne6h853c"
-path="res://.godot/imported/map biomes.png-c2bab1643b8fbbff961a2426067ed2f2.ctex"
+uid="uid://dgmvlxjtb660r"
+path="res://.godot/imported/Coin.png-97863a1520d62fc49743bbf4fb0100a4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/map biomes.png"
-dest_files=["res://.godot/imported/map biomes.png-c2bab1643b8fbbff961a2426067ed2f2.ctex"]
+source_file="res://zone/assets/Coin.png"
+dest_files=["res://.godot/imported/Coin.png-97863a1520d62fc49743bbf4fb0100a4.ctex"]
 
 [params]
 
