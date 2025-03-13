@@ -61,7 +61,7 @@ shape = SubResource("RectangleShape2D_iybxn")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Main panel" type="PanelContainer" parent="CanvasLayer"]
+[node name="Main_panel" type="PanelContainer" parent="CanvasLayer"]
 anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
@@ -75,123 +75,123 @@ grow_vertical = 2
 size_flags_horizontal = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_vv71a")
 
-[node name="MainV" type="VBoxContainer" parent="CanvasLayer/Main panel"]
+[node name="MainV" type="VBoxContainer" parent="CanvasLayer/Main_panel"]
 layout_mode = 2
 
-[node name="Header" type="HBoxContainer" parent="CanvasLayer/Main panel/MainV"]
+[node name="Header" type="HBoxContainer" parent="CanvasLayer/Main_panel/MainV"]
 layout_mode = 2
 alignment = 1
 
-[node name="Title" type="Label" parent="CanvasLayer/Main panel/MainV/Header"]
+[node name="Title" type="Label" parent="CanvasLayer/Main_panel/MainV/Header"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "ZONE NAME"
 label_settings = SubResource("LabelSettings_7wtpu")
 
-[node name="Exit" type="Button" parent="CanvasLayer/Main panel/MainV/Header"]
+[node name="Exit" type="Button" parent="CanvasLayer/Main_panel/MainV/Header"]
 layout_mode = 2
 icon = ExtResource("3_m58ea")
 
-[node name="Troops" type="VBoxContainer" parent="CanvasLayer/Main panel/MainV"]
+[node name="Troops" type="VBoxContainer" parent="CanvasLayer/Main_panel/MainV"]
 layout_mode = 2
 
-[node name="Basic" type="HBoxContainer" parent="CanvasLayer/Main panel/MainV/Troops"]
+[node name="Basic" type="HBoxContainer" parent="CanvasLayer/Main_panel/MainV/Troops"]
 layout_mode = 2
 
-[node name="Btext" type="Label" parent="CanvasLayer/Main panel/MainV/Troops/Basic"]
+[node name="Btext" type="Label" parent="CanvasLayer/Main_panel/MainV/Troops/Basic"]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Basic"
 label_settings = SubResource("LabelSettings_8sry5")
 vertical_alignment = 1
 
-[node name="Bnumber" type="Label" parent="CanvasLayer/Main panel/MainV/Troops/Basic"]
+[node name="Bnumber" type="Label" parent="CanvasLayer/Main_panel/MainV/Troops/Basic"]
 layout_mode = 2
 size_flags_horizontal = 8
 text = "0"
 horizontal_alignment = 2
 
-[node name="Advanced" type="HBoxContainer" parent="CanvasLayer/Main panel/MainV/Troops"]
+[node name="Advanced" type="HBoxContainer" parent="CanvasLayer/Main_panel/MainV/Troops"]
 layout_mode = 2
 
-[node name="Atext" type="Label" parent="CanvasLayer/Main panel/MainV/Troops/Advanced"]
+[node name="Atext" type="Label" parent="CanvasLayer/Main_panel/MainV/Troops/Advanced"]
 layout_mode = 2
 text = "ADVANCED"
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="CanvasLayer/Main panel/MainV/Troops"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="CanvasLayer/Main_panel/MainV/Troops"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/Main panel/MainV/Troops/HBoxContainer3"]
+[node name="Label" type="Label" parent="CanvasLayer/Main_panel/MainV/Troops/HBoxContainer3"]
 layout_mode = 2
 text = "Ranged"
 
-[node name="VSplitContainer" type="VSplitContainer" parent="CanvasLayer/Main panel/MainV"]
+[node name="VSplitContainer" type="VSplitContainer" parent="CanvasLayer/Main_panel/MainV"]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
-[node name="Shop" type="VBoxContainer" parent="CanvasLayer/Main panel/MainV"]
+[node name="Shop" type="VBoxContainer" parent="CanvasLayer/Main_panel/MainV"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/Main panel/MainV/Shop"]
+[node name="Label" type="Label" parent="CanvasLayer/Main_panel/MainV/Shop"]
 layout_mode = 2
 text = "SHOP"
 horizontal_alignment = 1
 
-[node name="Shop Troops" type="VBoxContainer" parent="CanvasLayer/Main panel/MainV/Shop"]
+[node name="Shop Troops" type="VBoxContainer" parent="CanvasLayer/Main_panel/MainV/Shop"]
 layout_mode = 2
 
-[node name="Basic" type="HBoxContainer" parent="CanvasLayer/Main panel/MainV/Shop/Shop Troops"]
+[node name="Basic" type="HBoxContainer" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops"]
 layout_mode = 2
 
-[node name="Btext" type="Label" parent="CanvasLayer/Main panel/MainV/Shop/Shop Troops/Basic"]
+[node name="Btext" type="Label" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Basic"]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Basic"
 label_settings = SubResource("LabelSettings_8sry5")
 vertical_alignment = 1
 
-[node name="BButton" type="Button" parent="CanvasLayer/Main panel/MainV/Shop/Shop Troops/Basic"]
+[node name="BButton" type="Button" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Basic"]
 layout_mode = 2
 text = "10"
 
-[node name="Advanced" type="HBoxContainer" parent="CanvasLayer/Main panel/MainV/Shop/Shop Troops"]
+[node name="Advanced" type="HBoxContainer" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops"]
 layout_mode = 2
 
-[node name="Atext" type="Label" parent="CanvasLayer/Main panel/MainV/Shop/Shop Troops/Advanced"]
+[node name="Atext" type="Label" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Advanced"]
 layout_mode = 2
 text = "ADVANCED"
 
-[node name="AButton" type="Button" parent="CanvasLayer/Main panel/MainV/Shop/Shop Troops/Advanced"]
+[node name="AButton" type="Button" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Advanced"]
 layout_mode = 2
 text = "15"
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="CanvasLayer/Main panel/MainV/Shop/Shop Troops"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops"]
 layout_mode = 2
 
-[node name="RText" type="Label" parent="CanvasLayer/Main panel/MainV/Shop/Shop Troops/HBoxContainer3"]
+[node name="RText" type="Label" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/HBoxContainer3"]
 layout_mode = 2
 text = "Ranged"
 
-[node name="RButton" type="Button" parent="CanvasLayer/Main panel/MainV/Shop/Shop Troops/HBoxContainer3"]
+[node name="RButton" type="Button" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/HBoxContainer3"]
 layout_mode = 2
 text = "12
 "
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Main panel/MainV/Shop"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Main_panel/MainV/Shop"]
 layout_mode = 2
 alignment = 2
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Main panel/MainV/Shop/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Main_panel/MainV/Shop/HBoxContainer"]
 layout_mode = 2
 texture = ExtResource("3_k18p2")
 stretch_mode = 3
 
-[node name="MoneyLabel" type="Label" parent="CanvasLayer/Main panel/MainV/Shop/HBoxContainer"]
+[node name="MoneyLabel" type="Label" parent="CanvasLayer/Main_panel/MainV/Shop/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
 text = "100"
 vertical_alignment = 1
 
 [connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]
-[connection signal="pressed" from="CanvasLayer/Main panel/MainV/Header/Exit" to="." method="_on_exit_pressed"]
-[connection signal="pressed" from="CanvasLayer/Main panel/MainV/Shop/Shop Troops/Basic/BButton" to="." method="_on_b_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Main_panel/MainV/Header/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Basic/BButton" to="." method="_on_b_button_pressed"]

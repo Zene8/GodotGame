@@ -56,7 +56,25 @@ position = Vector2(-19.205, 4.4)
 position = Vector2(48, -29)
 
 [node name="Unit Template3" parent="enemies" instance=ExtResource("2_m1kny")]
-position = Vector2(-19, -43)
+position = Vector2(-27, -47)
+
+[node name="Unit Template4" parent="enemies" instance=ExtResource("2_m1kny")]
+position = Vector2(9, -66)
+
+[node name="Unit Template5" parent="enemies" instance=ExtResource("2_m1kny")]
+position = Vector2(-62, -21)
+
+[node name="Unit Template6" parent="enemies" instance=ExtResource("2_m1kny")]
+position = Vector2(-62, -77)
+
+[node name="Unit Template7" parent="enemies" instance=ExtResource("2_m1kny")]
+position = Vector2(-97, -64)
+
+[node name="Unit Template8" parent="enemies" instance=ExtResource("2_m1kny")]
+position = Vector2(-104, -35)
+
+[node name="Unit Template9" parent="enemies" instance=ExtResource("2_m1kny")]
+position = Vector2(-106, -1)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
