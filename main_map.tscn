@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://bca11qet1it2i"]
 
 [ext_resource type="Script" uid="uid://bficd2k176r4b" path="res://main_map.gd" id="1_arjcw"]
-[ext_resource type="Texture2D" uid="uid://dmd3pq1h23yrt" path="res://map biomes.png" id="1_robre"]
+[ext_resource type="Texture2D" uid="uid://c8vd6ne6h853c" path="res://Assets/map biomes.png" id="1_robre"]
 [ext_resource type="Script" uid="uid://f7o2blk0elrh" path="res://camera_2d.gd" id="2_cxjh6"]
 [ext_resource type="PackedScene" uid="uid://bij712nq680ap" path="res://Zone.tscn" id="3_cjc14"]
 [ext_resource type="Theme" uid="uid://b8cdpud5xabcr" path="res://Main_Theme.tres" id="5_1ns3a"]

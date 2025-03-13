@@ -1,6 +1,7 @@
 extends ProgressBar
 var state = "Setup"
 var time = 30
+signal battle
 
 func _process(delta: float) -> void:
 	value += delta * (100/time)

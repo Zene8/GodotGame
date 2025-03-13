@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dmd3pq1h23yrt"
-path="res://.godot/imported/map biomes.png-d8ea407f22b0c866abacc8c1000d63ad.ctex"
+uid="uid://b1eiw26vec2x8"
+path="res://.godot/imported/mainMenu.jpg-2b1ec500f464ec14ee5e4db3167f7c98.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://map biomes.png"
-dest_files=["res://.godot/imported/map biomes.png-d8ea407f22b0c866abacc8c1000d63ad.ctex"]
+source_file="res://Assets/mainMenu.jpg"
+dest_files=["res://.godot/imported/mainMenu.jpg-2b1ec500f464ec14ee5e4db3167f7c98.ctex"]
 
 [params]
 
