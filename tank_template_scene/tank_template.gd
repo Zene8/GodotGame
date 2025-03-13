@@ -20,6 +20,7 @@ func _physics_process(delta: float) -> void:
 		if velocity.is_zero_approx():
 			moving = false
 		move_and_slide()
+		rotation_degrees = rad_to_deg(velocity.angle())+90
 		velocity = (move_to - position).normalized() * base_speed
 		if last_pos_count >= 2:
 			if (last_pos - position).length() < 0.01:
@@ -30,10 +31,8 @@ func _physics_process(delta: float) -> void:
 		last_pos_count += 1
 	
 func _draw() -> void:
-	if selected:
-		draw_circle(Vector2(0,0),10,Color.WHITE,true)
-	draw_circle(Vector2(0,0),8,Color.RED,false,3)
-	draw_arc(Vector2(0,0),8,PI*(1.0/2-Health/MaxHealth),PI*(1.0/2+Health/MaxHealth),30,Color.GREEN,3)
+	draw_rect(Rect2(Vector2(-10, 10), Vector2(20, 2)),Color.RED)
+	draw_rect(Rect2(Vector2(-10, 10), Vector2(Health/MaxHealth * 20, 2)),Color.GREEN)
 	
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("shift"):
@@ -49,8 +48,12 @@ func _input(event: InputEvent) -> void:
 	
 func toggle_select():
 	if selected:
+		get_node("Body_unselected").visible = true
+		get_node("Body_selected").visible = false
 		selected = false
 	else:
+		get_node("Body_unselected").visible = false
+		get_node("Body_selected").visible = true
 		selected = true
 
 func set_current_velocity(mousepos):
@@ -59,6 +62,3 @@ func set_current_velocity(mousepos):
 
 func set_moving(val):
 	moving = val
-	
-
-	
