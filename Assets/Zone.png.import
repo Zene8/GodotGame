@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d0bn87b3ondlr"
-path="res://.godot/imported/Designer.jpg-8ffbbcc29bd6643831859e9db5b76b27.ctex"
+uid="uid://dna4aynkcdwk6"
+path="res://.godot/imported/Zone.png-55b832b31fbff9a2e8b44d635c2da7b8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Designer.jpg"
-dest_files=["res://.godot/imported/Designer.jpg-8ffbbcc29bd6643831859e9db5b76b27.ctex"]
+source_file="res://Assets/Zone.png"
+dest_files=["res://.godot/imported/Zone.png-55b832b31fbff9a2e8b44d635c2da7b8.ctex"]
 
 [params]
 

@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://2cyn61pad45a"]
+
+[ext_resource type="Texture2D" uid="uid://cv35lybnf2c6m" path="res://Assets/tank_colours.png" id="1_oqg3v"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ffl12"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7wtuo"]
+
+[node name="tank_template" type="CharacterBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_oqg3v")
+hframes = 2
+vframes = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ffl12")
+
+[node name="Area2D" type="Area2D" parent="CollisionShape2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionShape2D/Area2D"]
+shape = SubResource("CircleShape2D_7wtuo")

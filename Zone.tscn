@@ -1,9 +1,9 @@
 [gd_scene load_steps=9 format=3 uid="uid://bij712nq680ap"]
 
 [ext_resource type="Script" uid="uid://bn7xidv22h4qw" path="res://zone.gd" id="1_bj4vl"]
-[ext_resource type="Texture2D" uid="uid://bxhuf16nb0sm2" path="res://Zone.png" id="2_hgeyq"]
-[ext_resource type="Texture2D" uid="uid://dgyycllq34v6" path="res://Coin.png" id="3_k18p2"]
-[ext_resource type="Texture2D" uid="uid://dyxmiirfqk67s" path="res://Menu_Exit.png" id="3_m58ea"]
+[ext_resource type="Texture2D" uid="uid://dna4aynkcdwk6" path="res://Assets/Zone.png" id="2_hgeyq"]
+[ext_resource type="Texture2D" uid="uid://dgmvlxjtb660r" path="res://Assets/Coin.png" id="3_k18p2"]
+[ext_resource type="Texture2D" uid="uid://dyxmiirfqk67s" path="res://Assets/Menu_Exit.png" id="3_m58ea"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iybxn"]
 size = Vector2(12, 12)
