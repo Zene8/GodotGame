@@ -8,6 +8,7 @@ func move_units_to(move_to):
 			if unit.get("selected"):
 				unit.set_current_velocity(move_to)
 				unit.set_moving(true)
+				unit.toggle_select()
 	
 	elif moving_mode == "Keep":
 		#Find average position
@@ -19,6 +20,7 @@ func move_units_to(move_to):
 			if unit.get("selected"):
 				unit.set_current_velocity(move_to + unit.position - average_position)
 				unit.set_moving(true)
+				unit.toggle_select()
 	
 	elif moving_mode == "Line":
 		var offset = 0
@@ -27,6 +29,7 @@ func move_units_to(move_to):
 			if unit.get("selected"):
 				unit.set_current_velocity(Vector2(move_to.x, move_to.y + offset*location))
 				unit.set_moving(true)
+				unit.toggle_select()
 				if location == 1:
 					location = -1
 				else:

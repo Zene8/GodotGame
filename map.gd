@@ -29,7 +29,6 @@ func _input(event: InputEvent) -> void:
 		await get_tree().physics_frame
 		var areas = select_area.get_overlapping_areas()
 		select_area_shape.disabled = true
-		print(areas)
 		if areas.size() >= 1:
 			for area in areas:
 				area.get_parent().toggle_select()
