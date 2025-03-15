@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://b37invkti8n3b"]
+[gd_scene load_steps=15 format=4 uid="uid://b37invkti8n3b"]
 
 [ext_resource type="Script" uid="uid://djumuswhau7j5" path="res://map/map.gd" id="1_kxmgb"]
 [ext_resource type="Texture2D" uid="uid://2oaiegstjcub" path="res://map/assets/mock.png" id="2_e8e5r"]
@@ -8,6 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://2cyn61pad45a" path="res://tank_template/tank_template.tscn" id="6_k8tny"]
 [ext_resource type="Theme" uid="uid://b8cdpud5xabcr" path="res://Main_Theme.tres" id="7_ap8vc"]
 [ext_resource type="Script" uid="uid://v8h3pl0521xa" path="res://map/map_progress_bar.gd" id="8_wnugf"]
+[ext_resource type="Texture2D" uid="uid://di4bggnp76ya4" path="res://unit_template/assets/unit template.png" id="9_112ik"]
+[ext_resource type="Texture2D" uid="uid://cykiddu3ib18" path="res://tank_template/Assets/tank_default.png" id="10_112ik"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eyj48"]
 resource_name = "Grass"
@@ -79,6 +81,15 @@ position = Vector2(-106, -1)
 
 [node name="tank_template" parent="enemies" instance=ExtResource("6_k8tny")]
 
+[node name="tank_template2" parent="enemies" instance=ExtResource("6_k8tny")]
+position = Vector2(-108, 38)
+
+[node name="tank_template3" parent="enemies" instance=ExtResource("6_k8tny")]
+position = Vector2(90, -20)
+
+[node name="tank_template4" parent="enemies" instance=ExtResource("6_k8tny")]
+position = Vector2(-22, 69)
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Phase Bar" type="PanelContainer" parent="CanvasLayer"]
@@ -126,6 +137,29 @@ text = "Direct"
 layout_mode = 2
 text = "Lines"
 
+[node name="UnitButtons" type="PanelContainer" parent="CanvasLayer"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -50.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/UnitButtons"]
+layout_mode = 2
+
+[node name="BaseUnit" type="Button" parent="CanvasLayer/UnitButtons/HBoxContainer"]
+layout_mode = 2
+icon = ExtResource("9_112ik")
+
+[node name="Tank" type="Button" parent="CanvasLayer/UnitButtons/HBoxContainer"]
+layout_mode = 2
+icon = ExtResource("10_112ik")
+
+[connection signal="state_changed" from="CanvasLayer/Phase Bar/PanelContainer/ProgressBar" to="." method="_on_progress_bar_state_changed"]
 [connection signal="pressed" from="CanvasLayer/HBoxContainer/Keep" to="enemies" method="_on_keep_pressed"]
 [connection signal="pressed" from="CanvasLayer/HBoxContainer/Direct" to="enemies" method="_on_direct_pressed"]
 [connection signal="pressed" from="CanvasLayer/HBoxContainer/Line" to="enemies" method="_on_line_pressed"]

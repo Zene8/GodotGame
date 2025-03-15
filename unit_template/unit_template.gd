@@ -4,13 +4,14 @@ var MaxHealth := 100.0
 var Health := 100.0:
 	set(value):
 		Health = clamp(value,0,MaxHealth)
-var selected := true
+var selected := false
 var shifting := false
 var base_speed = 50
 var moving = false
 var move_to := Vector2(0, 0)
 var last_pos := Vector2(0, 0)
 var last_pos_count = 1
+var battle := false
 
 func _process(delta: float) -> void:
 	queue_redraw()
@@ -28,6 +29,10 @@ func _physics_process(delta: float) -> void:
 				last_pos_count = 0
 				last_pos = position
 		last_pos_count += 1
+	elif battle:
+		move_and_slide()
+		velocity = move_to
+		
 	
 func _draw() -> void:
 	if selected:
@@ -56,6 +61,12 @@ func toggle_select():
 func set_current_velocity(mousepos):
 	velocity = (mousepos - position).normalized() * base_speed
 	move_to = mousepos
+	
+func unit_battle_start(direction):
+	velocity = direction.normalized() * base_speed
+	move_to = direction.normalized() * base_speed
+	battle = true
+	
 
 func set_moving(val):
 	moving = val

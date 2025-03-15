@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://2cyn61pad45a"]
 
-[ext_resource type="Script" uid="uid://mrlr4oh03qqh" path="res://tank_template_scene/tank_template.gd" id="1_ffl12"]
+[ext_resource type="Script" uid="uid://mrlr4oh03qqh" path="res://tank_template/tank_template.gd" id="1_ffl12"]
 [ext_resource type="Texture2D" uid="uid://cv35lybnf2c6m" path="res://tank_template/Assets/tank_colours.png" id="1_oqg3v"]
-[ext_resource type="Shader" uid="uid://i1klvks6pis1" path="res://tank_template_scene/tank_template.gdshader" id="2_7wtuo"]
+[ext_resource type="Shader" uid="uid://i1klvks6pis1" path="res://tank_template/tank_template.gdshader" id="2_7wtuo"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7je5b"]
 shader = ExtResource("2_7wtuo")
@@ -45,7 +45,7 @@ vframes = 7
 [node name="Turret" type="Sprite2D" parent="."]
 texture_filter = 1
 position = Vector2(-9.53674e-07, -3)
-scale = Vector2(1.4, 1.4)
+scale = Vector2(1.6, 1.6)
 texture = ExtResource("1_oqg3v")
 hframes = 2
 vframes = 7

@@ -32,6 +32,10 @@ func move_units_to(move_to):
 				else:
 					location = 1
 					offset += 20
+					
+func battle_start():
+	for unit in get_children():
+		unit.unit_battle_start(Vector2(-1, 0))
 				
 func _on_line_pressed() -> void:
 	moving_mode = "Line"

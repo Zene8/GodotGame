@@ -70,5 +70,6 @@ func _draw() -> void:
 		draw_rect(Rect2(mousepos,size),Color.BLACK,false)
 
 
-func _on_keep_pressed() -> void:
-	pass # Replace with function body.
+func _on_progress_bar_state_changed(new_state) -> void:
+	if new_state == "Battle":
+		$enemies.battle_start()
