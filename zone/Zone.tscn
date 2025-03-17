@@ -118,12 +118,24 @@ layout_mode = 2
 layout_mode = 2
 text = "ADVANCED"
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="CanvasLayer/Main_panel/MainV/Troops"]
+[node name="Anumber" type="Label" parent="CanvasLayer/Main_panel/MainV/Troops/Advanced"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "0"
+horizontal_alignment = 2
+
+[node name="Ranged" type="HBoxContainer" parent="CanvasLayer/Main_panel/MainV/Troops"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/Main_panel/MainV/Troops/HBoxContainer3"]
+[node name="Rtext" type="Label" parent="CanvasLayer/Main_panel/MainV/Troops/Ranged"]
 layout_mode = 2
 text = "Ranged"
+
+[node name="Rnumber" type="Label" parent="CanvasLayer/Main_panel/MainV/Troops/Ranged"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "0"
+horizontal_alignment = 2
 
 [node name="VSplitContainer" type="VSplitContainer" parent="CanvasLayer/Main_panel/MainV"]
 custom_minimum_size = Vector2(0, 10)
@@ -195,3 +207,5 @@ vertical_alignment = 1
 [connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]
 [connection signal="pressed" from="CanvasLayer/Main_panel/MainV/Header/Exit" to="." method="_on_exit_pressed"]
 [connection signal="pressed" from="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Basic/BButton" to="." method="_on_b_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Advanced/AButton" to="." method="_on_a_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/HBoxContainer3/RButton" to="." method="_on_r_button_pressed"]

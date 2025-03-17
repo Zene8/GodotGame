@@ -1,20 +1,22 @@
 extends Node2D
 
+enum Owners{RED,BLUE,YELLOW,GREEN,PURPLE,ORANGE}
+const OwnerColours = [Color(1,0,0,0.4),Color(0,0,1,0.4),Color(1,1,0.2,0.4),Color(0,1,0,0.4),Color(1,0,1,0.4),Color(1,0.4,0.1,0.4)]
 var Money = 100
 var edges
-var phaseProgressBar
-
+var phase
+var player_colour = Owners["RED"]
+var pb
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	phaseProgressBar = $CanvasLayer/PanelContainer/ProgressBar
 	edges = [[$Zones/Zone,$Zones/Zone2,0],[$Zones/Zone2,$Zones/Zone3,0],[$Zones/Zone3,$Zones/Zone4,1]]
 	var zones = $Zones
 	for zone in zones.get_children():
 		zone.Buy.connect(change_money)
-
+	pb = $CanvasLayer/PanelContainer/ProgressBar
+	pb.get("theme_override_styles/fill").bg_color = Color(1,0,0,0.4)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	phaseProgressBar.value += delta*1
 	queue_redraw()
 	
 	
@@ -33,3 +35,10 @@ func _input(event: InputEvent) -> void:
 			
 func change_money(amount):
 	Money += amount
+	
+func _on_progress_bar_state_changed(new_phase) -> void:
+	if phase == "Buy Phase":
+		for zone in get_node("Zones").get_children():
+			zone.get_node("CanvasLayer").get_node("Main_panel").visible = false	
+	phase = new_phase
+	
