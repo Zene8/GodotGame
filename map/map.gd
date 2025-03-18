@@ -6,18 +6,22 @@ var select_area_shape = CollisionShape2D
 var select_area = Area2D
 var shifting = false
 var dragging_unit = false
-var new_unit = null
-var new_unit_colour = null
+var selecting_unit = null
+var selecting_unit_colour = null
+var button_vals = {"BaseUnit":{"button":Button, "val":10}, "Tank":{"button":Button, "val":5}}
 
 func _ready() -> void:
 	select_area_shape = $Area2D/CollisionShape2D
 	select_area = $Area2D
-	pass # Replace with function body.
+	button_vals["BaseUnit"].button = $CanvasLayer/UnitButtons/HBoxContainer/BaseUnit
+	button_vals["Tank"].button = $CanvasLayer/UnitButtons/HBoxContainer/Tank
+	button_vals["BaseUnit"].button.text = str(button_vals["BaseUnit"].val)
+	button_vals["Tank"].button.text = str(button_vals["Tank"].val)
 
 func _process(_delta: float) -> void:
 	if dragging_unit:
 		var mousepos = get_global_mouse_position()
-		new_unit.position = mousepos
+		selecting_unit.position = mousepos
 
 	queue_redraw()
 
@@ -28,15 +32,12 @@ func _input(event: InputEvent) -> void:
 		shifting = false
 		
 	if event.is_action_pressed("L_click"):
-		print(get_global_mouse_position())
 		select_area_shape.disabled = false
 		select_area_shape.position = get_global_mouse_position()
 		select_area_shape.shape.size = Vector2(1, 1)
 		await get_tree().physics_frame
 		await get_tree().physics_frame
 		var areas = select_area.get_overlapping_areas()
-		select_area_shape.disabled = true
-		print(areas)
 		if areas.size() >= 1:
 			for area in areas:
 				area.get_parent().toggle_select()
@@ -66,10 +67,17 @@ func _input(event: InputEvent) -> void:
 		for area in areas:
 			area.get_parent().toggle_select()
 			
-	if event.is_action_released("L_click") and dragging_unit:
-		new_unit.get_node("CollisionShape2D").disabled = false
-		new_unit.modulate = new_unit_colour
-		dragging_unit = false
+	if event.is_action_pressed("L_click") and dragging_unit:
+		if selecting_unit.get_node("Area2D").get_overlapping_areas().size() == 1 and button_vals[dragging_unit].val > 0:
+			button_vals[dragging_unit].val -= 1
+			button_vals[dragging_unit].button.text = str(button_vals[dragging_unit].val)
+			var placed_unit = null
+			if dragging_unit == "BaseUnit":
+				placed_unit = preload("res://unit_template/unit_template.tscn").instantiate()
+			elif dragging_unit == "Tank":
+				placed_unit = preload("res://tank_template/tank_template.tscn").instantiate()
+			$enemies.add_child(placed_unit)
+			placed_unit.position = selecting_unit.position
 	
 	if event.is_action_pressed("R_click"):
 		$enemies.move_units_to(get_global_mouse_position())
@@ -84,20 +92,62 @@ func _draw() -> void:
 func _on_progress_bar_state_changed(new_state) -> void:
 	if new_state == "Battle":
 		$enemies.battle_start()
-
-#Unit buttons
-func _on_base_unit_button_down() -> void:
-	dragging_unit = true
-	new_unit = preload("res://unit_template/unit_template.tscn").instantiate()
-	new_unit.get_node("CollisionShape2D").disabled = true
-	new_unit_colour = new_unit.modulate
-	new_unit.modulate = Color(new_unit_colour.r, new_unit_colour.g - 0.5, new_unit_colour.b + 20)
-	$enemies.add_child(new_unit)
+		
 
 func _on_tank_button_down() -> void:
-	dragging_unit = true
-	new_unit = preload("res://tank_template/tank_template.tscn").instantiate()
-	new_unit.get_node("CollisionShape2D").disabled = true
-	new_unit_colour = new_unit.modulate
-	new_unit.modulate = Color(new_unit_colour.r, new_unit_colour.g - 0.5, new_unit_colour.b + 20)
-	$enemies.add_child(new_unit)
+	if not dragging_unit and button_vals["Tank"].val > 0:
+		dragging_unit = "Tank"
+		selecting_unit = preload("res://tank_template/tank_template.tscn").instantiate()
+		selecting_unit.get_node("CollisionShape2D").disabled = true
+		selecting_unit_colour = selecting_unit.modulate
+		selecting_unit.modulate = Color(selecting_unit_colour.r, selecting_unit_colour.g - 0.5, selecting_unit_colour.b + 20)
+		selecting_unit.z_index = 1
+		selecting_unit.get_node("Area2D").area_exited.connect(_on_selecting_area_exited)
+		$enemies.add_child(selecting_unit)
+		
+
+func _on_bin_mouse_entered() -> void:
+	if dragging_unit:
+		$enemies.remove_child(selecting_unit)
+		selecting_unit.queue_free()
+		dragging_unit = false
+
+func _on_base_unit_pressed() -> void:
+	if button_vals["BaseUnit"].val > 0:
+		if dragging_unit:
+			$enemies.remove_child(selecting_unit)
+		dragging_unit = "BaseUnit"
+		selecting_unit = preload("res://unit_template/unit_template.tscn").instantiate()
+		selecting_unit.get_node("CollisionShape2D").disabled = true
+		selecting_unit_colour = selecting_unit.modulate
+		selecting_unit.modulate = Color(selecting_unit_colour.r, selecting_unit_colour.g - 0.5, selecting_unit_colour.b + 20)
+		selecting_unit.z_index = 1
+		selecting_unit.get_node("Area2D").area_exited.connect(_on_selecting_area_exited)
+		$enemies.add_child(selecting_unit)
+		
+func _on_tank_pressed() -> void:
+	if button_vals["Tank"].val > 0:
+		if dragging_unit:
+			$enemies.remove_child(selecting_unit)
+			selecting_unit.queue_free()	
+		dragging_unit = "Tank"
+		selecting_unit = preload("res://tank_template/tank_template.tscn").instantiate()
+		selecting_unit.get_node("CollisionShape2D").disabled = true
+		selecting_unit_colour = selecting_unit.modulate
+		selecting_unit.modulate = Color(selecting_unit_colour.r, selecting_unit_colour.g - 0.5, selecting_unit_colour.b + 20)
+		selecting_unit.z_index = 1
+		selecting_unit.get_node("Area2D").area_exited.connect(_on_selecting_area_exited)
+		$enemies.add_child(selecting_unit)
+		
+func _on_selecting_area_exited(area):
+	if Input.is_mouse_button_pressed(1) and selecting_unit.get_node("Area2D").get_overlapping_areas().size() < 1 and button_vals[dragging_unit].val > 0:
+		button_vals[dragging_unit].val -= 1
+		button_vals[dragging_unit].button.text = str(button_vals[dragging_unit].val)
+		var placed_unit = null
+		if dragging_unit == "BaseUnit":
+			placed_unit = preload("res://unit_template/unit_template.tscn").instantiate()
+		elif dragging_unit == "Tank":
+			placed_unit = preload("res://tank_template/tank_template.tscn").instantiate()
+		$enemies.add_child(placed_unit)
+		placed_unit.position = selecting_unit.position
+	

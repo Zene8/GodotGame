@@ -4,6 +4,7 @@ var dragging := false
 var dragstart := Vector2()
 var startpos := Vector2()
 var maxzoom := 1.5
+var limit = {"x":500, "y":350}
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -15,10 +16,10 @@ func _process(delta: float) -> void:
 		position = startpos + (dragstart - get_global_mouse_position())
 	if zoom < Vector2(maxzoom,maxzoom):
 		zoom = Vector2(maxzoom,maxzoom)
-	if abs(position.x) > 250:
-		position.x = position.x * abs(250/position.x)
-	if abs(position.y) > 150:
-		position.y = position.y * abs(150/position.y)
+	if abs(position.x) > limit.x:
+		position.x = position.x * abs(limit.x/position.x)
+	if abs(position.y) > limit.y:
+		position.y = position.y * abs(limit.y/position.y)
 	
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("Scroll_up"):
