@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://bij712nq680ap"]
 
 [ext_resource type="Script" uid="uid://bn7xidv22h4qw" path="res://zone/zone.gd" id="1_bj4vl"]
-[ext_resource type="Texture2D" uid="uid://dna4aynkcdwk6" path="res://zone/assets/Zone.png" id="2_hgeyq"]
+[ext_resource type="Texture2D" uid="uid://duft2nwavkinb" path="res://zone/assets/zone_colours.png" id="2_vcget"]
 [ext_resource type="Texture2D" uid="uid://dgmvlxjtb660r" path="res://zone/assets/Coin.png" id="3_k18p2"]
 [ext_resource type="Texture2D" uid="uid://dyxmiirfqk67s" path="res://zone/assets/Menu_Exit.png" id="3_m58ea"]
 
@@ -31,7 +31,8 @@ script = ExtResource("1_bj4vl")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
-texture = ExtResource("2_hgeyq")
+texture = ExtResource("2_vcget")
+vframes = 7
 
 [node name="TroopCount" type="Label" parent="."]
 anchors_preset = 8

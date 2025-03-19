@@ -40,6 +40,12 @@ script = ExtResource("5_k1ppp")
 [node name="Node2D" type="Node2D" parent="Zones/Zone/Points"]
 position = Vector2(-62, -35)
 
+[node name="Node2D5" type="Node2D" parent="Zones/Zone/Points"]
+position = Vector2(-72, -23)
+
+[node name="Node2D6" type="Node2D" parent="Zones/Zone/Points"]
+position = Vector2(-78, -11)
+
 [node name="Node2D2" type="Node2D" parent="Zones/Zone/Points"]
 position = Vector2(-79, 17)
 
@@ -48,6 +54,24 @@ position = Vector2(43, 17)
 
 [node name="Node2D4" type="Node2D" parent="Zones/Zone/Points"]
 position = Vector2(25, -34)
+
+[node name="Node2D7" type="Node2D" parent="Zones/Zone/Points"]
+position = Vector2(7, -32)
+
+[node name="Node2D8" type="Node2D" parent="Zones/Zone/Points"]
+position = Vector2(5, -25)
+
+[node name="Node2D9" type="Node2D" parent="Zones/Zone/Points"]
+position = Vector2(-19, -32)
+
+[node name="Node2D10" type="Node2D" parent="Zones/Zone/Points"]
+position = Vector2(-21, -40)
+
+[node name="Node2D11" type="Node2D" parent="Zones/Zone/Points"]
+position = Vector2(-47, -35)
+
+[node name="Node2D12" type="Node2D" parent="Zones/Zone/Points"]
+position = Vector2(-55, -31)
 
 [node name="Zone2" parent="Zones" instance=ExtResource("4_3ah1q")]
 position = Vector2(1, -86)
