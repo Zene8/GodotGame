@@ -1,10 +1,10 @@
 [gd_scene load_steps=15 format=3 uid="uid://26f3hx8n0hyk"]
 
-[ext_resource type="Script" uid="uid://5kbvpjb0f2un" path="res://menu.gd" id="1_ouk20"]
-[ext_resource type="Script" uid="uid://qfud4fy6wxee" path="res://singleplayer.gd" id="2_mae5d"]
-[ext_resource type="FontFile" uid="uid://bm23rhih55byl" path="res://ArchitectsDaughter.ttf" id="2_ytr4m"]
-[ext_resource type="Texture2D" uid="uid://b1eiw26vec2x8" path="res://Assets/mainMenu.jpg" id="3_mae5d"]
-[ext_resource type="PackedScene" uid="uid://c7osil6s5ri2r" path="res://option_container.tscn" id="5_ytr4m"]
+[ext_resource type="Script" uid="uid://5kbvpjb0f2un" path="res://GUI/menu.gd" id="1_o1bug"]
+[ext_resource type="FontFile" uid="uid://bm23rhih55byl" path="res://ArchitectsDaughter.ttf" id="2_bi43m"]
+[ext_resource type="Script" uid="uid://qfud4fy6wxee" path="res://GUI/singleplayer.gd" id="3_oy63e"]
+[ext_resource type="Texture2D" uid="uid://b1eiw26vec2x8" path="res://Assets/mainMenu.jpg" id="4_ar3vo"]
+[ext_resource type="PackedScene" uid="uid://c7osil6s5ri2r" path="res://GUI/option_container.tscn" id="5_go3ra"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ytr4m"]
 bg_color = Color(0.278431, 0.109804, 0.0509804, 0.752941)
@@ -37,7 +37,7 @@ shadow_size = 5
 shadow_offset = Vector2(2, -2)
 
 [sub_resource type="Theme" id="Theme_l48gv"]
-default_font = ExtResource("2_ytr4m")
+default_font = ExtResource("2_bi43m")
 Button/colors/font_color = Color(0, 0, 0, 0.682353)
 Button/colors/font_disabled_color = Color(0, 0, 0, 0.682353)
 Button/colors/font_focus_color = Color(1, 1, 1, 0.682353)
@@ -154,7 +154,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
-script = ExtResource("1_ouk20")
+script = ExtResource("1_o1bug")
 
 [node name="MainMenuCont" type="VBoxContainer" parent="."]
 unique_name_in_owner = true
@@ -173,7 +173,7 @@ layout_mode = 2
 focus_neighbor_top = NodePath("../Exit")
 focus_neighbor_bottom = NodePath("../Multiplayer")
 text = "Singleplayer"
-script = ExtResource("2_mae5d")
+script = ExtResource("3_oy63e")
 
 [node name="Multiplayer" type="Button" parent="MainMenuCont"]
 layout_mode = 2
@@ -212,7 +212,7 @@ layout_mode = 2
 focus_neighbor_top = NodePath("../Back")
 focus_neighbor_bottom = NodePath("../CreateGame")
 text = "Join Game"
-script = ExtResource("2_mae5d")
+script = ExtResource("3_oy63e")
 
 [node name="CreateGame" type="Button" parent="MultiplayerCont"]
 layout_mode = 2
@@ -239,10 +239,10 @@ offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource("3_mae5d")
+texture = ExtResource("4_ar3vo")
 expand_mode = 1
 
-[node name="OptionContainer" parent="." instance=ExtResource("5_ytr4m")]
+[node name="OptionContainer" parent="." instance=ExtResource("5_go3ra")]
 layout_mode = 1
 offset_top = -269.5
 offset_bottom = 269.5
