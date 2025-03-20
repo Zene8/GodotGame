@@ -1,0 +1,187 @@
+[gd_scene load_steps=16 format=4 uid="uid://b37invkti8n3b"]
+
+[ext_resource type="Script" uid="uid://djumuswhau7j5" path="res://map/map.gd" id="1_kxmgb"]
+[ext_resource type="Texture2D" uid="uid://2oaiegstjcub" path="res://map/assets/mock.png" id="2_e8e5r"]
+[ext_resource type="Script" uid="uid://blrxwd7sud3vd" path="res://map/level_camera_2d.gd" id="3_112ik"]
+[ext_resource type="Script" uid="uid://b7y536phuh8xl" path="res://map/enemies.gd" id="4_i5grx"]
+[ext_resource type="PackedScene" uid="uid://c0ynell8yescv" path="res://unit_template/unit_template.tscn" id="5_lct0g"]
+[ext_resource type="PackedScene" uid="uid://2cyn61pad45a" path="res://tank_template/tank_template.tscn" id="6_k8tny"]
+[ext_resource type="Theme" uid="uid://b8cdpud5xabcr" path="res://Main_Theme.tres" id="7_ap8vc"]
+[ext_resource type="Script" uid="uid://v8h3pl0521xa" path="res://map/map_progress_bar.gd" id="8_wnugf"]
+[ext_resource type="Texture2D" uid="uid://di4bggnp76ya4" path="res://unit_template/assets/unit template.png" id="9_112ik"]
+[ext_resource type="Texture2D" uid="uid://cykiddu3ib18" path="res://tank_template/Assets/tank_default.png" id="10_112ik"]
+[ext_resource type="Texture2D" uid="uid://d3iysusb0vg5q" path="res://Assets/bin.png" id="11_i5grx"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eyj48"]
+resource_name = "Grass"
+texture = ExtResource("2_e8e5r")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_4rgyy"]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_eyj48")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_757db"]
+size = Vector2(0, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_71pa8"]
+font_size = 27
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_kxmgb")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+z_index = -1
+position = Vector2(-55, -64)
+tile_map_data = PackedByteArray("AAAFAPz/AAAAAAAAAAAFAPv/AAAAAAAAAAAEAPv/AAAAAAAAAAADAPv/AAAAAAAAAAACAPv/AAAAAAAAAAABAPv/AAAAAAAAAAAAAPv/AAAAAAAAAAD///v/AAAAAAAAAAD+//v/AAAAAAAAAAD9//v/AAAAAAAAAAD8//v/AAAAAAAAAAD8//z/AAAAAAAAAAD8//3/AAAAAAAAAAD8//7/AAAAAAAAAAD8////AAAAAAAAAAD8/wAAAAAAAAAAAAD8/wEAAAAAAAAAAAD8/wIAAAAAAAAAAAD8/wMAAAAAAAAAAAD8/wQAAAAAAAAAAAD8/wUAAAAAAAAAAAD9/wUAAAAAAAAAAAD9/wQAAAAAAAAAAAD9/wMAAAAAAAAAAAD9/wIAAAAAAAAAAAD9/wEAAAAAAAAAAAD9/wAAAAAAAAAAAAD9////AAAAAAAAAAD9//7/AAAAAAAAAAD9//3/AAAAAAAAAAD9//z/AAAAAAAAAAD+//z/AAAAAAAAAAD+//3/AAAAAAAAAAD+//7/AAAAAAAAAAD+////AAAAAAAAAAD+/wAAAAAAAAAAAAD+/wEAAAAAAAAAAAD+/wIAAAAAAAAAAAD+/wMAAAAAAAAAAAD+/wQAAAAAAAAAAAD+/wUAAAAAAAAAAAD//wUAAAAAAAAAAAD//wQAAAAAAAAAAAD//wMAAAAAAAAAAAD//wIAAAAAAAAAAAD//wEAAAAAAAAAAAD//wAAAAAAAAAAAAD/////AAAAAAAAAAD///7/AAAAAAAAAAD///3/AAAAAAAAAAD///z/AAAAAAAAAAAAAPz/AAAAAAAAAAAAAP3/AAAAAAAAAAAAAP7/AAAAAAAAAAAAAP//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAUAAAAAAAAAAAABAAUAAAAAAAAAAAABAAQAAAAAAAAAAAABAAMAAAAAAAAAAAABAAIAAAAAAAAAAAABAAEAAAAAAAAAAAABAAAAAAAAAAAAAAABAP//AAAAAAAAAAABAP7/AAAAAAAAAAABAP3/AAAAAAAAAAABAPz/AAAAAAAAAAACAPz/AAAAAAAAAAACAP3/AAAAAAAAAAACAP7/AAAAAAAAAAACAP//AAAAAAAAAAACAAAAAAAAAAAAAAACAAEAAAAAAAAAAAACAAIAAAAAAAAAAAACAAMAAAAAAAAAAAACAAQAAAAAAAAAAAACAAUAAAAAAAAAAAADAAUAAAAAAAAAAAADAAQAAAAAAAAAAAADAAMAAAAAAAAAAAADAAIAAAAAAAAAAAADAAEAAAAAAAAAAAADAAAAAAAAAAAAAAADAP//AAAAAAAAAAADAP7/AAAAAAAAAAADAP3/AAAAAAAAAAADAPz/AAAAAAAAAAAEAPz/AAAAAAAAAAAEAP3/AAAAAAAAAAAEAP7/AAAAAAAAAAAEAP//AAAAAAAAAAAEAAAAAAAAAAAAAAAEAAEAAAAAAAAAAAAEAAIAAAAAAAAAAAAEAAMAAAAAAAAAAAAEAAQAAAAAAAAAAAAEAAUAAAAAAAAAAAAFAAUAAAAAAAAAAAAFAAQAAAAAAAAAAAAFAAMAAAAAAAAAAAAFAAIAAAAAAAAAAAAFAAEAAAAAAAAAAAAFAAAAAAAAAAAAAAAFAP//AAAAAAAAAAAFAP7/AAAAAAAAAAAFAP3/AAAAAAAAAAD7/wUAAAAAAAAAAAD7/wQAAAAAAAAAAAD7/wMAAAAAAAAAAAD7/wIAAAAAAAAAAAD7/wEAAAAAAAAAAAD7/wAAAAAAAAAAAAD7////AAAAAAAAAAD7//7/AAAAAAAAAAD7//3/AAAAAAAAAAD7//z/AAAAAAAAAAD7//v/AAAAAAAAAAD6//v/AAAAAAAAAAD6//z/AAAAAAAAAAD6//3/AAAAAAAAAAD6//7/AAAAAAAAAAD6////AAAAAAAAAAD6/wAAAAAAAAAAAAD6/wEAAAAAAAAAAAD6/wIAAAAAAAAAAAD6/wMAAAAAAAAAAAD6/wQAAAAAAAAAAAD6/wUAAAAAAAAAAAD6//r/AAAAAAAAAAD7//r/AAAAAAAAAAD8//r/AAAAAAAAAAD9//r/AAAAAAAAAAD+//r/AAAAAAAAAAD///r/AAAAAAAAAAAAAPr/AAAAAAAAAAABAPr/AAAAAAAAAAAEAPr/AAAAAAAAAAAFAPr/AAAAAAAAAAADAPr/AAAAAAAAAAACAPr/AAAAAAAAAAA=")
+tile_set = SubResource("TileSet_4rgyy")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(4.01, 4.01)
+position_smoothing_enabled = true
+script = ExtResource("3_112ik")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_757db")
+
+[node name="enemies" type="Node" parent="."]
+script = ExtResource("4_i5grx")
+
+[node name="Unit Template" parent="enemies" instance=ExtResource("5_lct0g")]
+position = Vector2(-19.205, 4.4)
+
+[node name="Unit Template2" parent="enemies" instance=ExtResource("5_lct0g")]
+position = Vector2(48, -29)
+
+[node name="Unit Template3" parent="enemies" instance=ExtResource("5_lct0g")]
+position = Vector2(-27, -47)
+
+[node name="Unit Template4" parent="enemies" instance=ExtResource("5_lct0g")]
+position = Vector2(9, -66)
+
+[node name="Unit Template5" parent="enemies" instance=ExtResource("5_lct0g")]
+position = Vector2(-62, -21)
+
+[node name="Unit Template6" parent="enemies" instance=ExtResource("5_lct0g")]
+position = Vector2(-62, -77)
+
+[node name="Unit Template7" parent="enemies" instance=ExtResource("5_lct0g")]
+position = Vector2(-97, -64)
+
+[node name="Unit Template8" parent="enemies" instance=ExtResource("5_lct0g")]
+position = Vector2(-104, -35)
+
+[node name="Unit Template9" parent="enemies" instance=ExtResource("5_lct0g")]
+position = Vector2(-106, -1)
+
+[node name="tank_template" parent="enemies" instance=ExtResource("6_k8tny")]
+
+[node name="tank_template2" parent="enemies" instance=ExtResource("6_k8tny")]
+position = Vector2(-108, 38)
+
+[node name="tank_template3" parent="enemies" instance=ExtResource("6_k8tny")]
+position = Vector2(90, -20)
+
+[node name="tank_template4" parent="enemies" instance=ExtResource("6_k8tny")]
+position = Vector2(-22, 69)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Phase Bar" type="PanelContainer" parent="CanvasLayer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 50.0
+grow_horizontal = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Phase Bar"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Phase Bar/PanelContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Phase Bar/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Setup"
+label_settings = SubResource("LabelSettings_71pa8")
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/Phase Bar/PanelContainer"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+size_flags_vertical = 8
+theme = ExtResource("7_ap8vc")
+show_percentage = false
+script = ExtResource("8_wnugf")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
+offset_top = 50.0
+offset_right = 159.0
+offset_bottom = 100.0
+
+[node name="Keep" type="Button" parent="CanvasLayer/HBoxContainer"]
+visible = false
+layout_mode = 2
+text = "Keep"
+
+[node name="Direct" type="Button" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+text = "Direct"
+
+[node name="Line" type="Button" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+text = "Lines"
+
+[node name="UnitButtons" type="PanelContainer" parent="CanvasLayer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -29.0
+offset_top = -101.0
+offset_right = 23.0
+offset_bottom = -51.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(2, 2)
+size_flags_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/UnitButtons"]
+texture_filter = 1
+layout_mode = 2
+
+[node name="BaseUnit" type="Button" parent="CanvasLayer/UnitButtons/HBoxContainer"]
+layout_mode = 2
+icon = ExtResource("9_112ik")
+alignment = 2
+
+[node name="Tank" type="Button" parent="CanvasLayer/UnitButtons/HBoxContainer"]
+layout_mode = 2
+icon = ExtResource("10_112ik")
+alignment = 2
+
+[node name="ExtraButtons" type="PanelContainer" parent="CanvasLayer"]
+offset_left = 1111.0
+offset_top = 52.0
+offset_right = 1151.0
+offset_bottom = 92.0
+
+[node name="Bin" type="Button" parent="CanvasLayer/ExtraButtons"]
+layout_mode = 2
+icon = ExtResource("11_i5grx")
+
+[connection signal="state_changed" from="CanvasLayer/Phase Bar/PanelContainer/ProgressBar" to="." method="_on_progress_bar_state_changed"]
+[connection signal="pressed" from="CanvasLayer/HBoxContainer/Keep" to="enemies" method="_on_keep_pressed"]
+[connection signal="pressed" from="CanvasLayer/HBoxContainer/Direct" to="enemies" method="_on_direct_pressed"]
+[connection signal="pressed" from="CanvasLayer/HBoxContainer/Line" to="enemies" method="_on_line_pressed"]
+[connection signal="pressed" from="CanvasLayer/UnitButtons/HBoxContainer/BaseUnit" to="." method="_on_base_unit_pressed"]
+[connection signal="pressed" from="CanvasLayer/UnitButtons/HBoxContainer/Tank" to="." method="_on_tank_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/ExtraButtons/Bin" to="." method="_on_bin_mouse_entered"]

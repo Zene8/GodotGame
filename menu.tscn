@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://5kbvpjb0f2un" path="res://menu.gd" id="1_ouk20"]
 [ext_resource type="Script" uid="uid://qfud4fy6wxee" path="res://singleplayer.gd" id="2_mae5d"]
 [ext_resource type="FontFile" uid="uid://bm23rhih55byl" path="res://ArchitectsDaughter.ttf" id="2_ytr4m"]
-[ext_resource type="Texture2D" uid="uid://gea87h46k6r2" path="res://mainMenu.jpg" id="3_mae5d"]
+[ext_resource type="Texture2D" uid="uid://b1eiw26vec2x8" path="res://Assets/mainMenu.jpg" id="3_mae5d"]
 [ext_resource type="PackedScene" uid="uid://c7osil6s5ri2r" path="res://option_container.tscn" id="5_ytr4m"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ytr4m"]

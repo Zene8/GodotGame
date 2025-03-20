@@ -1,0 +1,212 @@
+[gd_scene load_steps=9 format=3 uid="uid://bij712nq680ap"]
+
+[ext_resource type="Script" uid="uid://bn7xidv22h4qw" path="res://zone/zone.gd" id="1_bj4vl"]
+[ext_resource type="Texture2D" uid="uid://duft2nwavkinb" path="res://zone/assets/zone_colours.png" id="2_vcget"]
+[ext_resource type="Texture2D" uid="uid://dgmvlxjtb660r" path="res://zone/assets/Coin.png" id="3_k18p2"]
+[ext_resource type="Texture2D" uid="uid://dyxmiirfqk67s" path="res://zone/assets/Menu_Exit.png" id="3_m58ea"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iybxn"]
+size = Vector2(12, 12)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vv71a"]
+bg_color = Color(0.251176, 0.282058, 0.274772, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="LabelSettings" id="LabelSettings_7wtpu"]
+font_size = 24
+font_color = Color(0.345098, 0.541176, 0.411765, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_8sry5"]
+font_size = 17
+
+[node name="Zone" type="Node2D"]
+script = ExtResource("1_bj4vl")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_vcget")
+vframes = 7
+
+[node name="TroopCount" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(4, 4)
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 5
+text = "10"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_iybxn")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Main_panel" type="PanelContainer" parent="CanvasLayer"]
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -239.0
+offset_top = 79.0
+offset_right = -27.0
+offset_bottom = -24.0
+grow_horizontal = 0
+grow_vertical = 2
+size_flags_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_vv71a")
+
+[node name="MainV" type="VBoxContainer" parent="CanvasLayer/Main_panel"]
+layout_mode = 2
+
+[node name="Header" type="HBoxContainer" parent="CanvasLayer/Main_panel/MainV"]
+layout_mode = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="CanvasLayer/Main_panel/MainV/Header"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "ZONE NAME"
+label_settings = SubResource("LabelSettings_7wtpu")
+
+[node name="Exit" type="Button" parent="CanvasLayer/Main_panel/MainV/Header"]
+layout_mode = 2
+icon = ExtResource("3_m58ea")
+
+[node name="Troops" type="VBoxContainer" parent="CanvasLayer/Main_panel/MainV"]
+layout_mode = 2
+
+[node name="Basic" type="HBoxContainer" parent="CanvasLayer/Main_panel/MainV/Troops"]
+layout_mode = 2
+
+[node name="Btext" type="Label" parent="CanvasLayer/Main_panel/MainV/Troops/Basic"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Basic"
+label_settings = SubResource("LabelSettings_8sry5")
+vertical_alignment = 1
+
+[node name="Bnumber" type="Label" parent="CanvasLayer/Main_panel/MainV/Troops/Basic"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "0"
+horizontal_alignment = 2
+
+[node name="Advanced" type="HBoxContainer" parent="CanvasLayer/Main_panel/MainV/Troops"]
+layout_mode = 2
+
+[node name="Atext" type="Label" parent="CanvasLayer/Main_panel/MainV/Troops/Advanced"]
+layout_mode = 2
+text = "ADVANCED"
+
+[node name="Anumber" type="Label" parent="CanvasLayer/Main_panel/MainV/Troops/Advanced"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "0"
+horizontal_alignment = 2
+
+[node name="Ranged" type="HBoxContainer" parent="CanvasLayer/Main_panel/MainV/Troops"]
+layout_mode = 2
+
+[node name="Rtext" type="Label" parent="CanvasLayer/Main_panel/MainV/Troops/Ranged"]
+layout_mode = 2
+text = "Ranged"
+
+[node name="Rnumber" type="Label" parent="CanvasLayer/Main_panel/MainV/Troops/Ranged"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "0"
+horizontal_alignment = 2
+
+[node name="VSplitContainer" type="VSplitContainer" parent="CanvasLayer/Main_panel/MainV"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="Shop" type="VBoxContainer" parent="CanvasLayer/Main_panel/MainV"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Main_panel/MainV/Shop"]
+layout_mode = 2
+text = "SHOP"
+horizontal_alignment = 1
+
+[node name="Shop Troops" type="VBoxContainer" parent="CanvasLayer/Main_panel/MainV/Shop"]
+layout_mode = 2
+
+[node name="Basic" type="HBoxContainer" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops"]
+layout_mode = 2
+
+[node name="Btext" type="Label" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Basic"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Basic"
+label_settings = SubResource("LabelSettings_8sry5")
+vertical_alignment = 1
+
+[node name="BButton" type="Button" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Basic"]
+layout_mode = 2
+text = "10"
+
+[node name="Advanced" type="HBoxContainer" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops"]
+layout_mode = 2
+
+[node name="Atext" type="Label" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Advanced"]
+layout_mode = 2
+text = "ADVANCED"
+
+[node name="AButton" type="Button" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Advanced"]
+layout_mode = 2
+text = "15"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops"]
+layout_mode = 2
+
+[node name="RText" type="Label" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/HBoxContainer3"]
+layout_mode = 2
+text = "Ranged"
+
+[node name="RButton" type="Button" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/HBoxContainer3"]
+layout_mode = 2
+text = "12
+"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Main_panel/MainV/Shop"]
+layout_mode = 2
+alignment = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Main_panel/MainV/Shop/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("3_k18p2")
+stretch_mode = 3
+
+[node name="MoneyLabel" type="Label" parent="CanvasLayer/Main_panel/MainV/Shop/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "100"
+vertical_alignment = 1
+
+[connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]
+[connection signal="pressed" from="CanvasLayer/Main_panel/MainV/Header/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Basic/BButton" to="." method="_on_b_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Advanced/AButton" to="." method="_on_a_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/HBoxContainer3/RButton" to="." method="_on_r_button_pressed"]
