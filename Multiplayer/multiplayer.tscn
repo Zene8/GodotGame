@@ -1,41 +1,22 @@
-[gd_scene load_steps=4 format=3 uid="uid://2di75bhoq6qp"]
+[gd_scene load_steps=3 format=3 uid="uid://2di75bhoq6qp"]
 
-[ext_resource type="Script" uid="uid://p5tpts1mn118" path="res://Multiplayer/level.gd" id="1_1rntj"]
-[ext_resource type="Script" uid="uid://l1eqym8ehe3y" path="res://Multiplayer/level_sync.gd" id="2_klxws"]
-[ext_resource type="PackedScene" uid="uid://b37invkti8n3b" path="res://map/map.tscn" id="2_yh2lt"]
+[ext_resource type="Script" uid="uid://dd2ldqxb85mr0" path="res://Multiplayer/lobby.gd" id="1_jawr0"]
+[ext_resource type="Script" uid="uid://b7ac210h2k2e5" path="res://Multiplayer/network.gd" id="1_lykk2"]
 
 [node name="Multiplayer" type="Node"]
+script = ExtResource("1_lykk2")
 
-[node name="UI" type="Control" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" type="Control" parent="CanvasLayer"]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+scale = Vector2(11.46, 16.2026)
+script = ExtResource("1_jawr0")
 
-[node name="Net" type="VBoxContainer" parent="UI"]
+[node name="PlayerList" type="ItemList" parent="CanvasLayer/UI"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-
-[node name="Options" type="HBoxContainer" parent="UI/Net"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="UI/Net/Options"]
-layout_mode = 2
-
-[node name="Host" type="Button" parent="UI/Net/Options"]
-layout_mode = 2
-
-[node name="Connect" type="Button" parent="UI/Net/Options"]
-layout_mode = 2
-
-[node name="remote" type="LineEdit" parent="UI/Net/Options"]
-layout_mode = 2
-
-[node name="Level" type="Node" parent="."]
-script = ExtResource("1_1rntj")
-
-[node name="Map" parent="Level" instance=ExtResource("2_yh2lt")]
-
-[node name="LevelSync" type="MultiplayerSpawner" parent="."]
-script = ExtResource("2_klxws")

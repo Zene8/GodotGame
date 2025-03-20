@@ -1,10 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://26f3hx8n0hyk"]
+[gd_scene load_steps=17 format=3 uid="uid://26f3hx8n0hyk"]
 
 [ext_resource type="Script" uid="uid://5kbvpjb0f2un" path="res://GUI/menu.gd" id="1_o1bug"]
 [ext_resource type="FontFile" uid="uid://bm23rhih55byl" path="res://ArchitectsDaughter.ttf" id="2_bi43m"]
-[ext_resource type="Script" uid="uid://qfud4fy6wxee" path="res://GUI/singleplayer.gd" id="3_oy63e"]
 [ext_resource type="Texture2D" uid="uid://b1eiw26vec2x8" path="res://Assets/mainMenu.jpg" id="4_ar3vo"]
 [ext_resource type="PackedScene" uid="uid://c7osil6s5ri2r" path="res://GUI/option_container.tscn" id="5_go3ra"]
+[ext_resource type="Script" uid="uid://ch6om40suec0y" path="res://GUI/game_list.gd" id="6_bi43m"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ytr4m"]
 bg_color = Color(0.278431, 0.109804, 0.0509804, 0.752941)
@@ -54,12 +54,14 @@ Button/styles/focus = SubResource("StyleBoxFlat_ytr4m")
 Button/styles/hover = SubResource("StyleBoxFlat_l48gv")
 Button/styles/normal = SubResource("StyleBoxFlat_ecwwl")
 
+[sub_resource type="GDScript" id="GDScript_o1bug"]
+
 [sub_resource type="Animation" id="Animation_l48gv"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("MainMenuCont:position")
+tracks/0/path = NodePath("CanvasLayer/MainMenuCont:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -71,7 +73,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("MultiplayerCont:position")
+tracks/1/path = NodePath("CanvasLayer/MultiplayerCont:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -86,7 +88,7 @@ resource_name = "slide_to_main"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("MultiplayerCont:position")
+tracks/0/path = NodePath("CanvasLayer/MultiplayerCont:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -98,7 +100,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("MainMenuCont:position")
+tracks/1/path = NodePath("CanvasLayer/MainMenuCont:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -113,7 +115,7 @@ resource_name = "slide_to_multiplayer"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("MainMenuCont:position")
+tracks/0/path = NodePath("CanvasLayer/MainMenuCont:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -125,7 +127,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("MultiplayerCont:position")
+tracks/1/path = NodePath("CanvasLayer/MultiplayerCont:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -146,6 +148,10 @@ _data = {
 &"slide_to_options": SubResource("Animation_kk3ma")
 }
 
+[sub_resource type="GDScript" id="GDScript_oy63e"]
+script/source = "extends VBoxContainer
+"
+
 [node name="Menu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -156,81 +162,78 @@ grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("1_o1bug")
 
-[node name="MainMenuCont" type="VBoxContainer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MainMenuCont" type="VBoxContainer" parent="CanvasLayer"]
 unique_name_in_owner = true
 z_index = 1
-layout_mode = 0
 offset_left = -3.0
 offset_top = 413.0
 offset_right = 338.0
-offset_bottom = 580.0
+offset_bottom = 640.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = SubResource("Theme_l48gv")
+metadata/_edit_lock_ = true
 
-[node name="Singleplayer" type="Button" parent="MainMenuCont"]
+[node name="Singleplayer" type="Button" parent="CanvasLayer/MainMenuCont"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../Exit")
 focus_neighbor_bottom = NodePath("../Multiplayer")
 text = "Singleplayer"
-script = ExtResource("3_oy63e")
+script = SubResource("GDScript_o1bug")
 
-[node name="Multiplayer" type="Button" parent="MainMenuCont"]
+[node name="Multiplayer" type="Button" parent="CanvasLayer/MainMenuCont"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../Singleplayer")
 focus_neighbor_bottom = NodePath("../Options")
 text = "Multiplayer"
 
-[node name="Options" type="Button" parent="MainMenuCont"]
+[node name="Options" type="Button" parent="CanvasLayer/MainMenuCont"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../Multiplayer")
 focus_neighbor_bottom = NodePath("../Exit")
 text = "Options"
 
-[node name="Exit" type="Button" parent="MainMenuCont"]
+[node name="Exit" type="Button" parent="CanvasLayer/MainMenuCont"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../Options")
 focus_neighbor_bottom = NodePath("../Singleplayer")
 text = "Exit"
 
-[node name="MultiplayerCont" type="VBoxContainer" parent="."]
+[node name="MultiplayerCont" type="VBoxContainer" parent="CanvasLayer"]
 unique_name_in_owner = true
 z_index = 1
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
 offset_left = -350.0
-offset_top = -235.0
+offset_top = 413.0
 offset_right = -9.0
-offset_bottom = -68.0
-grow_vertical = 0
+offset_bottom = 508.0
 theme = SubResource("Theme_l48gv")
+metadata/_edit_lock_ = true
 
-[node name="JoinGame" type="Button" parent="MultiplayerCont"]
+[node name="JoinGame" type="Button" parent="CanvasLayer/MultiplayerCont"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../Back")
 focus_neighbor_bottom = NodePath("../CreateGame")
 text = "Join Game"
-script = ExtResource("3_oy63e")
 
-[node name="CreateGame" type="Button" parent="MultiplayerCont"]
+[node name="CreateGame" type="Button" parent="CanvasLayer/MultiplayerCont"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../JoinGame")
 text = "Create Game"
 
-[node name="Back" type="Button" parent="MultiplayerCont"]
+[node name="Back" type="Button" parent="CanvasLayer/MultiplayerCont"]
 layout_mode = 2
 focus_neighbor_bottom = NodePath("../JoinGame")
 text = "Back"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer"]
+root_node = NodePath("../..")
 libraries = {
 &"": SubResource("AnimationLibrary_ecwwl")
 }
 
-[node name="background1" type="TextureRect" parent="."]
-layout_mode = 1
+[node name="background1" type="TextureRect" parent="CanvasLayer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -242,16 +245,42 @@ mouse_filter = 2
 texture = ExtResource("4_ar3vo")
 expand_mode = 1
 
-[node name="OptionContainer" parent="." instance=ExtResource("5_go3ra")]
-layout_mode = 1
+[node name="OptionContainer" parent="CanvasLayer" instance=ExtResource("5_go3ra")]
+unique_name_in_owner = true
+visible = true
 offset_top = -269.5
 offset_bottom = 269.5
 mouse_filter = 2
 
-[connection signal="pressed" from="MainMenuCont/Singleplayer" to="." method="_on_singleplayer_pressed"]
-[connection signal="pressed" from="MainMenuCont/Multiplayer" to="." method="_on_multiplayer_pressed"]
-[connection signal="pressed" from="MainMenuCont/Options" to="." method="_on_options_pressed"]
-[connection signal="pressed" from="MainMenuCont/Exit" to="." method="_on_exit_pressed"]
-[connection signal="pressed" from="MultiplayerCont/JoinGame" to="." method="_on_singleplayer_pressed"]
-[connection signal="pressed" from="MultiplayerCont/CreateGame" to="." method="_on_multiplayer_pressed"]
-[connection signal="pressed" from="MultiplayerCont/Back" to="." method="_on_back_pressed"]
+[node name="GameList" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("6_bi43m")
+
+[node name="gameListCont" type="VBoxContainer" parent="GameList"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = SubResource("GDScript_oy63e")
+
+[connection signal="pressed" from="CanvasLayer/MainMenuCont/Singleplayer" to="." method="_on_singleplayer_pressed"]
+[connection signal="pressed" from="CanvasLayer/MainMenuCont/Multiplayer" to="." method="_on_multiplayer_pressed"]
+[connection signal="pressed" from="CanvasLayer/MainMenuCont/Options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="CanvasLayer/MainMenuCont/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="CanvasLayer/MultiplayerCont/JoinGame" to="." method="_on_singleplayer_pressed"]
+[connection signal="pressed" from="CanvasLayer/MultiplayerCont/JoinGame" to="." method="_on_join_game_pressed"]
+[connection signal="pressed" from="CanvasLayer/MultiplayerCont/CreateGame" to="." method="_on_multiplayer_pressed"]
+[connection signal="pressed" from="CanvasLayer/MultiplayerCont/CreateGame" to="." method="_on_create_game_pressed"]
+[connection signal="pressed" from="CanvasLayer/MultiplayerCont/CreateGame" to="CanvasLayer/MultiplayerCont/JoinGame" method="_on_create_game_pressed"]
+[connection signal="pressed" from="CanvasLayer/MultiplayerCont/Back" to="." method="_on_back_pressed"]

@@ -82,11 +82,12 @@ func _on_music_h_scroll_bar_value_changed(value):
 
 func _on_sfx_h_scroll_bar_value_changed(value):
 	audio.z = value
-func _on_return_button_pressed():
-	option_container.visible = false
+	
+	
+	
+	
 
 func _on_apply_button_pressed():
-	option_container.visible = false
 	_save_settings()
 
 func _on_vsync_option_button_item_selected(index):

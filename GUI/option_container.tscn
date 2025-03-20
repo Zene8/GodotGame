@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://c7osil6s5ri2r"]
+[gd_scene load_steps=2 format=3 uid="uid://c7osil6s5ri2r"]
 
 [ext_resource type="Script" uid="uid://dw0jrpwj763h4" path="res://GUI/option_container.gd" id="1_d7bti"]
-[ext_resource type="Script" uid="uid://c5p1dotv3qi25" path="res://GUI/control.gd" id="4_bamm2"]
 
 [node name="OptionContainer" type="VBoxContainer"]
 visible = false
@@ -265,14 +264,8 @@ layout_mode = 2
 text = "Return
 "
 
-[node name="Control" type="Control" parent="."]
-layout_mode = 2
-script = ExtResource("4_bamm2")
-
 [connection signal="value_changed" from="TabContainer/Sound/General_HScrollBar" to="TabContainer/Sound/General_HScrollBar/Scroll_Label" method="_on_h_scroll_bar_value_changed"]
 [connection signal="value_changed" from="TabContainer/Sound/Music_HScrollBar" to="TabContainer/Sound/Music_HScrollBar/Scroll_Label" method="_on_h_scroll_bar_value_changed"]
 [connection signal="value_changed" from="TabContainer/Sound/SFX_HScrollBar" to="TabContainer/Sound/SFX_HScrollBar/Scroll_Label" method="_on_h_scroll_bar_value_changed"]
 [connection signal="pressed" from="Container/Apply_button" to="." method="_on_apply_button_pressed"]
-[connection signal="pressed" from="Container/Apply_button" to="Control" method="_on_apply_button_pressed"]
 [connection signal="pressed" from="Container/Return_button" to="." method="_on_return_button_pressed"]
-[connection signal="pressed" from="Container/Return_button" to="Control" method="_on_return_button_pressed"]
