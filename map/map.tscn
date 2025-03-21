@@ -6,12 +6,11 @@
 [ext_resource type="Script" uid="uid://b7y536phuh8xl" path="res://map/enemies.gd" id="4_i5grx"]
 [ext_resource type="PackedScene" uid="uid://c0ynell8yescv" path="res://unit_template/unit_template.tscn" id="5_lct0g"]
 [ext_resource type="PackedScene" uid="uid://2cyn61pad45a" path="res://tank_template/tank_template.tscn" id="6_k8tny"]
-[ext_resource type="Theme" uid="uid://b8cdpud5xabcr" path="res://GUI/Main_Theme.tres" id="7_ap8vc"]
+[ext_resource type="Theme" uid="uid://b8cdpud5xabcr" path="res://main_map/Main_Theme.tres" id="7_ap8vc"]
 [ext_resource type="Script" uid="uid://v8h3pl0521xa" path="res://map/map_progress_bar.gd" id="8_wnugf"]
 [ext_resource type="Texture2D" uid="uid://di4bggnp76ya4" path="res://unit_template/assets/unit template.png" id="9_112ik"]
 [ext_resource type="Texture2D" uid="uid://cykiddu3ib18" path="res://tank_template/Assets/tank_default.png" id="10_112ik"]
 [ext_resource type="Texture2D" uid="uid://d3iysusb0vg5q" path="res://Assets/bin.png" id="11_i5grx"]
-
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eyj48"]
 resource_name = "Grass"

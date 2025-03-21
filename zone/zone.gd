@@ -2,12 +2,12 @@ extends Node2D
 signal Buy(amount)
 enum Owners{RED,BLUE,YELLOW,GREEN,PURPLE,ORANGE}
 const OwnerColours = [Color(1,0,0,0.4),Color(0,0,1,0.4),Color(1,1,0.2,0.4),Color(0,1,0,0.4),Color(1,0,1,0.4),Color(1,0.4,0.1,0.4)]
-var troops = {"Basic":0,"Advanced":0,"Ranged":0}
+var troops = {"Basic":0,"Advanced":0,"Ranged":0,"Medic":0,"Tank":0}
 var Money
 var basic
 var advanced
 var ranged
-var costs = {"Basic":10,"Advanced":15,"Ranged":12}
+var costs = {"Basic":10,"Advanced":15,"Ranged":12,"Medic":0,"Tank":0}
 var MoneyLabel
 var TroopCountLabel
 var owner_colour = Owners["RED"]
@@ -39,7 +39,7 @@ func _process(_delta: float) -> void:
 		ranged.text = str(troops["Ranged"])
 		MoneyLabel.text = str(Money)
 	TroopCountLabel.text = str(TroopCount())
-	sprite.frame = owner_colour + 1
+	sprite.frame = 9*(owner_colour+1) + 3
 	queue_redraw()
 	
 func _draw() -> void:
@@ -80,6 +80,16 @@ func _on_r_button_pressed() -> void:
 	if Money >= costs["Ranged"]:
 		troops["Ranged"] +=1
 		Buy.emit(-costs["Ranged"])
+	
+func _on_m_button_pressed() -> void:
+	if Money >= costs["Medic"]:
+		troops["Medic"] +=1
+		Buy.emit(-costs["Medic"])
+
+func _on_t_button_pressed() -> void:
+	if Money >= costs["Tank"]:
+		troops["Tank"] +=1
+		Buy.emit(-costs["Tank"])
 	
 	
 func _on_exit_pressed() -> void:

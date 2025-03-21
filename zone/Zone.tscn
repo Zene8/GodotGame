@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://bij712nq680ap"]
 
 [ext_resource type="Script" uid="uid://bn7xidv22h4qw" path="res://zone/zone.gd" id="1_bj4vl"]
-[ext_resource type="Texture2D" uid="uid://duft2nwavkinb" path="res://zone/assets/zone_colours.png" id="2_vcget"]
+[ext_resource type="Texture2D" uid="uid://c6n0wot20j1gx" path="res://Assets/main_spritesheet.png" id="2_vcget"]
 [ext_resource type="Texture2D" uid="uid://dgmvlxjtb660r" path="res://zone/assets/Coin.png" id="3_k18p2"]
 [ext_resource type="Texture2D" uid="uid://dyxmiirfqk67s" path="res://zone/assets/Menu_Exit.png" id="3_m58ea"]
 
@@ -32,7 +32,9 @@ script = ExtResource("1_bj4vl")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
 texture = ExtResource("2_vcget")
+hframes = 9
 vframes = 7
+frame = 3
 
 [node name="TroopCount" type="Label" parent="."]
 anchors_preset = 8
@@ -117,7 +119,7 @@ layout_mode = 2
 
 [node name="Atext" type="Label" parent="CanvasLayer/Main_panel/MainV/Troops/Advanced"]
 layout_mode = 2
-text = "ADVANCED"
+text = "Advanced"
 
 [node name="Anumber" type="Label" parent="CanvasLayer/Main_panel/MainV/Troops/Advanced"]
 layout_mode = 2
@@ -133,6 +135,32 @@ layout_mode = 2
 text = "Ranged"
 
 [node name="Rnumber" type="Label" parent="CanvasLayer/Main_panel/MainV/Troops/Ranged"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "0"
+horizontal_alignment = 2
+
+[node name="Medic" type="HBoxContainer" parent="CanvasLayer/Main_panel/MainV/Troops"]
+layout_mode = 2
+
+[node name="Mtext" type="Label" parent="CanvasLayer/Main_panel/MainV/Troops/Medic"]
+layout_mode = 2
+text = "Medic"
+
+[node name="Mnumber" type="Label" parent="CanvasLayer/Main_panel/MainV/Troops/Medic"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "0"
+horizontal_alignment = 2
+
+[node name="Tank" type="HBoxContainer" parent="CanvasLayer/Main_panel/MainV/Troops"]
+layout_mode = 2
+
+[node name="Ttext" type="Label" parent="CanvasLayer/Main_panel/MainV/Troops/Tank"]
+layout_mode = 2
+text = "Tank"
+
+[node name="Tnumber" type="Label" parent="CanvasLayer/Main_panel/MainV/Troops/Tank"]
 layout_mode = 2
 size_flags_horizontal = 8
 text = "0"
@@ -172,20 +200,44 @@ layout_mode = 2
 
 [node name="Atext" type="Label" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Advanced"]
 layout_mode = 2
-text = "ADVANCED"
+text = "Advanced"
 
 [node name="AButton" type="Button" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Advanced"]
 layout_mode = 2
 text = "15"
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops"]
+[node name="Ranged" type="HBoxContainer" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops"]
 layout_mode = 2
 
-[node name="RText" type="Label" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/HBoxContainer3"]
+[node name="RText" type="Label" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Ranged"]
 layout_mode = 2
 text = "Ranged"
 
-[node name="RButton" type="Button" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/HBoxContainer3"]
+[node name="RButton" type="Button" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Ranged"]
+layout_mode = 2
+text = "12
+"
+
+[node name="Medic" type="HBoxContainer" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops"]
+layout_mode = 2
+
+[node name="MText" type="Label" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Medic"]
+layout_mode = 2
+text = "Medic"
+
+[node name="MButton" type="Button" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Medic"]
+layout_mode = 2
+text = "12
+"
+
+[node name="Tank" type="HBoxContainer" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops"]
+layout_mode = 2
+
+[node name="TText" type="Label" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Tank"]
+layout_mode = 2
+text = "Tank"
+
+[node name="TButton" type="Button" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Tank"]
 layout_mode = 2
 text = "12
 "
@@ -209,4 +261,6 @@ vertical_alignment = 1
 [connection signal="pressed" from="CanvasLayer/Main_panel/MainV/Header/Exit" to="." method="_on_exit_pressed"]
 [connection signal="pressed" from="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Basic/BButton" to="." method="_on_b_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Advanced/AButton" to="." method="_on_a_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/HBoxContainer3/RButton" to="." method="_on_r_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Ranged/RButton" to="." method="_on_r_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Medic/MButton" to="." method="_on_m_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Tank/TButton" to="." method="_on_t_button_pressed"]
