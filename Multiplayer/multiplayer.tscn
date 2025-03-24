@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://2di75bhoq6qp"]
+
+[ext_resource type="Script" uid="uid://dd2ldqxb85mr0" path="res://Multiplayer/lobby.gd" id="1_jawr0"]
+[ext_resource type="Script" uid="uid://b7ac210h2k2e5" path="res://Multiplayer/network.gd" id="1_lykk2"]
+
+[node name="Multiplayer" type="Node"]
+script = ExtResource("1_lykk2")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(11.46, 16.2026)
+script = ExtResource("1_jawr0")
+
+[node name="PlayerList" type="ItemList" parent="CanvasLayer/UI"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
