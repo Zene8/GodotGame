@@ -63,4 +63,6 @@ shift+L_click={
 
 [layer_names]
 
-2d_physics/layer_7="unit"
+2d_physics/layer_1="player 1 units"
+2d_physics/layer_2="player 2 units"
+2d_physics/layer_3="visibility"

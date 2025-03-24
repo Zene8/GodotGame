@@ -4,7 +4,7 @@ var dragging := false
 var dragstart := Vector2()
 var startpos := Vector2()
 var maxzoom := 1.5
-var limit = {"x":500, "y":350}
+var limit = {"x":1000, "y":350}
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://2cyn61pad45a"]
+[gd_scene load_steps=8 format=3 uid="uid://2cyn61pad45a"]
 
 [ext_resource type="Script" uid="uid://mrlr4oh03qqh" path="res://tank_template/tank_template.gd" id="1_ffl12"]
 [ext_resource type="Texture2D" uid="uid://cv35lybnf2c6m" path="res://tank_template/Assets/tank_colours.png" id="1_oqg3v"]
@@ -12,6 +12,9 @@ shader_parameter/line_thickness = 0.4
 [sub_resource type="CircleShape2D" id="CircleShape2D_ffl12"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7wtuo"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hfxdf"]
+radius = 162.89
 
 [node name="tank_template" type="CharacterBody2D"]
 script = ExtResource("1_ffl12")
@@ -50,3 +53,15 @@ texture = ExtResource("1_oqg3v")
 hframes = 2
 vframes = 7
 frame = 1
+
+[node name="Vision" type="Area2D" parent="."]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Vision"]
+shape = SubResource("CircleShape2D_hfxdf")
+
+[node name="Reload" type="Timer" parent="."]
+wait_time = 2.0
+
+[connection signal="area_entered" from="Vision" to="." method="_on_vision_area_entered"]
+[connection signal="timeout" from="Reload" to="." method="_on_reload_timeout"]
