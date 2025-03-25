@@ -7,7 +7,9 @@ var Money
 var basic
 var advanced
 var ranged
-var costs = {"Basic":10,"Advanced":15,"Ranged":12,"Medic":0,"Tank":0}
+var medic
+var tank
+var costs = {"Basic":10,"Advanced":15,"Ranged":12,"Medic":10,"Tank":30}
 var MoneyLabel
 var TroopCountLabel
 var owner_colour = Owners["RED"]
@@ -23,6 +25,8 @@ func _ready() -> void:
 	basic = $"CanvasLayer/Main_panel/MainV/Troops/Basic/Bnumber"
 	advanced = $CanvasLayer/Main_panel/MainV/Troops/Advanced/Anumber
 	ranged = $CanvasLayer/Main_panel/MainV/Troops/Ranged/Rnumber
+	medic = $CanvasLayer/Main_panel/MainV/Troops/Medic/Mnumber
+	tank = $CanvasLayer/Main_panel/MainV/Troops/Tank/Tnumber
 	MoneyLabel = $"CanvasLayer/Main_panel/MainV/Shop/HBoxContainer/MoneyLabel"
 	$"CanvasLayer/Main_panel".visible=false
 	TroopCountLabel = $TroopCount
@@ -37,6 +41,8 @@ func _process(_delta: float) -> void:
 		basic.text = str(troops["Basic"])
 		advanced.text = str(troops["Advanced"])
 		ranged.text = str(troops["Ranged"])
+		medic.text = str(troops["Medic"])
+		tank.text = str(troops["Tank"])
 		MoneyLabel.text = str(Money)
 	TroopCountLabel.text = str(TroopCount())
 	sprite.frame = 9*(owner_colour+1) + 3

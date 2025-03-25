@@ -227,7 +227,7 @@ text = "Medic"
 
 [node name="MButton" type="Button" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Medic"]
 layout_mode = 2
-text = "12
+text = "10
 "
 
 [node name="Tank" type="HBoxContainer" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops"]
@@ -239,7 +239,7 @@ text = "Tank"
 
 [node name="TButton" type="Button" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Tank"]
 layout_mode = 2
-text = "12
+text = "30
 "
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Main_panel/MainV/Shop"]
