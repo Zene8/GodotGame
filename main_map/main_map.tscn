@@ -1,11 +1,37 @@
-[gd_scene load_steps=10 format=3 uid="uid://bca11qet1it2i"]
+[gd_scene load_steps=36 format=3 uid="uid://bca11qet1it2i"]
 
 [ext_resource type="Script" uid="uid://bficd2k176r4b" path="res://main_map/main_map.gd" id="1_igodi"]
 [ext_resource type="Texture2D" uid="uid://c8vd6ne6h853c" path="res://main_map/assets/map biomes.png" id="2_k1ppp"]
 [ext_resource type="Script" uid="uid://f7o2blk0elrh" path="res://main_map/camera_2d.gd" id="3_rf157"]
 [ext_resource type="PackedScene" uid="uid://bij712nq680ap" path="res://zone/Zone.tscn" id="4_3ah1q"]
-[ext_resource type="Script" uid="uid://evxbbktatrbo" path="res://main_map/points.gd" id="5_k1ppp"]
+[ext_resource type="Texture2D" uid="uid://csf5bqc51jrki" path="res://main_map/assets/NW_africa.png" id="5_6uvq2"]
+[ext_resource type="Texture2D" uid="uid://cng8u1t2b1dsl" path="res://main_map/assets/UK.png" id="5_k1ppp"]
+[ext_resource type="Texture2D" uid="uid://jku8ommrgol7" path="res://main_map/assets/Western Europe.png" id="6_3ah1q"]
+[ext_resource type="Script" uid="uid://d0ushat6j3vqa" path="res://main_map/map.gd" id="6_rf157"]
+[ext_resource type="Texture2D" uid="uid://b0yjph2rswvyf" path="res://main_map/assets/SW_africa.png" id="7_2fn1g"]
 [ext_resource type="Script" uid="uid://dow08b84dxcu4" path="res://main_map/progress_bar.gd" id="7_rf157"]
+[ext_resource type="Texture2D" uid="uid://chlmer1ixyha2" path="res://main_map/assets/greenland.png" id="8_104v1"]
+[ext_resource type="Texture2D" uid="uid://k6wauc61msb3" path="res://main_map/assets/NE_africa.png" id="8_mtoq5"]
+[ext_resource type="Texture2D" uid="uid://bvpy81p8kimvw" path="res://main_map/assets/south_africa.png" id="9_i7x3g"]
+[ext_resource type="Texture2D" uid="uid://clukcs80ukhy0" path="res://main_map/assets/middle_east.png" id="9_sql55"]
+[ext_resource type="Texture2D" uid="uid://tc24l6ritk3h" path="res://main_map/assets/big_india.png" id="10_dx40k"]
+[ext_resource type="Texture2D" uid="uid://bebiaauxs1xra" path="res://main_map/assets/east_america.png" id="10_f8sy4"]
+[ext_resource type="Texture2D" uid="uid://s1opvvouf2id" path="res://main_map/assets/big_china.png" id="11_08adn"]
+[ext_resource type="Texture2D" uid="uid://x5jyrh30w28r" path="res://main_map/assets/NE_europe.png" id="11_coxoo"]
+[ext_resource type="Texture2D" uid="uid://ddqtnljyolenb" path="res://main_map/assets/west_america.png" id="11_murvy"]
+[ext_resource type="Texture2D" uid="uid://wsmi4fpueies" path="res://main_map/assets/russia_mongolia.png" id="12_6druk"]
+[ext_resource type="Texture2D" uid="uid://bk2ue82ydivrp" path="res://main_map/assets/scandanavia.png" id="12_ldy8x"]
+[ext_resource type="Texture2D" uid="uid://bpo2qsbq3t1re" path="res://main_map/assets/oceanic_isles.png" id="12_s8jln"]
+[ext_resource type="Texture2D" uid="uid://ptwfi0qac8vw" path="res://main_map/assets/canada.png" id="12_vsfbu"]
+[ext_resource type="Texture2D" uid="uid://ctvjr1x82barb" path="res://main_map/assets/NW_south_america.png" id="13_gsm1j"]
+[ext_resource type="Texture2D" uid="uid://byxsjyejahft2" path="res://main_map/assets/NE_south_america.png" id="13_i4fhx"]
+[ext_resource type="Texture2D" uid="uid://cr7342ktkbq65" path="res://main_map/assets/north_russia.png" id="13_ntaas"]
+[ext_resource type="Texture2D" uid="uid://boxwxkqbb16dq" path="res://main_map/assets/west_australia.png" id="13_sebi6"]
+[ext_resource type="Texture2D" uid="uid://cqlgavdmf6fs7" path="res://main_map/assets/west_russia.png" id="14_2jrk7"]
+[ext_resource type="Texture2D" uid="uid://dnipu6f8i061p" path="res://main_map/assets/east_australia.png" id="14_6druk"]
+[ext_resource type="Texture2D" uid="uid://bv6h532iw8qbf" path="res://main_map/assets/far_east.png" id="14_k0nd4"]
+[ext_resource type="Texture2D" uid="uid://dqfyfijisotni" path="res://main_map/assets/S_south_america.png" id="15_ipn2v"]
+[ext_resource type="Texture2D" uid="uid://b37mrp6a7vj8a" path="res://main_map/assets/russia_stan.png" id="15_qqsby"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ob7o4"]
 font_size = 27
@@ -30,57 +56,257 @@ script = ExtResource("3_rf157")
 
 [node name="Zones" type="Node" parent="."]
 
-[node name="Zone" parent="Zones" instance=ExtResource("4_3ah1q")]
-position = Vector2(-19, -5)
+[node name="nw_africa" parent="Zones" instance=ExtResource("4_3ah1q")]
+position = Vector2(-45, -11)
 
-[node name="Points" type="Node2D" parent="Zones/Zone"]
-position = Vector2(19, 5)
-script = ExtResource("5_k1ppp")
+[node name="map" type="Sprite2D" parent="Zones/nw_africa"]
+texture_filter = 1
+position = Vector2(-7, -4)
+texture = ExtResource("5_6uvq2")
+offset = Vector2(0, 0.5)
+script = ExtResource("6_rf157")
 
-[node name="Node2D" type="Node2D" parent="Zones/Zone/Points"]
-position = Vector2(-62, -35)
+[node name="sw_africa" parent="Zones" instance=ExtResource("4_3ah1q")]
+position = Vector2(-27, 23)
 
-[node name="Node2D5" type="Node2D" parent="Zones/Zone/Points"]
-position = Vector2(-72, -23)
+[node name="map" type="Sprite2D" parent="Zones/sw_africa"]
+texture_filter = 1
+position = Vector2(-7, -4)
+texture = ExtResource("7_2fn1g")
+script = ExtResource("6_rf157")
 
-[node name="Node2D6" type="Node2D" parent="Zones/Zone/Points"]
-position = Vector2(-78, -11)
+[node name="ne_africa" parent="Zones" instance=ExtResource("4_3ah1q")]
+position = Vector2(26, 9)
 
-[node name="Node2D2" type="Node2D" parent="Zones/Zone/Points"]
-position = Vector2(-79, 17)
+[node name="map" type="Sprite2D" parent="Zones/ne_africa"]
+texture_filter = 1
+position = Vector2(-7, -4)
+texture = ExtResource("8_mtoq5")
+script = ExtResource("6_rf157")
 
-[node name="Node2D3" type="Node2D" parent="Zones/Zone/Points"]
-position = Vector2(43, 17)
+[node name="middle_east" parent="Zones" instance=ExtResource("4_3ah1q")]
+position = Vector2(77, -32)
 
-[node name="Node2D4" type="Node2D" parent="Zones/Zone/Points"]
-position = Vector2(25, -34)
+[node name="map" type="Sprite2D" parent="Zones/middle_east"]
+texture_filter = 1
+position = Vector2(-2, 9)
+texture = ExtResource("9_sql55")
+offset = Vector2(0.5, 0)
+script = ExtResource("6_rf157")
 
-[node name="Node2D7" type="Node2D" parent="Zones/Zone/Points"]
-position = Vector2(7, -32)
+[node name="india" parent="Zones" instance=ExtResource("4_3ah1q")]
+position = Vector2(133, -13)
 
-[node name="Node2D8" type="Node2D" parent="Zones/Zone/Points"]
-position = Vector2(5, -25)
+[node name="map" type="Sprite2D" parent="Zones/india"]
+texture_filter = 1
+position = Vector2(11, 1)
+texture = ExtResource("10_dx40k")
+script = ExtResource("6_rf157")
 
-[node name="Node2D9" type="Node2D" parent="Zones/Zone/Points"]
-position = Vector2(-19, -32)
+[node name="china" parent="Zones" instance=ExtResource("4_3ah1q")]
+position = Vector2(199, -43)
 
-[node name="Node2D10" type="Node2D" parent="Zones/Zone/Points"]
-position = Vector2(-21, -40)
+[node name="map" type="Sprite2D" parent="Zones/china"]
+texture_filter = 1
+position = Vector2(-3, -1)
+texture = ExtResource("11_08adn")
+offset = Vector2(0, 0.5)
+script = ExtResource("6_rf157")
 
-[node name="Node2D11" type="Node2D" parent="Zones/Zone/Points"]
-position = Vector2(-47, -35)
+[node name="russia_mongolia" parent="Zones" instance=ExtResource("4_3ah1q")]
+position = Vector2(193, -89)
 
-[node name="Node2D12" type="Node2D" parent="Zones/Zone/Points"]
-position = Vector2(-55, -31)
+[node name="map" type="Sprite2D" parent="Zones/russia_mongolia"]
+texture_filter = 1
+position = Vector2(-3, 0)
+texture = ExtResource("12_6druk")
+offset = Vector2(0.5, 0)
+script = ExtResource("6_rf157")
 
-[node name="Zone2" parent="Zones" instance=ExtResource("4_3ah1q")]
-position = Vector2(1, -86)
+[node name="north_russia" parent="Zones" instance=ExtResource("4_3ah1q")]
+position = Vector2(185, -140)
 
-[node name="Zone3" parent="Zones" instance=ExtResource("4_3ah1q")]
+[node name="map" type="Sprite2D" parent="Zones/north_russia"]
+texture_filter = 1
+position = Vector2(-1, -5)
+texture = ExtResource("13_ntaas")
+script = ExtResource("6_rf157")
+
+[node name="far_east" parent="Zones" instance=ExtResource("4_3ah1q")]
+position = Vector2(260, -122)
+
+[node name="map" type="Sprite2D" parent="Zones/far_east"]
+texture_filter = 1
+position = Vector2(6, 33)
+texture = ExtResource("14_k0nd4")
+script = ExtResource("6_rf157")
+
+[node name="islands" parent="Zones" instance=ExtResource("4_3ah1q")]
+position = Vector2(217, 33)
+
+[node name="map" type="Sprite2D" parent="Zones/islands"]
+texture_filter = 1
+position = Vector2(13, -10)
+texture = ExtResource("12_s8jln")
+script = ExtResource("6_rf157")
+
+[node name="west_australia" parent="Zones" instance=ExtResource("4_3ah1q")]
+position = Vector2(237, 95)
+
+[node name="map" type="Sprite2D" parent="Zones/west_australia"]
+texture_filter = 1
+position = Vector2(1, -1)
+texture = ExtResource("13_sebi6")
+offset = Vector2(0.5, 0)
+script = ExtResource("6_rf157")
+
+[node name="east_australia" parent="Zones" instance=ExtResource("4_3ah1q")]
+position = Vector2(282, 101)
+
+[node name="map" type="Sprite2D" parent="Zones/east_australia"]
+texture_filter = 1
+position = Vector2(-1, -5)
+texture = ExtResource("14_6druk")
+offset = Vector2(0.5, 0)
+script = ExtResource("6_rf157")
+
+[node name="s_africa" parent="Zones" instance=ExtResource("4_3ah1q")]
+position = Vector2(13, 78)
+
+[node name="map" type="Sprite2D" parent="Zones/s_africa"]
+texture_filter = 1
+position = Vector2(7, 0)
+texture = ExtResource("9_i7x3g")
+offset = Vector2(0, 0.5)
+script = ExtResource("6_rf157")
+
+[node name="western_europe" parent="Zones" instance=ExtResource("4_3ah1q")]
+position = Vector2(-42, -76)
+
+[node name="map" type="Sprite2D" parent="Zones/western_europe"]
+texture_filter = 1
+position = Vector2(6, 3)
+texture = ExtResource("6_3ah1q")
+offset = Vector2(0.5, 0.5)
+script = ExtResource("6_rf157")
+
+[node name="ne_europe" parent="Zones" instance=ExtResource("4_3ah1q")]
+position = Vector2(24, -86)
+
+[node name="map" type="Sprite2D" parent="Zones/ne_europe"]
+texture_filter = 1
+position = Vector2(7, 3)
+texture = ExtResource("11_coxoo")
+script = ExtResource("6_rf157")
+
+[node name="west_russia" parent="Zones" instance=ExtResource("4_3ah1q")]
+position = Vector2(60, -118)
+
+[node name="map" type="Sprite2D" parent="Zones/west_russia"]
+texture_filter = 1
+position = Vector2(1, 3)
+texture = ExtResource("14_2jrk7")
+offset = Vector2(0, 0.5)
+script = ExtResource("6_rf157")
+
+[node name="russia_stan" parent="Zones" instance=ExtResource("4_3ah1q")]
+position = Vector2(123, -111)
+
+[node name="map" type="Sprite2D" parent="Zones/russia_stan"]
+texture_filter = 1
+position = Vector2(-7, -6)
+texture = ExtResource("15_qqsby")
+offset = Vector2(0.5, 0.5)
+script = ExtResource("6_rf157")
+
+[node name="UK" parent="Zones" instance=ExtResource("4_3ah1q")]
 position = Vector2(-52, -98)
 
-[node name="Zone4" parent="Zones" instance=ExtResource("4_3ah1q")]
-position = Vector2(-201, -62)
+[node name="map" type="Sprite2D" parent="Zones/UK"]
+texture_filter = 1
+position = Vector2(-21, -7)
+texture = ExtResource("5_k1ppp")
+offset = Vector2(0.5, 0.5)
+script = ExtResource("6_rf157")
+
+[node name="scandanavia" parent="Zones" instance=ExtResource("4_3ah1q")]
+position = Vector2(-14, -143)
+
+[node name="map" type="Sprite2D" parent="Zones/scandanavia"]
+texture_filter = 1
+position = Vector2(5, 5)
+texture = ExtResource("12_ldy8x")
+offset = Vector2(0.5, 0)
+script = ExtResource("6_rf157")
+
+[node name="greenland" parent="Zones" instance=ExtResource("4_3ah1q")]
+position = Vector2(-168, -133)
+
+[node name="map" type="Sprite2D" parent="Zones/greenland"]
+texture_filter = 1
+position = Vector2(2, 4)
+texture = ExtResource("8_104v1")
+offset = Vector2(0, 0.5)
+script = ExtResource("6_rf157")
+
+[node name="east_america" parent="Zones" instance=ExtResource("4_3ah1q")]
+position = Vector2(-185, -59)
+
+[node name="map" type="Sprite2D" parent="Zones/east_america"]
+texture_filter = 1
+position = Vector2(-3, 10)
+texture = ExtResource("10_f8sy4")
+script = ExtResource("6_rf157")
+
+[node name="west_america" parent="Zones" instance=ExtResource("4_3ah1q")]
+position = Vector2(-236, -51)
+
+[node name="map" type="Sprite2D" parent="Zones/west_america"]
+texture_filter = 1
+position = Vector2(3, 5)
+texture = ExtResource("11_murvy")
+offset = Vector2(0.5, 0)
+script = ExtResource("6_rf157")
+
+[node name="canada" parent="Zones" instance=ExtResource("4_3ah1q")]
+position = Vector2(-268, -131)
+
+[node name="map" type="Sprite2D" parent="Zones/canada"]
+texture_filter = 1
+position = Vector2(-3, 1)
+texture = ExtResource("12_vsfbu")
+offset = Vector2(0.5, 0.5)
+script = ExtResource("6_rf157")
+
+[node name="ne_south_america" parent="Zones" instance=ExtResource("4_3ah1q")]
+position = Vector2(-137, 54)
+
+[node name="map" type="Sprite2D" parent="Zones/ne_south_america"]
+texture_filter = 1
+position = Vector2(-1, 4)
+texture = ExtResource("13_i4fhx")
+offset = Vector2(0.5, 0)
+script = ExtResource("6_rf157")
+
+[node name="nw_south_america" parent="Zones" instance=ExtResource("4_3ah1q")]
+position = Vector2(-173, 37)
+
+[node name="map" type="Sprite2D" parent="Zones/nw_south_america"]
+texture_filter = 1
+position = Vector2(3, 4)
+texture = ExtResource("13_gsm1j")
+offset = Vector2(0.5, 0.5)
+script = ExtResource("6_rf157")
+
+[node name="s_south_america" parent="Zones" instance=ExtResource("4_3ah1q")]
+position = Vector2(-160, 97)
+
+[node name="map" type="Sprite2D" parent="Zones/s_south_america"]
+texture_filter = 1
+position = Vector2(-4, 3)
+texture = ExtResource("15_ipn2v")
+offset = Vector2(0.5, 0.5)
+script = ExtResource("6_rf157")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

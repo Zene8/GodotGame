@@ -11,7 +11,7 @@ var zones
 # Called when the node enters the scene tree for the first time.
 
 func _ready() -> void:
-	edges = [[$Zones/Zone,$Zones/Zone2,0],[$Zones/Zone2,$Zones/Zone3,0],[$Zones/Zone3,$Zones/Zone4,1]]
+	edges = [[$Zones/nw_africa,$Zones/western_europe,0],[$Zones/western_europe,$Zones/UK,0],[$Zones/UK,$Zones/greenland,1]]
 	zones = $Zones
 	for zone in zones.get_children():
 		zone.owner_colour = Owners.values()[randi_range(0, Owners.size() - 1)]
