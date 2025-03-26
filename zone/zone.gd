@@ -20,6 +20,7 @@ var phase
 var sprite
 var selected := false
 var targeted := false
+var shifting
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	basic = $"CanvasLayer/Main_panel/MainV/Troops/Basic/Bnumber"
@@ -32,6 +33,11 @@ func _ready() -> void:
 	TroopCountLabel = $TroopCount
 	sprite = $Sprite2D
 	
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("shift"):
+		shifting = true
+	if event.is_action_released("shift"):
+		shifting = false
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	var parent = get_parent().get_parent()
@@ -62,13 +68,13 @@ func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int
 					zone.get_node("CanvasLayer").get_node("Main_panel").visible = false	
 				$"CanvasLayer/Main_panel".visible=true
 			elif phase == "Attack Phase":
-				for zone in get_parent().get_children():
-					zone.selected = false
-					selected = true
+				if not shifting:
+					for zone in get_parent().get_children():
+						zone.selected = false
+				selected = true
 		else:
 			if phase == "Attack Phase" and targeted:
-				#START BATTLE
-				pass
+				get_tree().change_scene_to_file("res://map/map.tscn")
 				
 			
 
