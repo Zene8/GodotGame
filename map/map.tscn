@@ -1,16 +1,18 @@
-[gd_scene load_steps=16 format=4 uid="uid://b37invkti8n3b"]
+[gd_scene load_steps=18 format=4 uid="uid://b37invkti8n3b"]
 
 [ext_resource type="Script" uid="uid://djumuswhau7j5" path="res://map/map.gd" id="1_kxmgb"]
 [ext_resource type="Texture2D" uid="uid://2oaiegstjcub" path="res://map/assets/mock.png" id="2_e8e5r"]
 [ext_resource type="Script" uid="uid://blrxwd7sud3vd" path="res://map/level_camera_2d.gd" id="3_112ik"]
 [ext_resource type="Script" uid="uid://b7y536phuh8xl" path="res://map/enemies.gd" id="4_i5grx"]
-[ext_resource type="PackedScene" uid="uid://c0ynell8yescv" path="res://unit_template/unit_template.tscn" id="5_lct0g"]
-[ext_resource type="PackedScene" uid="uid://2cyn61pad45a" path="res://tank_template/tank_template.tscn" id="6_k8tny"]
+[ext_resource type="PackedScene" uid="uid://c0ynell8yescv" path="res://units/unit_template/unit_template.tscn" id="5_lct0g"]
+[ext_resource type="PackedScene" uid="uid://2cyn61pad45a" path="res://units/tank_template/tank_template.tscn" id="6_k8tny"]
 [ext_resource type="Theme" uid="uid://b8cdpud5xabcr" path="res://main_map/Main_Theme.tres" id="7_ap8vc"]
+[ext_resource type="PackedScene" uid="uid://c036cg3aa41d1" path="res://units/sniper_template/sniper_template.tscn" id="7_lct0g"]
 [ext_resource type="Script" uid="uid://v8h3pl0521xa" path="res://map/map_progress_bar.gd" id="8_wnugf"]
-[ext_resource type="Texture2D" uid="uid://di4bggnp76ya4" path="res://unit_template/assets/unit template.png" id="9_112ik"]
-[ext_resource type="Texture2D" uid="uid://cykiddu3ib18" path="res://tank_template/Assets/tank_default.png" id="10_112ik"]
+[ext_resource type="Texture2D" uid="uid://di4bggnp76ya4" path="res://units/unit_template/assets/unit template.png" id="9_112ik"]
+[ext_resource type="Texture2D" uid="uid://cykiddu3ib18" path="res://units/tank_template/Assets/tank_default.png" id="10_112ik"]
 [ext_resource type="Texture2D" uid="uid://d3iysusb0vg5q" path="res://Assets/bin.png" id="11_i5grx"]
+[ext_resource type="Texture2D" uid="uid://fpo6ttabcjpc" path="res://units/sniper_template/Assets/sniper_default.png" id="12_k8tny"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eyj48"]
 resource_name = "Grass"
@@ -92,6 +94,12 @@ rotation = 0.0104696
 [node name="tank_template3" parent="Player1" instance=ExtResource("6_k8tny")]
 position = Vector2(-161, -140)
 rotation = 0.0104696
+
+[node name="sniper_template" parent="Player1" instance=ExtResource("7_lct0g")]
+position = Vector2(121, -236)
+
+[node name="sniper_template2" parent="Player1" instance=ExtResource("7_lct0g")]
+position = Vector2(-340, -70)
 
 [node name="Player2" type="Node" parent="."]
 
@@ -182,6 +190,10 @@ layout_mode = 2
 icon = ExtResource("10_112ik")
 alignment = 2
 
+[node name="Sniper" type="Button" parent="CanvasLayer/UnitButtons/HBoxContainer"]
+layout_mode = 2
+icon = ExtResource("12_k8tny")
+
 [node name="ExtraButtons" type="PanelContainer" parent="CanvasLayer"]
 anchors_preset = 1
 anchor_left = 1.0
@@ -201,4 +213,5 @@ icon = ExtResource("11_i5grx")
 [connection signal="pressed" from="CanvasLayer/HBoxContainer/Line" to="Player1" method="_on_line_pressed"]
 [connection signal="pressed" from="CanvasLayer/UnitButtons/HBoxContainer/BaseUnit" to="." method="_on_base_unit_pressed"]
 [connection signal="pressed" from="CanvasLayer/UnitButtons/HBoxContainer/Tank" to="." method="_on_tank_pressed"]
+[connection signal="pressed" from="CanvasLayer/UnitButtons/HBoxContainer/Sniper" to="." method="_on_sniper_pressed"]
 [connection signal="mouse_entered" from="CanvasLayer/ExtraButtons/Bin" to="." method="_on_bin_mouse_entered"]

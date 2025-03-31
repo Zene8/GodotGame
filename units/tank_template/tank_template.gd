@@ -20,6 +20,7 @@ var target_unit = null
 var unit_hit = false
 var target = null
 const base_speed = 25
+const bullet_speed = 10
 
 func _ready() -> void:
 	var vision_detection = $Vision
@@ -66,7 +67,7 @@ func _draw() -> void:
 	draw_rect(Rect2(Vector2(-10, 10), Vector2(health/max_health * 20, 2)),Color.GREEN)
 	if shooting:
 		draw_line(shooting*(bullet_distance-10), shooting*(bullet_distance-0.9), Color.YELLOW)
-		bullet_distance += 5
+		bullet_distance += bullet_speed
 	if target_unit != null and shooting:
 		if Vector2(shooting*(bullet_distance-0.9)).length() >= Vector2(target).length():
 			shooting = false

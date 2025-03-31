@@ -12,7 +12,7 @@ var last_pos := Vector2(0, 0)
 var last_pos_count = 1
 var battle = false
 var player = null
-var bloom = 0.2
+var bloom = 0.05
 var shooting = false
 var bullet_distance = 1
 var rng = RandomNumberGenerator.new()
@@ -20,6 +20,7 @@ var target_unit = null
 var unit_hit = false
 var target = null
 const base_speed = 50
+const bullet_speed = 20
 
 func _process(delta: float) -> void:
 	queue_redraw()
@@ -64,16 +65,16 @@ func _draw() -> void:
 	draw_arc(Vector2(0,0),8,PI*(1.0/2-health/max_health),PI*(1.0/2+health/max_health),30,Color.GREEN,3)
 	if shooting:
 		draw_line(shooting*(bullet_distance-10), shooting*(bullet_distance-0.9), Color.YELLOW)
-		bullet_distance += 5
+		bullet_distance += bullet_speed
 	if target_unit != null and shooting:
 		if Vector2(shooting*(bullet_distance-0.9)).length() >= Vector2(target).length():
 			shooting = false
 			unit_hit = false
-			if target_unit.get("health") <= 20:
-				target_unit.damage(20)
+			if target_unit.get("health") <= 50:
+				target_unit.damage(50)
 				target_unit = null
 			else:
-				target_unit.damage(20)
+				target_unit.damage(50)
 	
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("shift"):
@@ -141,6 +142,12 @@ func _on_reload_timeout() -> void:
 	else:
 		shooting = false
 	bullet_distance = 1
+
+func _on_vision_area_exited(area: Area2D) -> void:
+	if target_unit == area.get_parent():
+		target_unit = null
+		if $Vision.has_overlapping_areas():
+			target_unit = $Vision.get_overlapping_areas()[0].get_parent()
 
 func damage(damage):
 	health -= damage

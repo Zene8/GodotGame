@@ -8,15 +8,17 @@ var shifting = false
 var dragging_unit = false
 var selecting_unit = null
 var selecting_unit_colour = null
-var button_vals = {"BaseUnit":{"button":Button, "val":10}, "Tank":{"button":Button, "val":5}}
+var button_vals = {"BaseUnit":{"button":Button, "val":10}, "Tank":{"button":Button, "val":5}, "Sniper":{"button":Button, "val":5}}
 
 func _ready() -> void:
 	select_area_shape = $Area2D/CollisionShape2D
 	select_area = $Area2D
 	button_vals["BaseUnit"].button = $CanvasLayer/UnitButtons/HBoxContainer/BaseUnit
 	button_vals["Tank"].button = $CanvasLayer/UnitButtons/HBoxContainer/Tank
+	button_vals["Sniper"].button = $CanvasLayer/UnitButtons/HBoxContainer/Sniper
 	button_vals["BaseUnit"].button.text = str(button_vals["BaseUnit"].val)
 	button_vals["Tank"].button.text = str(button_vals["Tank"].val)
+	button_vals["Sniper"].button.text = str(button_vals["Sniper"].val)
 
 func _process(_delta: float) -> void:
 	if dragging_unit:
@@ -73,9 +75,11 @@ func _input(event: InputEvent) -> void:
 			button_vals[dragging_unit].button.text = str(button_vals[dragging_unit].val)
 			var placed_unit = null
 			if dragging_unit == "BaseUnit":
-				placed_unit = preload("res://unit_template/unit_template.tscn").instantiate()
+				placed_unit = preload("res://units/unit_template/unit_template.tscn").instantiate()
 			elif dragging_unit == "Tank":
-				placed_unit = preload("res://tank_template/tank_template.tscn").instantiate()
+				placed_unit = preload("res://units/tank_template/tank_template.tscn").instantiate()
+			elif dragging_unit == "Sniper":
+				placed_unit = preload("res://units/sniper_template/sniper_template.tscn").instantiate()
 			$Player1.add_child(placed_unit)
 			placed_unit.position = selecting_unit.position
 	
@@ -105,15 +109,8 @@ func _on_base_unit_pressed() -> void:
 			$Player1.remove_child(selecting_unit)
 			selecting_unit.queue_free()
 		dragging_unit = "BaseUnit"
-		selecting_unit = preload("res://unit_template/unit_template.tscn").instantiate()
-		selecting_unit.get_node("CollisionShape2D").disabled = true
-		selecting_unit.get_node("Vision").get_node("CollisionShape2D").disabled = true
-		selecting_unit.get_node("Area2D").get_node("CollisionShape2D").disabled = true
-		selecting_unit_colour = selecting_unit.modulate
-		selecting_unit.modulate = Color(selecting_unit_colour.r, selecting_unit_colour.g - 0.5, selecting_unit_colour.b + 20)
-		selecting_unit.z_index = 1
-		selecting_unit.get_node("Area2D").area_exited.connect(_on_selecting_area_exited)
-		$Player1.add_child(selecting_unit)
+		selecting_unit = preload("res://units/unit_template/unit_template.tscn").instantiate()
+		set_up_placing_unit(selecting_unit)
 		
 func _on_tank_pressed() -> void:
 	if button_vals["Tank"].val > 0:
@@ -121,15 +118,28 @@ func _on_tank_pressed() -> void:
 			$Player1.remove_child(selecting_unit)
 			selecting_unit.queue_free()	
 		dragging_unit = "Tank"
-		selecting_unit = preload("res://tank_template/tank_template.tscn").instantiate()
-		selecting_unit.get_node("CollisionShape2D").disabled = true
-		selecting_unit.get_node("Vision").get_node("CollisionShape2D").disabled = true
-		selecting_unit.get_node("Area2D").get_node("CollisionShape2D").disabled = true
-		selecting_unit_colour = selecting_unit.modulate
-		selecting_unit.modulate = Color(selecting_unit_colour.r, selecting_unit_colour.g - 0.5, selecting_unit_colour.b + 20)
-		selecting_unit.z_index = 1
-		selecting_unit.get_node("Area2D").area_exited.connect(_on_selecting_area_exited)
-		$Player1.add_child(selecting_unit)
+		selecting_unit = preload("res://units/tank_template/tank_template.tscn").instantiate()
+		set_up_placing_unit(selecting_unit)
+		
+func _on_sniper_pressed() -> void:
+	if button_vals["Sniper"].val > 0:
+		if dragging_unit:
+			$Player1.remove_child(selecting_unit)
+			selecting_unit.queue_free()	
+		dragging_unit = "Sniper"
+		selecting_unit = preload("res://units/sniper_template/sniper_template.tscn").instantiate()
+		set_up_placing_unit(selecting_unit)
+		
+
+func set_up_placing_unit(selecting_unit) -> void:
+	selecting_unit.get_node("CollisionShape2D").disabled = true
+	selecting_unit.get_node("Vision").get_node("CollisionShape2D").disabled = true
+	selecting_unit_colour = selecting_unit.modulate
+	selecting_unit.modulate = Color(selecting_unit_colour.r, selecting_unit_colour.g - 0.5, selecting_unit_colour.b + 20)
+	selecting_unit.z_index = 1
+	print(selecting_unit)
+	selecting_unit.get_node("Area2D").area_exited.connect(_on_selecting_area_exited)
+	$Player1.add_child(selecting_unit)
 		
 func _on_selecting_area_exited(area):
 	if Input.is_mouse_button_pressed(1) and selecting_unit.get_node("Area2D").get_overlapping_areas().size() < 1 and button_vals[dragging_unit].val > 0:
@@ -137,9 +147,12 @@ func _on_selecting_area_exited(area):
 		button_vals[dragging_unit].button.text = str(button_vals[dragging_unit].val)
 		var placed_unit = null
 		if dragging_unit == "BaseUnit":
-			placed_unit = preload("res://unit_template/unit_template.tscn").instantiate()
+			placed_unit = preload("res://units/unit_template/unit_template.tscn").instantiate()
 		elif dragging_unit == "Tank":
-			placed_unit = preload("res://tank_template/tank_template.tscn").instantiate()
+			placed_unit = preload("res://units/tank_template/tank_template.tscn").instantiate()
+		elif dragging_unit == "Sniper":
+			placed_unit = preload("res://units/sniper_template/sniper_template.tscn").instantiate()
 		$Player1.add_child(placed_unit)
 		placed_unit.position = selecting_unit.position
+		
 		
