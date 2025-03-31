@@ -74,3 +74,4 @@ shift+L_click={
 2d_physics/layer_1="player 1 units"
 2d_physics/layer_2="player 2 units"
 2d_physics/layer_3="visibility"
+2d_physics/layer_4="selection"

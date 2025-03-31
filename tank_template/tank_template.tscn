@@ -64,4 +64,5 @@ shape = SubResource("CircleShape2D_hfxdf")
 wait_time = 2.0
 
 [connection signal="area_entered" from="Vision" to="." method="_on_vision_area_entered"]
+[connection signal="area_exited" from="Vision" to="." method="_on_vision_area_exited"]
 [connection signal="timeout" from="Reload" to="." method="_on_reload_timeout"]

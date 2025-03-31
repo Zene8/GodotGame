@@ -103,9 +103,12 @@ func _on_base_unit_pressed() -> void:
 	if button_vals["BaseUnit"].val > 0:
 		if dragging_unit:
 			$Player1.remove_child(selecting_unit)
+			selecting_unit.queue_free()
 		dragging_unit = "BaseUnit"
 		selecting_unit = preload("res://unit_template/unit_template.tscn").instantiate()
 		selecting_unit.get_node("CollisionShape2D").disabled = true
+		selecting_unit.get_node("Vision").get_node("CollisionShape2D").disabled = true
+		selecting_unit.get_node("Area2D").get_node("CollisionShape2D").disabled = true
 		selecting_unit_colour = selecting_unit.modulate
 		selecting_unit.modulate = Color(selecting_unit_colour.r, selecting_unit_colour.g - 0.5, selecting_unit_colour.b + 20)
 		selecting_unit.z_index = 1

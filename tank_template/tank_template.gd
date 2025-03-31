@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
-const max_health := 100.0
-var health := 100.0:
+const max_health := 500.0
+var health := 500:
 	set(value):
 		health = clamp(value,0,max_health)
 var selected := false
@@ -16,10 +16,10 @@ var bloom = 0.2
 var shooting = false
 var bullet_distance = 1
 var rng = RandomNumberGenerator.new()
-var shot_unit = null
+var target_unit = null
+var unit_hit = false
 var target = null
 const base_speed = 25
-const reload_speed = 2.0
 
 func _ready() -> void:
 	var vision_detection = $Vision
@@ -27,8 +27,8 @@ func _ready() -> void:
 		player = 1
 		vision_detection.set_collision_mask_value(2, true)
 		vision_detection.set_collision_mask_value(1, false)
-		$Area2D.set_collision_layer_value(1, true)
 		$Area2D.set_collision_layer_value(2, false)
+		$Area2D.set_collision_layer_value(1, true)
 	else:
 		player = 2
 		vision_detection.set_collision_mask_value(1, true)
@@ -37,6 +37,8 @@ func _ready() -> void:
 		$Area2D.set_collision_layer_value(1, false)
 		
 func _process(delta: float) -> void:
+	if target_unit:
+		$Turret.rotation_degrees = rad_to_deg((target_unit.position - position).angle()) - rotation_degrees + 90
 	queue_redraw()
 	
 func _physics_process(delta: float) -> void:
@@ -65,11 +67,16 @@ func _draw() -> void:
 	if shooting:
 		draw_line(shooting*(bullet_distance-10), shooting*(bullet_distance-0.9), Color.YELLOW)
 		bullet_distance += 5
-	if shot_unit != null:
+	if target_unit != null and shooting:
 		if Vector2(shooting*(bullet_distance-0.9)).length() >= Vector2(target).length():
 			shooting = false
-			shot_unit.damage(40)
-			shot_unit = null
+			unit_hit = false
+			if target_unit.get("health") <= 100:
+				target_unit.damage(100)
+				target_unit = null
+			else:
+				target_unit.damage(100)
+			
 	
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("shift"):
@@ -107,6 +114,8 @@ func set_moving(val):
 
 func _on_vision_area_entered(area: Area2D) -> void:
 	if $Reload.time_left == 0.0:
+		if target_unit == null:
+			target_unit = area.get_parent()
 		shooting = (area.get_parent().position - position).rotated(-rotation+rng.randf_range(-bloom, bloom))
 		var bullet_path = RayCast2D.new()
 		bullet_path.position = Vector2(0, 0)
@@ -115,13 +124,16 @@ func _on_vision_area_entered(area: Area2D) -> void:
 		add_child(bullet_path)
 		bullet_path.force_raycast_update()
 		if bullet_path.is_colliding():
-			shot_unit = bullet_path.get_collider()
+			unit_hit = true
 		shooting = shooting.normalized()
 		$Reload.start()
 		bullet_distance = 1
+	
 
 func _on_reload_timeout() -> void:
 	if $Vision.has_overlapping_areas():
+		if target_unit == null:
+			target_unit = $Vision.get_overlapping_areas()[0].get_parent()
 		var area = $Vision.get_overlapping_areas()[0]
 		shooting = (area.get_parent().position - position).rotated(-rotation+rng.randf_range(-bloom, bloom))
 		var bullet_path = RayCast2D.new()
@@ -131,15 +143,21 @@ func _on_reload_timeout() -> void:
 		add_child(bullet_path)
 		bullet_path.force_raycast_update()
 		if bullet_path.is_colliding():
-			shot_unit = bullet_path.get_collider()
+			unit_hit = true
 		shooting = shooting.normalized()
 		$Reload.start()
 	else:
 		shooting = false
 	bullet_distance = 1
 	
+func _on_vision_area_exited(area: Area2D) -> void:
+	if target_unit == area.get_parent():
+		target_unit = null
+		if $Vision.has_overlapping_areas():
+			target_unit = $Vision.get_overlapping_areas()[0].get_parent()
+		
+	
 func damage(damage):
 	health -= damage
-	if health == 0:
+	if health <= 0:
 		queue_free()
-	
