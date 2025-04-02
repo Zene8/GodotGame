@@ -9,6 +9,7 @@ var dragging_unit = false
 var selecting_unit = null
 var selecting_unit_colour = null
 var button_vals = {"BaseUnit":{"button":Button, "val":10}, "Tank":{"button":Button, "val":5}, "Sniper":{"button":Button, "val":5}}
+var mode = "Setup"
 
 func _ready() -> void:
 	select_area_shape = $Area2D/CollisionShape2D
@@ -33,7 +34,7 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_released("shift"):
 		shifting = false
 		
-	if event.is_action_pressed("L_click") and not dragging_unit:
+	if event.is_action_pressed("L_click") and not dragging_unit and not Rect2($CanvasLayer/UnitModes.position, $CanvasLayer/UnitModes.size).has_point(event.position):
 		select_area_shape.disabled = false
 		select_area_shape.position = get_global_mouse_position()
 		select_area_shape.shape.size = Vector2(1, 1)
@@ -43,15 +44,15 @@ func _input(event: InputEvent) -> void:
 		if areas.size() >= 1:
 			for area in areas:
 				area.get_parent().toggle_select()
+				$CanvasLayer/UnitModes.visible = true
+				get_node("CanvasLayer/UnitModes/VBoxContainer/HBoxContainer/" + area.get_parent().get("battle_mode")).button_pressed = true
 		else:
+			$CanvasLayer/UnitModes.visible = false
 			for unit in $Player1.get_children():
 				if unit.get("selected"):
 					unit.toggle_select()
 
 	if event.is_action_pressed("shift+L_click"):
-		for unit in $Player1.get_children():
-			if unit.get("selected"):
-				unit.toggle_select()
 		selecting = true
 		select_start = get_global_mouse_position()
 
@@ -68,6 +69,8 @@ func _input(event: InputEvent) -> void:
 		select_area_shape.disabled = true
 		for area in areas:
 			area.get_parent().toggle_select()
+		$CanvasLayer/UnitModes.visible = true
+		get_node("CanvasLayer/UnitModes/VBoxContainer/HBoxContainer/" + areas[0].get_parent().get("battle_mode")).button_pressed = true
 			
 	if event.is_action_pressed("L_click") and dragging_unit:
 		if selecting_unit.get_node("Area2D").get_overlapping_areas().size() == 0 and button_vals[dragging_unit].val > 0:
@@ -95,6 +98,8 @@ func _draw() -> void:
 
 func _on_progress_bar_state_changed(new_state) -> void:
 	if new_state == "Battle":
+		$CanvasLayer/UnitButtons.visible = false
+		mode = new_state
 		$Player1.battle_start()
 
 func _on_bin_mouse_entered() -> void:
@@ -104,7 +109,7 @@ func _on_bin_mouse_entered() -> void:
 		dragging_unit = false
 
 func _on_base_unit_pressed() -> void:
-	if button_vals["BaseUnit"].val > 0:
+	if button_vals["BaseUnit"].val > 0 and mode == "Setup":
 		if dragging_unit:
 			$Player1.remove_child(selecting_unit)
 			selecting_unit.queue_free()
@@ -113,7 +118,7 @@ func _on_base_unit_pressed() -> void:
 		set_up_placing_unit(selecting_unit)
 		
 func _on_tank_pressed() -> void:
-	if button_vals["Tank"].val > 0:
+	if button_vals["Tank"].val > 0 and mode == "Setup":
 		if dragging_unit:
 			$Player1.remove_child(selecting_unit)
 			selecting_unit.queue_free()	
@@ -122,7 +127,7 @@ func _on_tank_pressed() -> void:
 		set_up_placing_unit(selecting_unit)
 		
 func _on_sniper_pressed() -> void:
-	if button_vals["Sniper"].val > 0:
+	if button_vals["Sniper"].val > 0 and mode == "Setup":
 		if dragging_unit:
 			$Player1.remove_child(selecting_unit)
 			selecting_unit.queue_free()	
@@ -155,4 +160,11 @@ func _on_selecting_area_exited(area):
 		$Player1.add_child(placed_unit)
 		placed_unit.position = selecting_unit.position
 		
-		
+func _on_mode_changed() -> void:
+	for mode in $CanvasLayer/UnitModes/VBoxContainer/HBoxContainer.get_children():
+		if mode.button_pressed == true:
+			for unit in $Player1.get_children():
+				if unit.get("selected"):
+					unit.set_battle_mode(mode.name)
+				
+			

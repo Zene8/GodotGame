@@ -19,6 +19,7 @@ var rng = RandomNumberGenerator.new()
 var target_unit = null
 var unit_hit = false
 var target = null
+var battle_mode = "Charge"
 const base_speed = 50
 const bullet_speed = 10
 
@@ -42,18 +43,21 @@ func _ready() -> void:
 	
 func _physics_process(delta: float) -> void:
 	if moving:
-		if velocity.is_zero_approx():
-			moving = false
-		move_and_slide()
-		velocity = (move_to - position).normalized() * base_speed
-		if last_pos_count >= 2:
-			if (last_pos - position).length() < 0.01:
+		if shooting:
+			velocity = Vector2(0, 0)
+		else:
+			if velocity.is_zero_approx():
 				moving = false
-			else:
-				last_pos_count = 0
-				last_pos = position
-		last_pos_count += 1
-	elif battle:
+			move_and_slide()
+			velocity = (move_to - position).normalized() * base_speed
+			if last_pos_count >= 2:
+				if (last_pos - position).length() < 0.01:
+					moving = false
+				else:
+					last_pos_count = 0
+					last_pos = position
+			last_pos_count += 1
+	elif battle and battle_mode == "Charge":
 		move_and_slide()
 		velocity = move_to
 		
@@ -66,7 +70,7 @@ func _draw() -> void:
 	if shooting:
 		draw_line(shooting*(bullet_distance-10), shooting*(bullet_distance-0.9), Color.YELLOW)
 		bullet_distance += bullet_speed
-	if target_unit != null and shooting:
+	if target_unit != null and shooting and unit_hit:
 		if Vector2(shooting*(bullet_distance-0.9)).length() >= Vector2(target).length():
 			shooting = false
 			unit_hit = false
@@ -153,3 +157,6 @@ func damage(damage):
 	health -= damage
 	if health <= 0:
 		queue_free()
+
+func set_battle_mode(new_mode):
+	battle_mode = new_mode
