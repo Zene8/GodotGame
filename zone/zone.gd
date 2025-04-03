@@ -1,5 +1,6 @@
 extends Node2D
 signal Buy(amount)
+signal SceneChange(scene)
 enum Owners{RED,BLUE,YELLOW,GREEN,PURPLE,ORANGE}
 const OwnerColours = [Color(1,0,0,0.4),Color(0,0,1,0.4),Color(1,1,0.2,0.4),Color(0,1,0,0.4),Color(1,0,1,0.4),Color(1,0.4,0.1,0.4)]
 var troops = {"Basic":0,"Advanced":0,"Ranged":0,"Medic":0,"Tank":0}
@@ -62,7 +63,7 @@ func _draw() -> void:
 
 func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event.is_action_pressed("L_click"):
-		if get_node("/root/Main_map").player_colour == owner_colour:
+		if get_parent().get_parent().player_colour == owner_colour:
 			if phase == "Buy Phase":
 				for zone in get_parent().get_children():
 					zone.get_node("CanvasLayer").get_node("Main_panel").visible = false	
@@ -74,8 +75,11 @@ func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int
 				selected = true
 		else:
 			if phase == "Attack Phase" and targeted:
-				get_tree().change_scene_to_file("res://map/map.tscn")
-				
+				var battle_scene = preload("res://map/map.tscn").instantiate()
+				battle_scene.button_vals["BaseUnit"].val = troops["Basic"]
+				battle_scene.button_vals["Tank"].val = troops["Advanced"]
+				battle_scene.button_vals["Sniper"].val = troops["Ranged"]
+				SceneChange.emit(battle_scene)
 			
 
 func _on_b_button_pressed() -> void:

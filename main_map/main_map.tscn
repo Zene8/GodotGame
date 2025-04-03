@@ -54,7 +54,7 @@ position_smoothing_enabled = true
 position_smoothing_speed = 20.0
 script = ExtResource("3_rf157")
 
-[node name="Zones" type="Node" parent="."]
+[node name="Zones" type="Node2D" parent="."]
 
 [node name="nw_africa" parent="Zones" instance=ExtResource("4_3ah1q")]
 position = Vector2(-45, -11)

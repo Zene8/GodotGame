@@ -10,6 +10,8 @@ var selecting_unit = null
 var selecting_unit_colour = null
 var button_vals = {"BaseUnit":{"button":Button, "val":10}, "Tank":{"button":Button, "val":5}, "Sniper":{"button":Button, "val":5}}
 var mode = "Setup"
+var player1units
+var player2units
 
 func _ready() -> void:
 	select_area_shape = $Area2D/CollisionShape2D
@@ -20,12 +22,17 @@ func _ready() -> void:
 	button_vals["BaseUnit"].button.text = str(button_vals["BaseUnit"].val)
 	button_vals["Tank"].button.text = str(button_vals["Tank"].val)
 	button_vals["Sniper"].button.text = str(button_vals["Sniper"].val)
-
+	player1units = $Player1
+	player2units = $Player2
+	
 func _process(_delta: float) -> void:
 	if dragging_unit:
 		var mousepos = get_global_mouse_position()
 		selecting_unit.position = mousepos
-
+	
+	if len(player1units.get_children()) == 0 or len(player2units.get_children()) == 0:
+		get_tree().change_scene_to_file("res://main_map/main_map.tscn")
+		
 	queue_redraw()
 
 func _input(event: InputEvent) -> void:
