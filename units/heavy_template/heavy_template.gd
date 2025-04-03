@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
-const max_health := 100.0
-var health := 100.0:
+const max_health := 150.0
+var health := 150.0:
 	set(value):
 		health = clamp(value,0,max_health)
 var selected := false
@@ -12,7 +12,7 @@ var last_pos := Vector2(0, 0)
 var last_pos_count = 1
 var battle = false
 var player = null
-var bloom = 0.05
+var bloom = 0.3
 var shooting = false
 var bullet_distance = 1
 var rng = RandomNumberGenerator.new()

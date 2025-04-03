@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://b37invkti8n3b"]
+[gd_scene load_steps=23 format=4 uid="uid://b37invkti8n3b"]
 
 [ext_resource type="Script" uid="uid://djumuswhau7j5" path="res://map/map.gd" id="1_kxmgb"]
 [ext_resource type="Texture2D" uid="uid://2oaiegstjcub" path="res://map/assets/mock.png" id="2_e8e5r"]
@@ -10,10 +10,12 @@
 [ext_resource type="Theme" uid="uid://b8cdpud5xabcr" path="res://main_map/Main_Theme.tres" id="7_ap8vc"]
 [ext_resource type="PackedScene" uid="uid://c036cg3aa41d1" path="res://units/sniper_template/sniper_template.tscn" id="7_lct0g"]
 [ext_resource type="Script" uid="uid://v8h3pl0521xa" path="res://map/map_progress_bar.gd" id="8_wnugf"]
+[ext_resource type="PackedScene" uid="uid://cmfjsiaeo4e03" path="res://units/heavy_template/heavy_template.tscn" id="9_58xwf"]
 [ext_resource type="Texture2D" uid="uid://di4bggnp76ya4" path="res://units/unit_template/assets/unit template.png" id="9_112ik"]
 [ext_resource type="Texture2D" uid="uid://cykiddu3ib18" path="res://units/tank_template/Assets/tank_default.png" id="10_112ik"]
 [ext_resource type="Texture2D" uid="uid://d3iysusb0vg5q" path="res://Assets/bin.png" id="11_i5grx"]
 [ext_resource type="Texture2D" uid="uid://fpo6ttabcjpc" path="res://units/sniper_template/Assets/sniper_default.png" id="12_k8tny"]
+[ext_resource type="Texture2D" uid="uid://3bhr4dfiowvn" path="res://units/heavy_template/Assets/heavy_default.png" id="15_w1ifk"]
 [ext_resource type="ButtonGroup" uid="uid://d0gaqwru0vtef" path="res://map/battle_mode.tres" id="15_wnugf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eyj48"]
@@ -129,6 +131,8 @@ position = Vector2(121, -236)
 [node name="sniper_template2" parent="Player1" instance=ExtResource("7_lct0g")]
 position = Vector2(-324, -56)
 
+[node name="heavy_template" parent="Player1" instance=ExtResource("9_58xwf")]
+
 [node name="Player2" type="Node" parent="."]
 
 [node name="unit_template" parent="Player2" instance=ExtResource("5_lct0g")]
@@ -194,10 +198,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -29.0
-offset_top = -101.0
-offset_right = 23.0
-offset_bottom = -51.0
+offset_left = -106.0
+offset_top = -100.0
+offset_right = 2.0
+offset_bottom = -50.0
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(2, 2)
@@ -220,6 +224,10 @@ alignment = 2
 [node name="Sniper" type="Button" parent="CanvasLayer/UnitButtons/HBoxContainer"]
 layout_mode = 2
 icon = ExtResource("12_k8tny")
+
+[node name="Heavy" type="Button" parent="CanvasLayer/UnitButtons/HBoxContainer"]
+layout_mode = 2
+icon = ExtResource("15_w1ifk")
 
 [node name="ExtraButtons" type="PanelContainer" parent="CanvasLayer"]
 anchors_preset = 1
@@ -272,6 +280,7 @@ text = "Charge"
 [connection signal="pressed" from="CanvasLayer/UnitButtons/HBoxContainer/BaseUnit" to="." method="_on_base_unit_pressed"]
 [connection signal="pressed" from="CanvasLayer/UnitButtons/HBoxContainer/Tank" to="." method="_on_tank_pressed"]
 [connection signal="pressed" from="CanvasLayer/UnitButtons/HBoxContainer/Sniper" to="." method="_on_sniper_pressed"]
+[connection signal="pressed" from="CanvasLayer/UnitButtons/HBoxContainer/Heavy" to="." method="_on_heavy_pressed"]
 [connection signal="mouse_entered" from="CanvasLayer/ExtraButtons/Bin" to="." method="_on_bin_mouse_entered"]
 [connection signal="pressed" from="CanvasLayer/UnitModes/VBoxContainer/HBoxContainer/Static" to="." method="_on_mode_changed"]
 [connection signal="pressed" from="CanvasLayer/UnitModes/VBoxContainer/HBoxContainer/Charge" to="." method="_on_mode_changed"]
