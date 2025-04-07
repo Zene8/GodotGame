@@ -1,5 +1,6 @@
 extends Node2D
 
+signal BattleFinished(Win,amount)
 var selecting := false
 var select_start := Vector2(0,0)
 var select_area_shape = CollisionShape2D
@@ -8,7 +9,7 @@ var shifting = false
 var dragging_unit = false
 var selecting_unit = null
 var selecting_unit_colour = null
-var button_vals = {"BaseUnit":{"button":Button, "val":10}, "Tank":{"button":Button, "val":5}, "Sniper":{"button":Button, "val":5}, "Heavy":{"button":Button, "val":5}}
+var button_vals = {"BaseUnit":{"button":Button, "val":0}, "Tank":{"button":Button, "val":0}, "Sniper":{"button":Button, "val":0}, "Heavy":{"button":Button, "val":0}}
 var mode = "Setup"
 var player1units
 var player2units
@@ -23,22 +24,27 @@ func _ready() -> void:
 	button_vals["BaseUnit"].button.text = str(button_vals["BaseUnit"].val)
 	button_vals["Tank"].button.text = str(button_vals["Tank"].val)
 	button_vals["Sniper"].button.text = str(button_vals["Sniper"].val)
-
-	player1units = $Player1
-	player2units = $Player2
-	
 	button_vals["Heavy"].button.text = str(button_vals["Heavy"].val)
 	for enemy_unit in $Player2.get_children():
 		enemy_unit.visible = false
-
+		
+	
+	player1units = $Player1
+	player2units = $Player2
+	
+	
 
 func _process(_delta: float) -> void:
 	if dragging_unit:
 		var mousepos = get_global_mouse_position()
 		selecting_unit.position = mousepos
 	
-	if len(player1units.get_children()) == 0 or len(player2units.get_children()) == 0:
-		get_tree().change_scene_to_file("res://main_map/main_map.tscn")
+	if len(player2units.get_children()) == 0:
+		BattleFinished.emit(true,len(player1units.get_children()))
+		queue_free()
+	elif len(player1units.get_children()) == 0:
+		BattleFinished.emit(false,len(player2units.get_children()))
+		queue_free()
 		
 	queue_redraw()
 

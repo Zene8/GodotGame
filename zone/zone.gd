@@ -76,10 +76,16 @@ func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int
 		else:
 			if phase == "Attack Phase" and targeted:
 				var battle_scene = preload("res://map/map.tscn").instantiate()
-				battle_scene.button_vals["BaseUnit"].val = troops["Basic"]
-				battle_scene.button_vals["Tank"].val = troops["Advanced"]
-				battle_scene.button_vals["Sniper"].val = troops["Ranged"]
+				var zones = get_parent()
+				var edges = zones.get_parent().edges
+				for zone in zones.get_children():
+					if zone.selected and (([self,zone,0] in edges) or ([self,zone,1] in edges) or ([zone,self,0] in edges) or ([zone,self,1] in edges)):
+						battle_scene.button_vals["BaseUnit"].val += zone.troops["Basic"]
+						battle_scene.button_vals["Tank"].val += zone.troops["Tank"]
+						battle_scene.button_vals["Sniper"].val += zone.troops["Ranged"]
+						battle_scene.button_vals["Heavy"].val += zone.troops["Advanced"]
 				SceneChange.emit(battle_scene)
+				zones.get_parent().get_node("Camera2D").enabled = false
 			
 
 func _on_b_button_pressed() -> void:
