@@ -106,6 +106,9 @@ func _input(event: InputEvent) -> void:
 	
 	if event.is_action_pressed("R_click"):
 		$Player1.move_units_to(get_global_mouse_position())
+	
+	if event.is_action_pressed("esc") and dragging_unit:
+		stop_dragging()
 		
 
 func _draw() -> void:
@@ -117,16 +120,17 @@ func _draw() -> void:
 func _on_progress_bar_state_changed(new_state) -> void:
 	if new_state == "Battle":
 		$CanvasLayer/UnitButtons.visible = false
+		$restricted_layer.queue_free()
 		mode = new_state
 		for enemy_unit in $Player2.get_children():
 			enemy_unit.visible = true
+		if dragging_unit:
+			stop_dragging()
 		$Player1.battle_start()
 
 func _on_bin_mouse_entered() -> void:
 	if dragging_unit:
-		$Player1.remove_child(selecting_unit)
-		selecting_unit.queue_free()
-		dragging_unit = false
+		stop_dragging()
 
 func _on_base_unit_pressed() -> void:
 	if button_vals["BaseUnit"].val > 0 and mode == "Setup":
@@ -170,7 +174,6 @@ func set_up_placing_unit(selecting_unit) -> void:
 	selecting_unit_colour = selecting_unit.modulate
 	selecting_unit.modulate = Color(selecting_unit_colour.r, selecting_unit_colour.g - 0.5, selecting_unit_colour.b + 20)
 	selecting_unit.z_index = 1
-	print(selecting_unit)
 	selecting_unit.get_node("Area2D").area_exited.connect(_on_selecting_area_exited)
 	$Player1.add_child(selecting_unit)
 		
@@ -196,3 +199,8 @@ func _on_mode_changed() -> void:
 			for unit in $Player1.get_children():
 				if unit.get("selected"):
 					unit.set_battle_mode(mode.name)
+
+func stop_dragging():
+	$Player1.remove_child(selecting_unit)
+	selecting_unit.queue_free()
+	dragging_unit = false
