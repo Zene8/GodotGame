@@ -9,7 +9,7 @@ var shifting = false
 var dragging_unit = false
 var selecting_unit = null
 var selecting_unit_colour = null
-var button_vals = {"BaseUnit":{"button":Button, "val":0}, "Tank":{"button":Button, "val":0}, "Sniper":{"button":Button, "val":0}, "Heavy":{"button":Button, "val":0}}
+var button_vals = {"BaseUnit":{"button":Button, "val":10}, "Tank":{"button":Button, "val":5}, "Sniper":{"button":Button, "val":5}, "Heavy":{"button":Button, "val":5}}
 var mode = "Setup"
 var player1units
 var player2units
@@ -55,7 +55,6 @@ func _input(event: InputEvent) -> void:
 		shifting = false
 		
 	if event.is_action_pressed("L_click") and not dragging_unit and not Rect2($CanvasLayer/UnitModes.position, $CanvasLayer/UnitModes.size).has_point(event.position):
-		select_area_shape.disabled = false
 		select_area_shape.position = get_global_mouse_position()
 		select_area_shape.shape.size = Vector2(1, 1)
 		await get_tree().physics_frame
@@ -79,18 +78,15 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_released("L_click") and Input.is_action_pressed("shift"):
 		selecting = false
 		var mousepos = get_global_mouse_position()
-		
-		select_area_shape.disabled = false
 		select_area_shape.position = Vector2(min(mousepos.x,select_start.x)+abs(select_start.x - mousepos.x)/2,min(mousepos.y,select_start.y)+abs(select_start.y - mousepos.y)/2)
 		select_area_shape.shape.size = abs(select_start - mousepos)
 		await get_tree().physics_frame
 		await get_tree().physics_frame
 		var areas = select_area.get_overlapping_areas()
-		select_area_shape.disabled = true
 		for area in areas:
 			area.get_parent().toggle_select()
 			get_node("CanvasLayer/UnitModes/VBoxContainer/HBoxContainer/" + area.get_parent().get("battle_mode")).button_pressed = true
-		$CanvasLayer/UnitModes.visible = true
+			$CanvasLayer/UnitModes.visible = true
 			
 	if event.is_action_pressed("L_click") and dragging_unit and not Rect2($CanvasLayer/UnitButtons.position, $CanvasLayer/UnitButtons.size).has_point(event.position):
 		if selecting_unit.get_node("Area2D").get_overlapping_areas().size() == 0 and button_vals[dragging_unit].val > 0:

@@ -3,8 +3,8 @@ extends Camera2D
 var dragging := false
 var dragstart := Vector2()
 var startpos := Vector2()
-var maxzoom := 1.5
-var limit = {"x":1000, "y":350}
+var maxzoom := 2
+var limit = {"x":550, "y":180}
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
