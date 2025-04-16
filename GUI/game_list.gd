@@ -14,4 +14,4 @@ func update_game_list(game_info):
 
 func _on_game_selected(game_info):
 	var address = game_info.split("|")[1]
-	NetworkManager.join_game(address)
+	NetworkManager.join_game()
