@@ -1,5 +1,6 @@
 extends Node2D
 
+signal SceneChange(scene)
 enum Owners{RED,BLUE,YELLOW,GREEN,PURPLE,ORANGE}
 const OwnerColours = [Color(1,0,0,0.7),Color(0,0,1,0.7),Color(1,1,0.2,0.7),Color(0,1,0,0.7),Color(1,0,1,0.7),Color(1,0.4,0.1,0.7)]
 var Money = 100
@@ -9,14 +10,18 @@ var player_colour = Owners["RED"]
 var pb
 var zones
 var players = 6
+var attackpanel
 # Called when the node enters the tree for the first time.
 
 func _ready() -> void:
 	edges = [[$Zones/nw_africa,$Zones/western_europe,0],[$Zones/western_europe,$Zones/UK,0],[$Zones/western_europe,$Zones/ne_europe,0],[$Zones/west_russia,$Zones/ne_europe,0],[$Zones/west_russia,$Zones/russia_stan,0],[$Zones/west_russia,$Zones/scandanavia,0],[$Zones/middle_east,$Zones/ne_europe,0],[$Zones/UK,$Zones/greenland,1],[$Zones/UK,$Zones/scandanavia,1],[$Zones/nw_africa,$Zones/ne_africa,0],[$Zones/ne_africa,$Zones/s_africa,0],[$Zones/sw_africa,$Zones/ne_africa,0],[$Zones/sw_africa,$Zones/nw_africa,0],[$Zones/sw_africa,$Zones/s_africa,0],[$Zones/middle_east,$Zones/ne_africa,0],[$Zones/sw_africa,$Zones/nw_africa,0],[$Zones/russia_stan,$Zones/west_russia,0],[$Zones/north_russia,$Zones/russia_stan,0],[$Zones/russia_stan,$Zones/russia_mongolia,0],[$Zones/north_russia,$Zones/russia_mongolia,0],[$Zones/north_russia,$Zones/far_east,0],[$Zones/far_east,$Zones/russia_mongolia,0],[$Zones/middle_east,$Zones/india,0],[$Zones/china,$Zones/india,0],[$Zones/china,$Zones/russia_mongolia,0],[$Zones/china,$Zones/islands,0],[$Zones/india,$Zones/islands,0],[$Zones/west_australia,$Zones/islands,1],[$Zones/east_australia,$Zones/islands,1],[$Zones/west_australia,$Zones/east_australia,0],[$Zones/ne_south_america,$Zones/nw_south_america,0],[$Zones/s_south_america,$Zones/nw_south_america,0],[$Zones/s_south_america,$Zones/ne_south_america,0],[$Zones/sw_africa,$Zones/ne_south_america,1],[$Zones/west_america,$Zones/nw_south_america,0],[$Zones/west_america,$Zones/canada,0],[$Zones/west_america,$Zones/east_america,0],[$Zones/east_america,$Zones/greenland,0],[$Zones/canada,$Zones/greenland,0],[$Zones/russia_stan,$Zones/india,0]]
 	zones = $Zones
+	attackpanel = $CanvasLayer/attack_panel
+	attackpanel.visible = false
 	for zone in zones.get_children():
 		zone.owner_colour = Owners.values()[randi_range(0, players - 1)]
 		zone.Buy.connect(change_money)
+		zone.attacked.connect(attacking)
 	pb = $CanvasLayer/PanelContainer/ProgressBar
 	pb.get("theme_override_styles/fill").bg_color = Color(1,0,0,0.4)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -52,9 +57,56 @@ func _input(event: InputEvent) -> void:
 func change_money(amount):
 	Money += amount
 	
+func attacking(attacked_zone):
+	var select_zones = $CanvasLayer/attack_panel/VBoxContainer/select_zones
+	for zone in zones.get_children():
+		if zone.selected and (([attacked_zone,zone,0] in edges) or ([attacked_zone,zone,1] in edges) or ([zone,attacked_zone,0] in edges) or ([zone,attacked_zone,1] in edges)):
+			var troop_select_panel = preload("res://main_map/troop_select_panel.tscn").instantiate()
+			troop_select_panel.get_node("PanelContainer/MainH/soliderH/VSlider").max_value = float(zone.troops["Basic"])
+			troop_select_panel.get_node("PanelContainer/MainH/advancedH/VSlider").max_value = float(zone.troops["Advanced"])
+			troop_select_panel.get_node("PanelContainer/MainH/sniperH/VSlider").max_value = float(zone.troops["Ranged"])
+			troop_select_panel.get_node("PanelContainer/MainH/medicH/VSlider").max_value = float(zone.troops["Medic"])
+			troop_select_panel.get_node("PanelContainer/MainH/tankH/VSlider").max_value = float(zone.troops["Tank"])
+			select_zones.add_child(troop_select_panel)
+	attackpanel.visible = true
+	
+	
 func _on_progress_bar_state_changed(new_phase) -> void:
 	if phase == "Buy Phase":
 		for zone in get_node("Zones").get_children():
 			zone.get_node("CanvasLayer").get_node("Main_panel").visible = false	
 	phase = new_phase
 	
+
+
+func _on_confirm_pressed() -> void:
+	var valid = true
+	var troop_amounts = [0,0,0,0,0]
+	var troop_names = ["soliderH","advancedH","sniperH","medicH","tankH"]
+	var select_zones = $CanvasLayer/attack_panel/VBoxContainer/select_zones
+	for zone in select_zones.get_children():
+		var remaining_troops = false
+		for i in range(5):
+			var slider = zone.get_node("PanelContainer/MainH/"+troop_names[i]+"/VSlider")
+			if slider.max_value != slider.value:
+				remaining_troops = true
+		if !remaining_troops:
+			valid = false
+			break
+			
+	if valid:
+		for zone in select_zones.get_children():
+			for i in range(5):
+				var slider = zone.get_node("PanelContainer/MainH/"+troop_names[i]+"/VSlider")
+				troop_amounts[i] += int(slider.value)
+		var battle_scene = preload("res://map/map.tscn").instantiate()
+		battle_scene.button_vals["BaseUnit"].val = troop_amounts[0]
+		battle_scene.button_vals["Tank"].val = troop_amounts[4]
+		battle_scene.button_vals["Sniper"].val = troop_amounts[2]
+		battle_scene.button_vals["Heavy"].val = troop_amounts[1]
+		SceneChange.emit(battle_scene)
+		get_node("Camera2D").enabled = false
+
+
+func _on_cancel_pressed() -> void:
+	pass # Replace with function body.

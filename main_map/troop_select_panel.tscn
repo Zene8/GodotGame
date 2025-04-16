@@ -1,0 +1,166 @@
+[gd_scene load_steps=8 format=3 uid="uid://bkc03hqlkmb2k"]
+
+[ext_resource type="Texture2D" uid="uid://dcm52qrrh8218" path="res://main_map/assets/soldier-map.png" id="1_yn5o7"]
+[ext_resource type="Texture2D" uid="uid://dyj4a6taqy7us" path="res://main_map/assets/soldier-advanced-map.png" id="2_mlka6"]
+[ext_resource type="Texture2D" uid="uid://bvfej3r3mqebo" path="res://main_map/assets/sniper-map.png" id="3_67wwx"]
+[ext_resource type="Texture2D" uid="uid://djr3ykikkepc6" path="res://main_map/assets/medic-map.png" id="4_upnrt"]
+[ext_resource type="Texture2D" uid="uid://dl3dweuiy33st" path="res://main_map/assets/tank-map.png" id="5_h6td6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u5syv"]
+bg_color = Color(0.180005, 0.180005, 0.180005, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_13fkj"]
+font_size = 10
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_right = 286.0
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_u5syv")
+
+[node name="MainH" type="HBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 9
+
+[node name="Label" type="Label" parent="PanelContainer/MainH"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Zone name"
+
+[node name="soliderH" type="HBoxContainer" parent="PanelContainer/MainH"]
+layout_mode = 2
+
+[node name="solider" type="VBoxContainer" parent="PanelContainer/MainH/soliderH"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/MainH/soliderH/solider"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("1_yn5o7")
+stretch_mode = 2
+
+[node name="soldier_amount" type="Label" parent="PanelContainer/MainH/soliderH/solider"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+text = "10/10"
+label_settings = SubResource("LabelSettings_13fkj")
+horizontal_alignment = 1
+
+[node name="VSlider" type="VSlider" parent="PanelContainer/MainH/soliderH"]
+layout_mode = 2
+max_value = 5.0
+
+[node name="advancedH" type="HBoxContainer" parent="PanelContainer/MainH"]
+layout_mode = 2
+
+[node name="advanced" type="VBoxContainer" parent="PanelContainer/MainH/advancedH"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/MainH/advancedH/advanced"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("2_mlka6")
+stretch_mode = 2
+
+[node name="soldier_amount" type="Label" parent="PanelContainer/MainH/advancedH/advanced"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+text = "10/10"
+label_settings = SubResource("LabelSettings_13fkj")
+horizontal_alignment = 1
+
+[node name="VSlider" type="VSlider" parent="PanelContainer/MainH/advancedH"]
+layout_mode = 2
+max_value = 5.0
+
+[node name="sniperH" type="HBoxContainer" parent="PanelContainer/MainH"]
+layout_mode = 2
+
+[node name="sniper" type="VBoxContainer" parent="PanelContainer/MainH/sniperH"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/MainH/sniperH/sniper"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("3_67wwx")
+stretch_mode = 2
+
+[node name="soldier_amount" type="Label" parent="PanelContainer/MainH/sniperH/sniper"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+text = "10/10"
+label_settings = SubResource("LabelSettings_13fkj")
+horizontal_alignment = 1
+
+[node name="VSlider" type="VSlider" parent="PanelContainer/MainH/sniperH"]
+layout_mode = 2
+max_value = 5.0
+
+[node name="medicH" type="HBoxContainer" parent="PanelContainer/MainH"]
+layout_mode = 2
+
+[node name="medic" type="VBoxContainer" parent="PanelContainer/MainH/medicH"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/MainH/medicH/medic"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("4_upnrt")
+stretch_mode = 2
+
+[node name="soldier_amount" type="Label" parent="PanelContainer/MainH/medicH/medic"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+text = "10/10"
+label_settings = SubResource("LabelSettings_13fkj")
+horizontal_alignment = 1
+
+[node name="VSlider" type="VSlider" parent="PanelContainer/MainH/medicH"]
+layout_mode = 2
+max_value = 5.0
+
+[node name="tankH" type="HBoxContainer" parent="PanelContainer/MainH"]
+layout_mode = 2
+
+[node name="tank" type="VBoxContainer" parent="PanelContainer/MainH/tankH"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/MainH/tankH/tank"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("5_h6td6")
+stretch_mode = 2
+
+[node name="soldier_amount" type="Label" parent="PanelContainer/MainH/tankH/tank"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+text = "10/10"
+label_settings = SubResource("LabelSettings_13fkj")
+horizontal_alignment = 1
+
+[node name="VSlider" type="VSlider" parent="PanelContainer/MainH/tankH"]
+layout_mode = 2
+max_value = 5.0

@@ -5,8 +5,7 @@ var zones
 func _ready() -> void:
 	Main_map = get_node("Main_map")
 	zones = get_node("Main_map/Zones")
-	for zone in zones.get_children():
-		zone.SceneChange.connect(ChangeSceneToBattle)
+	Main_map.SceneChange.connect(ChangeSceneToBattle)
 	
 		
 func ChangeSceneToBattle(scene):

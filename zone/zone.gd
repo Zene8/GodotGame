@@ -1,6 +1,6 @@
 extends Node2D
 signal Buy(amount)
-signal SceneChange(scene)
+signal attacked(attacked_zone)
 enum Owners{RED,BLUE,YELLOW,GREEN,PURPLE,ORANGE}
 const OwnerColours = [Color(1,0,0,0.4),Color(0,0,1,0.4),Color(1,1,0.2,0.4),Color(0,1,0,0.4),Color(1,0,1,0.4),Color(1,0.4,0.1,0.4)]
 var troops = {"Basic":0,"Advanced":0,"Ranged":0,"Medic":0,"Tank":0}
@@ -22,6 +22,7 @@ var sprite
 var selected := false
 var targeted := false
 var shifting
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	basic = $"CanvasLayer/Main_panel/MainV/Troops/Basic/Bnumber"
@@ -75,17 +76,7 @@ func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int
 				selected = true
 		else:
 			if phase == "Attack Phase" and targeted:
-				var battle_scene = preload("res://map/map.tscn").instantiate()
-				var zones = get_parent()
-				var edges = zones.get_parent().edges
-				for zone in zones.get_children():
-					if zone.selected and (([self,zone,0] in edges) or ([self,zone,1] in edges) or ([zone,self,0] in edges) or ([zone,self,1] in edges)):
-						battle_scene.button_vals["BaseUnit"].val += zone.troops["Basic"]
-						battle_scene.button_vals["Tank"].val += zone.troops["Tank"]
-						battle_scene.button_vals["Sniper"].val += zone.troops["Ranged"]
-						battle_scene.button_vals["Heavy"].val += zone.troops["Advanced"]
-				SceneChange.emit(battle_scene)
-				zones.get_parent().get_node("Camera2D").enabled = false
+				attacked.emit(self)
 			
 
 func _on_b_button_pressed() -> void:
