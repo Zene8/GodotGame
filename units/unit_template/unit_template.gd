@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+const TYPE = "soldier"
 const max_health := 100.0
 var health := 100.0:
 	set(value):

@@ -11,6 +11,7 @@ var pb
 var zones
 var players = 6
 var attackpanel
+var targeted_zone
 # Called when the node enters the tree for the first time.
 
 func _ready() -> void:
@@ -58,6 +59,7 @@ func change_money(amount):
 	Money += amount
 	
 func attacking(attacked_zone):
+	targeted_zone = attacked_zone
 	var select_zones = $CanvasLayer/attack_panel/VBoxContainer/select_zones
 	for zone in zones.get_children():
 		if zone.selected and (([attacked_zone,zone,0] in edges) or ([attacked_zone,zone,1] in edges) or ([zone,attacked_zone,0] in edges) or ([zone,attacked_zone,1] in edges)):
@@ -67,7 +69,9 @@ func attacking(attacked_zone):
 			troop_select_panel.get_node("PanelContainer/MainH/sniperH/VSlider").max_value = float(zone.troops["Ranged"])
 			troop_select_panel.get_node("PanelContainer/MainH/medicH/VSlider").max_value = float(zone.troops["Medic"])
 			troop_select_panel.get_node("PanelContainer/MainH/tankH/VSlider").max_value = float(zone.troops["Tank"])
+			troop_select_panel.get_node("PanelContainer/MainH/zone_name").text = zone.name
 			select_zones.add_child(troop_select_panel)
+	print_tree()
 	attackpanel.visible = true
 	
 	
@@ -83,6 +87,7 @@ func _on_confirm_pressed() -> void:
 	var valid = true
 	var troop_amounts = [0,0,0,0,0]
 	var troop_names = ["soliderH","advancedH","sniperH","medicH","tankH"]
+	var real_troop_names = ["Basic","Advanced","Ranged","Medic","Tank"]
 	var select_zones = $CanvasLayer/attack_panel/VBoxContainer/select_zones
 	for zone in select_zones.get_children():
 		var remaining_troops = false
@@ -96,17 +101,41 @@ func _on_confirm_pressed() -> void:
 			
 	if valid:
 		for zone in select_zones.get_children():
+			var real_zone = zones.get_node(zone.get_node("PanelContainer/MainH/zone_name").text) 
 			for i in range(5):
 				var slider = zone.get_node("PanelContainer/MainH/"+troop_names[i]+"/VSlider")
+				real_zone.troops[real_troop_names[i]] -= int(slider.value)
 				troop_amounts[i] += int(slider.value)
 		var battle_scene = preload("res://map/map.tscn").instantiate()
 		battle_scene.button_vals["BaseUnit"].val = troop_amounts[0]
 		battle_scene.button_vals["Tank"].val = troop_amounts[4]
 		battle_scene.button_vals["Sniper"].val = troop_amounts[2]
 		battle_scene.button_vals["Heavy"].val = troop_amounts[1]
+		battle_scene.button_vals["Medic"].val = troop_amounts[3]
 		SceneChange.emit(battle_scene)
+		for zone in select_zones.get_children():
+			zone.queue_free()
 		get_node("Camera2D").enabled = false
 
 
 func _on_cancel_pressed() -> void:
-	pass # Replace with function body.
+	var select_zones = $CanvasLayer/attack_panel/VBoxContainer/select_zones
+	for zone in select_zones.get_children():
+		zone.queue_free()
+	attackpanel.visible = false
+	
+func handle_battle(Win,amount):
+	if Win == false:
+		targeted_zone.troops["Basic"] = amount[0]
+		targeted_zone.troops["Advanced"] = amount[1]
+		targeted_zone.troops["Sniper"] = amount[2]
+		targeted_zone.troops["Medic"] = amount[3]
+		targeted_zone.troops["Tank"] = amount[4]
+		
+	if Win == true:
+		targeted_zone.owner_colour = player_colour
+		targeted_zone.troops["Basic"] = amount[0]
+		targeted_zone.troops["Advanced"] = amount[1]
+		targeted_zone.troops["Sniper"] = amount[2]
+		targeted_zone.troops["Medic"] = amount[3]
+		targeted_zone.troops["Tank"] = amount[4]

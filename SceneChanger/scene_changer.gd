@@ -17,14 +17,7 @@ func ChangeSceneToBattle(scene):
 	
 
 func ChangeSceneToMap(Win,amount):
-	if Win == false:
-		#SET attacked zone to amount
-		pass
-		
-	if Win == true:
-		#Set losing zone to colour of winner and move troops accross
-		pass
-		
+	Main_map.handle_battle(Win,amount)
 	Main_map.get_node("Camera2D").enabled = true
 	Main_map.visible = true
 	Main_map.get_child(-1).visible = true

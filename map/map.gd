@@ -42,10 +42,22 @@ func _process(_delta: float) -> void:
 		selecting_unit.position = mousepos
 	
 	if len(player2units.get_children()) == 0:
-		BattleFinished.emit(true,len(player1units.get_children()))
+		var units = [0,0,0,0,0]
+		var types = ["soldier","advanced","sniper","medic","tank"]
+		for unit in player1units.get_children():
+			for i in range(5):
+				if unit.TYPE == types[i]:
+					units[i] += 1
+		BattleFinished.emit(true,units)
 		queue_free()
 	elif len(player1units.get_children()) == 0:
-		BattleFinished.emit(false,len(player2units.get_children()))
+		var units = [0,0,0,0,0]
+		var types = ["soldier","advanced","sniper","medic","tank"]
+		for unit in player2units.get_children():
+			for i in range(5):
+				if unit.TYPE == types[i]:
+					units[i] += 1
+		BattleFinished.emit(false,units)
 		queue_free()
 		
 	queue_redraw()

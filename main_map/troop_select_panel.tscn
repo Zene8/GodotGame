@@ -1,5 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://bkc03hqlkmb2k"]
+[gd_scene load_steps=9 format=3 uid="uid://bkc03hqlkmb2k"]
 
+[ext_resource type="Script" uid="uid://blwrjtgl27ntj" path="res://main_map/troop_select_panel.gd" id="1_mlka6"]
 [ext_resource type="Texture2D" uid="uid://dcm52qrrh8218" path="res://main_map/assets/soldier-map.png" id="1_yn5o7"]
 [ext_resource type="Texture2D" uid="uid://dyj4a6taqy7us" path="res://main_map/assets/soldier-advanced-map.png" id="2_mlka6"]
 [ext_resource type="Texture2D" uid="uid://bvfej3r3mqebo" path="res://main_map/assets/sniper-map.png" id="3_67wwx"]
@@ -19,10 +20,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_mlka6")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 0
-offset_right = 286.0
+offset_left = -184.0
+offset_right = 184.0
 offset_bottom = 40.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_u5syv")
 
@@ -30,7 +33,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_u5syv")
 layout_mode = 2
 theme_override_constants/separation = 9
 
-[node name="Label" type="Label" parent="PanelContainer/MainH"]
+[node name="zone_name" type="Label" parent="PanelContainer/MainH"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Zone name"

@@ -34,6 +34,8 @@ func _ready() -> void:
 	$"CanvasLayer/Main_panel".visible=false
 	TroopCountLabel = $TroopCount
 	sprite = $Sprite2D
+	var title = $CanvasLayer/Main_panel/MainV/Header/Title
+	title.text = self.name
 	
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("shift"):
