@@ -1,0 +1,44 @@
+[gd_scene load_steps=2 format=3 uid="uid://bjipf33trn6xx"]
+
+[ext_resource type="Script" uid="uid://bq51mfhri6rpv" path="res://player_list.gd" id="1_2drdv"]
+
+[node name="PlayerList" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PlayerList" type="CanvasLayer" parent="."]
+script = ExtResource("1_2drdv")
+
+[node name="Panel" type="Panel" parent="PlayerList"]
+visible = false
+anchors_preset = -1
+anchor_left = 0.113
+anchor_right = 0.887
+anchor_bottom = 0.785
+offset_left = -0.17601
+offset_right = 0.175964
+offset_bottom = 0.319977
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="PlayerList/Panel"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 22.3333
+
+[node name="PlayerList" type="ItemList" parent="PlayerList"]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 181.0
+offset_top = -4.0
+offset_right = -150.0
+offset_bottom = -184.0
+grow_horizontal = 2
+grow_vertical = 2

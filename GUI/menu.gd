@@ -6,8 +6,8 @@ extends Control
 @onready var OptionsContainer = get_node("%OptionContainer")
 @onready var button = get_node("CanvasLayer/OptionContainer/Container/Apply_button")
 @onready var button2 = get_node("CanvasLayer/OptionContainer/Container/Return_button")
-@onready var GameList = get_node("%GameList")
-@onready var lobby_scene = preload("res://Multiplayer/multiplayer.tscn")  # Load the lobby scene
+@onready var GameList = get_node("%gameListNode")
+@onready var lobby_scene = preload("res://Multiplayer/multiplayer.tscn") 
 
 	
 
@@ -18,8 +18,7 @@ func _ready():
 	OptionsContainer.visible = false
 	GameList.visible = false
 	main_container.get_node("Singleplayer").grab_focus()
-	NetworkManager.connect("game_found", Callable(self, "update_game_list"))
-	NetworkManager.discover_games()
+	
 
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):
@@ -79,10 +78,12 @@ func _on_quit_confirmed():
 
 
 func _on_create_game_pressed() -> void:
-	NetworkManager.host_game()  # Calls the host function from NetworkManager
-	get_tree().change_scene_to_packed(lobby_scene)  # Switch to the lobby
+	var response = NetworkManager.host_game()  # Calls the host function from NetworkManager
+	if(response):
+		get_tree().change_scene_to_packed(lobby_scene)  # Switch to the lobby
 
 
 func _on_join_game_pressed() -> void:
-	GameList.visible = true 
-	main_container.visible = false
+	var response = NetworkManager.join_game()  # Calls the host function from NetworkManager
+	if(response):
+		get_tree().change_scene_to_packed(lobby_scene)  # Switch to the lobby
