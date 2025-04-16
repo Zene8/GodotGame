@@ -17,7 +17,8 @@ func update_player_list():
 	for id in multiplayer.get_peers():
 		if id == 1:
 			player_list.add_item("Player " + str(id) + "(Host)")
-		player_list.add_item("Player " + str(id))
+		else:
+			player_list.add_item("Player " + str(id))
 		
 	# Add local player
 	if multiplayer.is_server():
