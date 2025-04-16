@@ -22,6 +22,7 @@ var target = null
 var battle_mode = "Charge"
 const base_speed = 50
 const bullet_speed = 20
+const bullet_damage = 50
 
 func _process(delta: float) -> void:
 	queue_redraw()
@@ -74,11 +75,11 @@ func _draw() -> void:
 		if Vector2(shooting*(bullet_distance-0.9)).length() >= Vector2(target).length():
 			shooting = false
 			unit_hit = false
-			if target_unit.get("health") <= 50:
-				target_unit.damage(50)
+			if target_unit.get("health") <= bullet_damage:
+				target_unit.damage(bullet_damage)
 				target_unit = null
 			else:
-				target_unit.damage(50)
+				target_unit.damage(bullet_damage)
 	
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("shift"):
