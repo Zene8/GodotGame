@@ -326,6 +326,7 @@ script = ExtResource("6_rf157")
 [node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
 anchors_preset = 10
 anchor_right = 1.0
+offset_bottom = 55.0
 grow_horizontal = 2
 
 [node name="Panel" type="Panel" parent="CanvasLayer/PanelContainer"]

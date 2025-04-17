@@ -3,9 +3,12 @@ extends Node2D
 signal SceneChange(scene)
 enum Owners{RED,BLUE,YELLOW,GREEN,PURPLE,ORANGE}
 const OwnerColours = [Color(1,0,0,0.7),Color(0,0,1,0.7),Color(1,1,0.2,0.7),Color(0,1,0,0.7),Color(1,0,1,0.7),Color(1,0.4,0.1,0.7)]
+var colour:
+	get:
+		return OwnerColours[player_colour]
 var Money = 100
 var edges
-var phase
+var phase = "Buy Phase"
 var player_colour = Owners["RED"]
 var pb
 var zones
@@ -24,11 +27,16 @@ func _ready() -> void:
 		zone.Buy.connect(change_money)
 		zone.attacked.connect(attacking)
 	pb = $CanvasLayer/PanelContainer/ProgressBar
-	pb.get("theme_override_styles/fill").bg_color = Color(1,0,0,0.4)
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+	pb.get("theme_override_styles/fill").bg_color = colour
+
+
 func _process(delta: float) -> void:
+	var win = true
 	for zone in zones.get_children():
 		zone.targeted = false
+		if zone.owner_colour != player_colour:
+			win = false
+			
 	for edge in edges:
 		if edge[0].selected == true:
 			if edge[1].owner_colour != edge[0].owner_colour:
@@ -38,7 +46,8 @@ func _process(delta: float) -> void:
 				edge[0].targeted = true
 				
 	queue_redraw()
-	
+	if win:
+		end_game()
 	
 func _draw() -> void:
 	for edge in edges:
@@ -61,6 +70,8 @@ func change_money(amount):
 func attacking(attacked_zone):
 	targeted_zone = attacked_zone
 	var select_zones = $CanvasLayer/attack_panel/VBoxContainer/select_zones
+	for zone in select_zones.get_children():
+		zone.queue_free()
 	for zone in zones.get_children():
 		if zone.selected and (([attacked_zone,zone,0] in edges) or ([attacked_zone,zone,1] in edges) or ([zone,attacked_zone,0] in edges) or ([zone,attacked_zone,1] in edges)):
 			var troop_select_panel = preload("res://main_map/troop_select_panel.tscn").instantiate()
@@ -76,11 +87,16 @@ func attacking(attacked_zone):
 	
 	
 func _on_progress_bar_state_changed(new_phase) -> void:
-	if phase == "Buy Phase":
+	for zone in zones.get_children():
+		zone.selected = false
+		
+	if new_phase == "Attack Phase":
 		for zone in get_node("Zones").get_children():
-			zone.get_node("CanvasLayer").get_node("Main_panel").visible = false	
+			zone.get_node("CanvasLayer").get_node("Main_panel").visible = false
+	elif new_phase == "Buy Phase":
+		player_colour = (player_colour + 1)%players
 	phase = new_phase
-	
+	pb.get("theme_override_styles/fill").bg_color = colour
 
 
 func _on_confirm_pressed() -> void:
@@ -116,6 +132,7 @@ func _on_confirm_pressed() -> void:
 		for zone in select_zones.get_children():
 			zone.queue_free()
 		get_node("Camera2D").enabled = false
+		attackpanel.visible = false
 
 
 func _on_cancel_pressed() -> void:
@@ -139,3 +156,6 @@ func handle_battle(Win,amount):
 		targeted_zone.troops["Sniper"] = amount[2]
 		targeted_zone.troops["Medic"] = amount[3]
 		targeted_zone.troops["Tank"] = amount[4]
+
+func end_game():
+	pass
