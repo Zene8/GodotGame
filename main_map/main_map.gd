@@ -98,7 +98,7 @@ func _on_progress_bar_state_changed(new_phase) -> void:
 		for zone in get_node("Zones").get_children():
 			zone.get_node("CanvasLayer").get_node("Main_panel").visible = false
 	elif new_phase == "Buy Phase":
-		
+		_on_cancel_pressed()
 		player_colour = player_colour + 1
 		if player_colour == players:
 			player_colour = 0
