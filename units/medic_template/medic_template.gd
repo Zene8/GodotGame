@@ -20,9 +20,9 @@ var rng = RandomNumberGenerator.new()
 var target_unit = null
 var unit_hit = false
 var target = null
-var battle_mode = "Charge"
+var battle_mode = "Follow"
 const base_speed = 50
-const bullet_speed = 20
+const bullet_speed = 15
 const bullet_damage = 5
 
 func _process(delta: float) -> void:
@@ -62,7 +62,7 @@ func _physics_process(delta: float) -> void:
 					last_pos_count = 0
 					last_pos = position
 			last_pos_count += 1
-	elif battle and battle_mode == "Charge":
+	elif battle and battle_mode == "Charge" and target_unit == null:
 		move_and_slide()
 		velocity = Vector2(-1, 0) * base_speed
 		
@@ -85,18 +85,6 @@ func _draw() -> void:
 			else:
 				target_unit.damage(bullet_damage)
 	
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("shift"):
-		shifting = true
-	if event.is_action_released("shift"):
-		shifting = false
-	
-	if event.is_action_pressed("space") && selected:
-		if shifting:
-			health += 10
-		else:
-			health -= 10
-	
 func toggle_select():
 	if selected:
 		selected = false
@@ -115,7 +103,7 @@ func set_moving(val):
 	moving = val
 
 func _on_vision_area_entered(area: Area2D) -> void:
-	if $Reload.time_left == 0.0:
+	if $Reload.time_left == 0.0 and area.get_parent().get_parent().name != "Player" + str(player):
 		if target_unit == null:
 			target_unit = area.get_parent()
 		shooting = (area.get_parent().position - position).rotated(-rotation+rng.randf_range(-bloom, bloom))
@@ -170,3 +158,6 @@ func _on_heal_timeout() -> void:
 		for area in $heal_area.get_overlapping_areas():
 			area.get_parent().damage(-10)
 	$Heal.start()
+
+func set_unit_colour(colour_index):
+	$Sprite2D.frame = (colour_index + 1) * 9 + 8

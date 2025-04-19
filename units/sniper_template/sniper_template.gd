@@ -59,7 +59,7 @@ func _physics_process(delta: float) -> void:
 					last_pos_count = 0
 					last_pos = position
 			last_pos_count += 1
-	elif battle and battle_mode == "Charge":
+	elif battle and battle_mode == "Charge" and target_unit == null:
 		move_and_slide()
 		velocity = Vector2(-1, 0) * base_speed
 		
@@ -81,18 +81,6 @@ func _draw() -> void:
 				target_unit = null
 			else:
 				target_unit.damage(bullet_damage)
-	
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("shift"):
-		shifting = true
-	if event.is_action_released("shift"):
-		shifting = false
-	
-	if event.is_action_pressed("space") && selected:
-		if shifting:
-			health += 10
-		else:
-			health -= 10
 	
 func toggle_select():
 	if selected:
@@ -161,3 +149,6 @@ func damage(damage):
 
 func set_battle_mode(new_mode):
 	battle_mode = new_mode
+
+func set_unit_colour(colour_index):
+	$Sprite2D.frame = (colour_index + 1) * 9 + 7

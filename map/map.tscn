@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=4 uid="uid://b37invkti8n3b"]
+[gd_scene load_steps=28 format=4 uid="uid://b37invkti8n3b"]
 
 [ext_resource type="Script" uid="uid://djumuswhau7j5" path="res://map/map.gd" id="1_kxmgb"]
 [ext_resource type="Script" uid="uid://blrxwd7sud3vd" path="res://map/level_camera_2d.gd" id="3_112ik"]
@@ -9,9 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://c0ynell8yescv" path="res://units/unit_template/unit_template.tscn" id="5_lct0g"]
 [ext_resource type="PackedScene" uid="uid://2cyn61pad45a" path="res://units/tank_template/tank_template.tscn" id="6_k8tny"]
 [ext_resource type="Theme" uid="uid://b8cdpud5xabcr" path="res://main_map/Main_Theme.tres" id="7_ap8vc"]
-[ext_resource type="PackedScene" uid="uid://c036cg3aa41d1" path="res://units/sniper_template/sniper_template.tscn" id="7_lct0g"]
 [ext_resource type="Script" uid="uid://v8h3pl0521xa" path="res://map/map_progress_bar.gd" id="8_wnugf"]
-[ext_resource type="PackedScene" uid="uid://cmfjsiaeo4e03" path="res://units/heavy_template/heavy_template.tscn" id="9_58xwf"]
 [ext_resource type="Texture2D" uid="uid://di4bggnp76ya4" path="res://units/unit_template/assets/unit template.png" id="9_112ik"]
 [ext_resource type="Texture2D" uid="uid://cykiddu3ib18" path="res://units/tank_template/Assets/tank_default.png" id="10_112ik"]
 [ext_resource type="Texture2D" uid="uid://d3iysusb0vg5q" path="res://Assets/bin.png" id="11_i5grx"]
@@ -19,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://3bhr4dfiowvn" path="res://units/heavy_template/Assets/heavy_default.png" id="15_w1ifk"]
 [ext_resource type="ButtonGroup" uid="uid://d0gaqwru0vtef" path="res://map/battle_mode.tres" id="15_wnugf"]
 [ext_resource type="Texture2D" uid="uid://d3jwwa8lhksjk" path="res://units/medic_template/assets/medic_template.png" id="17_g0u07"]
+[ext_resource type="Texture2D" uid="uid://qjv44f7c7itf" path="res://units/elite_template/Assets/elite_template.png" id="18_8lto5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wnugf"]
 texture = ExtResource("3_ap8vc")
@@ -158,53 +157,8 @@ shape = SubResource("RectangleShape2D_757db")
 [node name="Player1" type="Node" parent="."]
 script = ExtResource("4_i5grx")
 
-[node name="unit_template" parent="Player1" instance=ExtResource("5_lct0g")]
-position = Vector2(520.795, 79.4)
-
-[node name="unit_template2" parent="Player1" instance=ExtResource("5_lct0g")]
-position = Vector2(588, 46)
-
-[node name="unit_template3" parent="Player1" instance=ExtResource("5_lct0g")]
-position = Vector2(513, 28)
-
-[node name="unit_template4" parent="Player1" instance=ExtResource("5_lct0g")]
-position = Vector2(549, 9)
-
-[node name="unit_template5" parent="Player1" instance=ExtResource("5_lct0g")]
-position = Vector2(479, 59)
-
-[node name="unit_template6" parent="Player1" instance=ExtResource("5_lct0g")]
-position = Vector2(478, -2)
-
-[node name="unit_template7" parent="Player1" instance=ExtResource("5_lct0g")]
-position = Vector2(443, 11)
-
-[node name="unit_template8" parent="Player1" instance=ExtResource("5_lct0g")]
-position = Vector2(436, 40)
-
-[node name="unit_template9" parent="Player1" instance=ExtResource("5_lct0g")]
-position = Vector2(434, 74)
-
-[node name="tank_template" parent="Player1" instance=ExtResource("6_k8tny")]
-position = Vector2(581, -80)
-rotation = 0.0104696
-
-[node name="tank_template2" parent="Player1" instance=ExtResource("6_k8tny")]
-position = Vector2(338, 110)
-rotation = 0.0104696
-
-[node name="tank_template3" parent="Player1" instance=ExtResource("6_k8tny")]
-position = Vector2(379, -65)
-rotation = 0.0104696
-
-[node name="sniper_template" parent="Player1" instance=ExtResource("7_lct0g")]
-position = Vector2(661, -161)
-
-[node name="sniper_template2" parent="Player1" instance=ExtResource("7_lct0g")]
-position = Vector2(216, 19)
-
-[node name="heavy_template" parent="Player1" instance=ExtResource("9_58xwf")]
-position = Vector2(540, 75)
+[node name="Unit Template" parent="Player1" instance=ExtResource("5_lct0g")]
+position = Vector2(214, -7)
 
 [node name="Player2" type="Node" parent="."]
 
@@ -284,7 +238,7 @@ size_flags_horizontal = 2
 texture_filter = 1
 layout_mode = 2
 
-[node name="BaseUnit" type="Button" parent="CanvasLayer/UnitButtons/HBoxContainer"]
+[node name="Unit" type="Button" parent="CanvasLayer/UnitButtons/HBoxContainer"]
 layout_mode = 2
 icon = ExtResource("9_112ik")
 alignment = 2
@@ -305,6 +259,10 @@ icon = ExtResource("15_w1ifk")
 [node name="Medic" type="Button" parent="CanvasLayer/UnitButtons/HBoxContainer"]
 layout_mode = 2
 icon = ExtResource("17_g0u07")
+
+[node name="Elite" type="Button" parent="CanvasLayer/UnitButtons/HBoxContainer"]
+layout_mode = 2
+icon = ExtResource("18_8lto5")
 
 [node name="ExtraButtons" type="PanelContainer" parent="CanvasLayer"]
 anchors_preset = 1
@@ -354,11 +312,12 @@ text = "Charge"
 [connection signal="pressed" from="CanvasLayer/HBoxContainer/Keep" to="Player1" method="_on_keep_pressed"]
 [connection signal="pressed" from="CanvasLayer/HBoxContainer/Direct" to="Player1" method="_on_direct_pressed"]
 [connection signal="pressed" from="CanvasLayer/HBoxContainer/Line" to="Player1" method="_on_line_pressed"]
-[connection signal="pressed" from="CanvasLayer/UnitButtons/HBoxContainer/BaseUnit" to="." method="_on_base_unit_pressed"]
+[connection signal="pressed" from="CanvasLayer/UnitButtons/HBoxContainer/Unit" to="." method="_on_base_unit_pressed"]
 [connection signal="pressed" from="CanvasLayer/UnitButtons/HBoxContainer/Tank" to="." method="_on_tank_pressed"]
 [connection signal="pressed" from="CanvasLayer/UnitButtons/HBoxContainer/Sniper" to="." method="_on_sniper_pressed"]
 [connection signal="pressed" from="CanvasLayer/UnitButtons/HBoxContainer/Heavy" to="." method="_on_heavy_pressed"]
 [connection signal="pressed" from="CanvasLayer/UnitButtons/HBoxContainer/Medic" to="." method="_on_medic_pressed"]
+[connection signal="pressed" from="CanvasLayer/UnitButtons/HBoxContainer/Elite" to="." method="_on_elite_pressed"]
 [connection signal="mouse_entered" from="CanvasLayer/ExtraButtons/Bin" to="." method="_on_bin_mouse_entered"]
 [connection signal="pressed" from="CanvasLayer/UnitModes/VBoxContainer/HBoxContainer/Static" to="." method="_on_mode_changed"]
 [connection signal="pressed" from="CanvasLayer/UnitModes/VBoxContainer/HBoxContainer/Charge" to="." method="_on_mode_changed"]

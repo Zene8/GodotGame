@@ -9,7 +9,7 @@ var shifting = false
 var dragging_unit = false
 var selecting_unit = null
 var selecting_unit_colour = null
-var button_vals = {"BaseUnit":{"button":Button, "val":10}, "Tank":{"button":Button, "val":5}, "Sniper":{"button":Button, "val":5}, "Heavy":{"button":Button, "val":5}, "Medic":{"button":Button, "val":5}}
+var button_vals = {"unit":{"button":Button, "val":1}, "tank":{"button":Button, "val":0}, "sniper":{"button":Button, "val":0}, "heavy":{"button":Button, "val":0}, "medic":{"button":Button, "val":0}, "elite":{"button":Button, "val":0}}
 var mode = "Setup"
 var player1units
 var player2units
@@ -17,16 +17,18 @@ var player2units
 func _ready() -> void:
 	select_area_shape = $Area2D/CollisionShape2D
 	select_area = $Area2D
-	button_vals["BaseUnit"].button = $CanvasLayer/UnitButtons/HBoxContainer/BaseUnit
-	button_vals["Tank"].button = $CanvasLayer/UnitButtons/HBoxContainer/Tank
-	button_vals["Sniper"].button = $CanvasLayer/UnitButtons/HBoxContainer/Sniper
-	button_vals["Heavy"].button = $CanvasLayer/UnitButtons/HBoxContainer/Heavy
-	button_vals["Medic"].button = $CanvasLayer/UnitButtons/HBoxContainer/Medic
-	button_vals["BaseUnit"].button.text = str(button_vals["BaseUnit"].val)
-	button_vals["Tank"].button.text = str(button_vals["Tank"].val)
-	button_vals["Sniper"].button.text = str(button_vals["Sniper"].val)
-	button_vals["Heavy"].button.text = str(button_vals["Heavy"].val)
-	button_vals["Medic"].button.text = str(button_vals["Medic"].val)
+	button_vals["unit"].button = $CanvasLayer/UnitButtons/HBoxContainer/Unit
+	button_vals["tank"].button = $CanvasLayer/UnitButtons/HBoxContainer/Tank
+	button_vals["sniper"].button = $CanvasLayer/UnitButtons/HBoxContainer/Sniper
+	button_vals["heavy"].button = $CanvasLayer/UnitButtons/HBoxContainer/Heavy
+	button_vals["medic"].button = $CanvasLayer/UnitButtons/HBoxContainer/Medic
+	button_vals["elite"].button = $CanvasLayer/UnitButtons/HBoxContainer/Elite
+	button_vals["unit"].button.text = str(button_vals["unit"].val)
+	button_vals["tank"].button.text = str(button_vals["tank"].val)
+	button_vals["sniper"].button.text = str(button_vals["sniper"].val)
+	button_vals["heavy"].button.text = str(button_vals["heavy"].val)
+	button_vals["medic"].button.text = str(button_vals["medic"].val)
+	button_vals["elite"].button.text = str(button_vals["elite"].val)
 	for enemy_unit in $Player2.get_children():
 		enemy_unit.visible = false
 		
@@ -106,17 +108,7 @@ func _input(event: InputEvent) -> void:
 		if selecting_unit.get_node("Area2D").get_overlapping_areas().size() == 0 and button_vals[dragging_unit].val > 0 and selecting_unit.get_node("Area2D").get_overlapping_bodies().size() == 0:
 			button_vals[dragging_unit].val -= 1
 			button_vals[dragging_unit].button.text = str(button_vals[dragging_unit].val)
-			var placed_unit = null
-			if dragging_unit == "BaseUnit":
-				placed_unit = preload("res://units/unit_template/unit_template.tscn").instantiate()
-			elif dragging_unit == "Tank":
-				placed_unit = preload("res://units/tank_template/tank_template.tscn").instantiate()
-			elif dragging_unit == "Sniper":
-				placed_unit = preload("res://units/sniper_template/sniper_template.tscn").instantiate()
-			elif dragging_unit == "Heavy":
-				placed_unit = preload("res://units/heavy_template/heavy_template.tscn").instantiate()
-			elif dragging_unit == "Medic":
-				placed_unit = preload("res://units/medic_template/medic_template.tscn").instantiate()
+			var placed_unit = load("res://units/" + dragging_unit + "_template/" + dragging_unit + "_template.tscn").instantiate()
 			$Player1.add_child(placed_unit)
 			placed_unit.position = selecting_unit.position
 	
@@ -149,48 +141,57 @@ func _on_bin_mouse_entered() -> void:
 		stop_dragging()
 
 func _on_base_unit_pressed() -> void:
-	if button_vals["BaseUnit"].val > 0 and mode == "Setup":
+	if button_vals["unit"].val > 0 and mode == "Setup":
 		if dragging_unit:
 			$Player1.remove_child(selecting_unit)
 			selecting_unit.queue_free()
-		dragging_unit = "BaseUnit"
+		dragging_unit = "unit"
 		selecting_unit = preload("res://units/unit_template/unit_template.tscn").instantiate()
 		set_up_placing_unit(selecting_unit)
 		
 func _on_tank_pressed() -> void:
-	if button_vals["Tank"].val > 0 and mode == "Setup":
+	if button_vals["tank"].val > 0 and mode == "Setup":
 		if dragging_unit:
 			$Player1.remove_child(selecting_unit)
 			selecting_unit.queue_free()	
-		dragging_unit = "Tank"
+		dragging_unit = "tank"
 		selecting_unit = preload("res://units/tank_template/tank_template.tscn").instantiate()
 		set_up_placing_unit(selecting_unit)
 		
 func _on_sniper_pressed() -> void:
-	if button_vals["Sniper"].val > 0 and mode == "Setup":
+	if button_vals["sniper"].val > 0 and mode == "Setup":
 		if dragging_unit:
 			$Player1.remove_child(selecting_unit)
 			selecting_unit.queue_free()	
-		dragging_unit = "Sniper"
+		dragging_unit = "sniper"
 		selecting_unit = preload("res://units/sniper_template/sniper_template.tscn").instantiate()
 		set_up_placing_unit(selecting_unit)
 
 func _on_heavy_pressed() -> void:
-	if button_vals["Heavy"].val > 0 and mode == "Setup":
+	if button_vals["heavy"].val > 0 and mode == "Setup":
 		if dragging_unit:
 			$Player1.remove_child(selecting_unit)
 			selecting_unit.queue_free()	
-		dragging_unit = "Heavy"
+		dragging_unit = "heavy"
 		selecting_unit = preload("res://units/heavy_template/heavy_template.tscn").instantiate()
 		set_up_placing_unit(selecting_unit)
 
 func _on_medic_pressed() -> void:
-	if button_vals["Medic"].val > 0 and mode == "Setup":
+	if button_vals["medic"].val > 0 and mode == "Setup":
 		if dragging_unit:
 			$Player1.remove_child(selecting_unit)
 			selecting_unit.queue_free()	
-		dragging_unit = "Medic"
+		dragging_unit = "medic"
 		selecting_unit = preload("res://units/medic_template/medic_template.tscn").instantiate()
+		set_up_placing_unit(selecting_unit)
+
+func _on_elite_pressed() -> void:
+	if button_vals["elite"].val > 0 and mode == "Setup":
+		if dragging_unit:
+			$Player1.remove_child(selecting_unit)
+			selecting_unit.queue_free()	
+		dragging_unit = "elite"
+		selecting_unit = preload("res://units/elite_template/elite_template.tscn").instantiate()
 		set_up_placing_unit(selecting_unit)
 
 func set_up_placing_unit(selecting_unit) -> void:
@@ -206,17 +207,7 @@ func _on_selecting_area_exited(area):
 	if Input.is_mouse_button_pressed(1) and selecting_unit.get_node("Area2D").get_overlapping_areas().size() < 1 and button_vals[dragging_unit].val > 0:
 		button_vals[dragging_unit].val -= 1
 		button_vals[dragging_unit].button.text = str(button_vals[dragging_unit].val)
-		var placed_unit = null
-		if dragging_unit == "BaseUnit":
-			placed_unit = preload("res://units/unit_template/unit_template.tscn").instantiate()
-		elif dragging_unit == "Tank":
-			placed_unit = preload("res://units/tank_template/tank_template.tscn").instantiate()
-		elif dragging_unit == "Sniper":
-			placed_unit = preload("res://units/sniper_template/sniper_template.tscn").instantiate()
-		elif dragging_unit == "Heavy":
-			placed_unit = preload("res://units/heavy_template/heavy_template.tscn").instantiate()
-		elif dragging_unit == "Medic":
-			placed_unit = preload("res://units/medic_template/medic_template.tscn").instantiate()
+		var placed_unit = load("res://units/" + dragging_unit + "_template/" + dragging_unit + "_template.tscn").instantiate()
 		$Player1.add_child(placed_unit)
 		placed_unit.position = selecting_unit.position
 		
@@ -231,3 +222,10 @@ func stop_dragging():
 	$Player1.remove_child(selecting_unit)
 	selecting_unit.queue_free()
 	dragging_unit = false
+
+func set_player_colours(player1_colour, player2_colour):
+	for unit in $Player1.get_children():
+		unit.set_unit_colour(player1_colour)
+	for unit in $Player2.get_children():
+		unit.set_unit_colour(player2_colour)
+	

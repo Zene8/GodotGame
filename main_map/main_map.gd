@@ -123,11 +123,12 @@ func _on_confirm_pressed() -> void:
 				real_zone.troops[real_troop_names[i]] -= int(slider.value)
 				troop_amounts[i] += int(slider.value)
 		var battle_scene = preload("res://map/map.tscn").instantiate()
-		battle_scene.button_vals["BaseUnit"].val = troop_amounts[0]
-		battle_scene.button_vals["Tank"].val = troop_amounts[4]
-		battle_scene.button_vals["Sniper"].val = troop_amounts[2]
-		battle_scene.button_vals["Heavy"].val = troop_amounts[1]
-		battle_scene.button_vals["Medic"].val = troop_amounts[3]
+		battle_scene.button_vals["unit"].val = troop_amounts[0]
+		battle_scene.button_vals["tank"].val = troop_amounts[4]
+		battle_scene.button_vals["sniper"].val = troop_amounts[2]
+		battle_scene.button_vals["heavy"].val = troop_amounts[1]
+		battle_scene.button_vals["medic"].val = troop_amounts[3]
+		battle_scene.set_player_colours(player_colour, targeted_zone.owner_colour)
 		SceneChange.emit(battle_scene)
 		for zone in select_zones.get_children():
 			zone.queue_free()
