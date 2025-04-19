@@ -3,14 +3,15 @@ signal Buy(amount)
 signal attacked(attacked_zone)
 enum Owners{RED,BLUE,YELLOW,GREEN,PURPLE,ORANGE}
 const OwnerColours = [Color(1,0,0,0.4),Color(0,0,1,0.4),Color(1,1,0.2,0.4),Color(0,1,0,0.4),Color(1,0,1,0.4),Color(1,0.4,0.1,0.4)]
-var troops = {"Basic":0,"Advanced":0,"Ranged":0,"Medic":0,"Tank":0}
+var troops = {"Basic":1,"Advanced":0,"Ranged":0,"Medic":0,"Tank":0,"Elite":0}
 var Money
 var basic
 var advanced
 var ranged
 var medic
 var tank
-var costs = {"Basic":10,"Advanced":15,"Ranged":12,"Medic":10,"Tank":30}
+var elite
+var costs = {"Basic":10,"Advanced":15,"Ranged":12,"Medic":10,"Tank":30,"Elite":20}
 var MoneyLabel
 var TroopCountLabel
 var owner_colour = Owners["RED"]
@@ -30,6 +31,7 @@ func _ready() -> void:
 	ranged = $CanvasLayer/Main_panel/MainV/Troops/Ranged/Rnumber
 	medic = $CanvasLayer/Main_panel/MainV/Troops/Medic/Mnumber
 	tank = $CanvasLayer/Main_panel/MainV/Troops/Tank/Tnumber
+	elite = $CanvasLayer/Main_panel/MainV/Troops/Elite/Enumber
 	MoneyLabel = $"CanvasLayer/Main_panel/MainV/Shop/HBoxContainer/MoneyLabel"
 	$"CanvasLayer/Main_panel".visible=false
 	TroopCountLabel = $TroopCount
@@ -46,13 +48,14 @@ func _input(event: InputEvent) -> void:
 func _process(_delta: float) -> void:
 	var parent = get_parent().get_parent()
 	if parent != null:
-		Money = parent.Money
+		Money = parent.player_money[owner_colour]
 		phase = parent.phase
 		basic.text = str(troops["Basic"])
 		advanced.text = str(troops["Advanced"])
 		ranged.text = str(troops["Ranged"])
 		medic.text = str(troops["Medic"])
 		tank.text = str(troops["Tank"])
+		elite.text = str(troops["Elite"])
 		MoneyLabel.text = str(Money)
 	TroopCountLabel.text = str(TroopCount())
 	sprite.frame = 9*(owner_colour+1) + 3
@@ -106,6 +109,10 @@ func _on_t_button_pressed() -> void:
 		troops["Tank"] +=1
 		Buy.emit(-costs["Tank"])
 	
+func _on_e_button_pressed() -> void:
+	if Money >= costs["Elite"]:
+		troops["Elite"] +=1
+		Buy.emit(-costs["Elite"])
 	
 func _on_exit_pressed() -> void:
 	$"CanvasLayer/Main_panel".visible=false

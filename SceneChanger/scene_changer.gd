@@ -13,7 +13,7 @@ func _ready() -> void:
 		
 func ChangeSceneToBattle(scene):
 	state = "Battle"
-	map_progress_bar.state = state
+	map_progress_bar.game_state = state
 	for scenes in get_children():
 		scenes.visible = false
 		scenes.get_child(-1).visible = false
@@ -23,7 +23,7 @@ func ChangeSceneToBattle(scene):
 
 func ChangeSceneToMap(Win,amount):
 	state = "Map"
-	map_progress_bar.state = state
+	map_progress_bar.game_state = state
 	Main_map.handle_battle(Win,amount)
 	Main_map.get_node("Camera2D").enabled = true
 	Main_map.visible = true

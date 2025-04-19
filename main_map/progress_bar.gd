@@ -20,8 +20,8 @@ func change_state(new_state):
 	state = new_state
 	value = 0
 	if new_state == "Attack Phase":
-		time = 60
+		time = 5 #60
 	elif new_state == "Buy Phase":
-		time = 15
+		time = 5 #15
 	get_parent().get_node("Label").text = new_state
 	state_changed.emit(new_state)

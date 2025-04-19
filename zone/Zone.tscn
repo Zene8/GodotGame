@@ -168,6 +168,19 @@ size_flags_horizontal = 8
 text = "0"
 horizontal_alignment = 2
 
+[node name="Elite" type="HBoxContainer" parent="CanvasLayer/Main_panel/MainV/Troops"]
+layout_mode = 2
+
+[node name="Etext" type="Label" parent="CanvasLayer/Main_panel/MainV/Troops/Elite"]
+layout_mode = 2
+text = "Elite"
+
+[node name="Enumber" type="Label" parent="CanvasLayer/Main_panel/MainV/Troops/Elite"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "0"
+horizontal_alignment = 2
+
 [node name="VSplitContainer" type="VSplitContainer" parent="CanvasLayer/Main_panel/MainV"]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
@@ -244,6 +257,18 @@ layout_mode = 2
 text = "30
 "
 
+[node name="Elite" type="HBoxContainer" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops"]
+layout_mode = 2
+
+[node name="EText" type="Label" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Elite"]
+layout_mode = 2
+text = "Elite"
+
+[node name="EButton" type="Button" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Elite"]
+layout_mode = 2
+text = "20
+"
+
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Main_panel/MainV/Shop"]
 layout_mode = 2
 alignment = 2
@@ -266,3 +291,4 @@ vertical_alignment = 1
 [connection signal="pressed" from="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Ranged/RButton" to="." method="_on_r_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Medic/MButton" to="." method="_on_m_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Tank/TButton" to="." method="_on_t_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Elite/EButton" to="." method="_on_e_button_pressed"]

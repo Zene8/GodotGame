@@ -13,6 +13,8 @@ var button_vals = {"unit":{"button":Button, "val":1}, "tank":{"button":Button, "
 var mode = "Setup"
 var player1units
 var player2units
+var player1_colour 
+var player2_colour
 
 func _ready() -> void:
 	select_area_shape = $Area2D/CollisionShape2D
@@ -44,19 +46,19 @@ func _process(_delta: float) -> void:
 		selecting_unit.position = mousepos
 	
 	if len(player2units.get_children()) == 0:
-		var units = [0,0,0,0,0]
-		var types = ["soldier","advanced","sniper","medic","tank"]
+		var units = [0,0,0,0,0,0]
+		var types = ["soldier","advanced","sniper","medic","tank","elite"]
 		for unit in player1units.get_children():
-			for i in range(5):
+			for i in range(6):
 				if unit.TYPE == types[i]:
 					units[i] += 1
 		BattleFinished.emit(true,units)
 		queue_free()
 	elif len(player1units.get_children()) == 0:
-		var units = [0,0,0,0,0]
-		var types = ["soldier","advanced","sniper","medic","tank"]
+		var units = [0,0,0,0,0,0]
+		var types = ["soldier","advanced","sniper","medic","tank","elite"]
 		for unit in player2units.get_children():
-			for i in range(5):
+			for i in range(6):
 				if unit.TYPE == types[i]:
 					units[i] += 1
 		BattleFinished.emit(false,units)
@@ -110,6 +112,7 @@ func _input(event: InputEvent) -> void:
 			button_vals[dragging_unit].button.text = str(button_vals[dragging_unit].val)
 			var placed_unit = load("res://units/" + dragging_unit + "_template/" + dragging_unit + "_template.tscn").instantiate()
 			$Player1.add_child(placed_unit)
+			placed_unit.set_unit_colour(player1_colour)
 			placed_unit.position = selecting_unit.position
 	
 	if event.is_action_pressed("R_click"):
@@ -208,8 +211,10 @@ func _on_selecting_area_exited(area):
 		button_vals[dragging_unit].val -= 1
 		button_vals[dragging_unit].button.text = str(button_vals[dragging_unit].val)
 		var placed_unit = load("res://units/" + dragging_unit + "_template/" + dragging_unit + "_template.tscn").instantiate()
+		placed_unit.set_unit_colour(player1_colour)
 		$Player1.add_child(placed_unit)
 		placed_unit.position = selecting_unit.position
+		
 		
 func _on_mode_changed() -> void:
 	for mode in $CanvasLayer/UnitModes/VBoxContainer/HBoxContainer.get_children():
@@ -223,7 +228,9 @@ func stop_dragging():
 	selecting_unit.queue_free()
 	dragging_unit = false
 
-func set_player_colours(player1_colour, player2_colour):
+func set_player_colours(player1_c, player2_c):
+	player1_colour = player1_c
+	player2_colour = player2_c
 	for unit in $Player1.get_children():
 		unit.set_unit_colour(player1_colour)
 	for unit in $Player2.get_children():
