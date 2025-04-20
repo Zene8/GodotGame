@@ -174,7 +174,7 @@ func end_game():
 
 func territories_owned(player):
 	var count = 0
-	for zone in zones:
+	for zone in zones.get_children():
 		if zone.owner_colour == player:
 			count += 1
 	return count
