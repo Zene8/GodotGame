@@ -11,6 +11,8 @@ var selecting_unit = null
 var selecting_unit_colour = null
 var button_vals = {"unit":{"button":Button, "val":1}, "tank":{"button":Button, "val":0}, "sniper":{"button":Button, "val":0}, "heavy":{"button":Button, "val":0}, "medic":{"button":Button, "val":0}, "elite":{"button":Button, "val":0}}
 var mode = "Setup"
+var rng = RandomNumberGenerator.new()
+var map = null
 var player1units
 var player2units
 var player1_colour 
@@ -33,10 +35,20 @@ func _ready() -> void:
 	button_vals["elite"].button.text = str(button_vals["elite"].val)
 	for enemy_unit in $Player2.get_children():
 		enemy_unit.visible = false
-		
 	
 	player1units = $Player1
 	player2units = $Player2
+	
+	var battle_map = preload("res://Battle_maps/battle_maps.tscn").instantiate()
+	var map_number = rng.randi_range(1, 3)
+	add_child(battle_map)
+	for a_map in battle_map.get_children():
+		if a_map.name == "Map" + str(map_number):
+			$Camera2D.set_camera_limits(a_map.get_used_rect().size)
+			map = a_map
+			map.enabled = true
+			for layer in map.get_children():
+				layer.enabled = true
 	
 	
 
@@ -45,7 +57,7 @@ func _process(_delta: float) -> void:
 		var mousepos = get_global_mouse_position()
 		selecting_unit.position = mousepos
 	
-	if len(player2units.get_children()) == 0:
+	if len(player2units.get_children()) == 0 and mode == "Battle":
 		var units = [0,0,0,0,0,0]
 		var types = ["soldier","advanced","sniper","medic","tank","elite"]
 		for unit in player1units.get_children():
@@ -54,7 +66,7 @@ func _process(_delta: float) -> void:
 					units[i] += 1
 		BattleFinished.emit(true,units)
 		queue_free()
-	elif len(player1units.get_children()) == 0:
+	elif len(player1units.get_children()) == 0 and mode == "Battle":
 		var units = [0,0,0,0,0,0]
 		var types = ["soldier","advanced","sniper","medic","tank","elite"]
 		for unit in player2units.get_children():
@@ -131,7 +143,8 @@ func _draw() -> void:
 func _on_progress_bar_state_changed(new_state) -> void:
 	if new_state == "Battle":
 		$CanvasLayer/UnitButtons.visible = false
-		$restricted_layer_player1.queue_free()
+		map.get_node("restricted_player1").queue_free()
+		map.get_node("restricted_player2").queue_free()
 		mode = new_state
 		for enemy_unit in $Player2.get_children():
 			enemy_unit.visible = true

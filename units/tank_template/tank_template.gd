@@ -65,7 +65,10 @@ func _physics_process(delta: float) -> void:
 			last_pos_count += 1
 	elif battle and battle_mode == "Charge" and target_unit == null:
 		move_and_slide()
-		velocity = Vector2(-1, 0) * base_speed
+		if player == 1:
+			velocity = Vector2(1, 0) * base_speed
+		elif player == 2:
+			velocity = Vector2(-1, 0) * base_speed
 		rotation_degrees = rad_to_deg(velocity.angle())+90
 
 func _draw() -> void:
