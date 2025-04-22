@@ -37,5 +37,5 @@ func _input(event: InputEvent) -> void:
 
 func set_camera_limits(map_limits):
 	print(map_limits)
-	#limit.x = map_limits.x * 16 - 150
-	#limit.y = map_limits.y * 16 - 40
+	limit.x = map_limits.x * 16 - 150
+	limit.y = map_limits.y * 16 - 40
