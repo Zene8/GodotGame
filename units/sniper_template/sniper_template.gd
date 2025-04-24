@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+const TYPE = "sniper"
 const max_health := 100.0
 var health := 100.0:
 	set(value):
@@ -22,6 +23,7 @@ var target = null
 var battle_mode = "Charge"
 const base_speed = 50
 const bullet_speed = 20
+const bullet_damage = 50
 
 func _process(delta: float) -> void:
 	queue_redraw()
@@ -57,9 +59,12 @@ func _physics_process(delta: float) -> void:
 					last_pos_count = 0
 					last_pos = position
 			last_pos_count += 1
-	elif battle and battle_mode == "Charge":
+	elif battle and battle_mode == "Charge" and target_unit == null:
 		move_and_slide()
-		velocity = Vector2(-1, 0) * base_speed
+		if player == 1:
+			velocity = Vector2(1, 0) * base_speed
+		elif player == 2:
+			velocity = Vector2(-1, 0) * base_speed
 		
 	
 func _draw() -> void:
@@ -74,23 +79,11 @@ func _draw() -> void:
 		if Vector2(shooting*(bullet_distance-0.9)).length() >= Vector2(target).length():
 			shooting = false
 			unit_hit = false
-			if target_unit.get("health") <= 50:
-				target_unit.damage(50)
+			if target_unit.get("health") <= bullet_damage:
+				target_unit.damage(bullet_damage)
 				target_unit = null
 			else:
-				target_unit.damage(50)
-	
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("shift"):
-		shifting = true
-	if event.is_action_released("shift"):
-		shifting = false
-	
-	if event.is_action_pressed("space") && selected:
-		if shifting:
-			health += 10
-		else:
-			health -= 10
+				target_unit.damage(bullet_damage)
 	
 func toggle_select():
 	if selected:
@@ -159,3 +152,6 @@ func damage(damage):
 
 func set_battle_mode(new_mode):
 	battle_mode = new_mode
+
+func set_unit_colour(colour_index):
+	$Sprite2D.frame = (colour_index + 1) * 9 + 7

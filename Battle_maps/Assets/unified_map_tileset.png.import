@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cf5uy0pxk83sp"
-path="res://.godot/imported/grass.png-b8a5521a1a761b679695db29e394da93.ctex"
+uid="uid://dakuynfq7pp54"
+path="res://.godot/imported/unified_map_tileset.png-c66b733e01acb6217c392ed52dc2f8e7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://map/assets/grass.png"
-dest_files=["res://.godot/imported/grass.png-b8a5521a1a761b679695db29e394da93.ctex"]
+source_file="res://Battle_maps/Assets/unified_map_tileset.png"
+dest_files=["res://.godot/imported/unified_map_tileset.png-c66b733e01acb6217c392ed52dc2f8e7.ctex"]
 
 [params]
 

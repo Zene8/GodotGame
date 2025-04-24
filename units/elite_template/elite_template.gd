@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
-const TYPE = "advanced"
-const max_health := 150.0
-var health := 150.0:
+const TYPE = "elite"
+const max_health := 250.0
+var health := 250.0:
 	set(value):
 		health = clamp(value,0,max_health)
 var selected := false
@@ -13,7 +13,7 @@ var last_pos := Vector2(0, 0)
 var last_pos_count = 1
 var battle = false
 var player = null
-var bloom = 0.3
+var bloom = 0.1
 var shooting = false
 var bullet_distance = 1
 var rng = RandomNumberGenerator.new()
@@ -21,9 +21,9 @@ var target_unit = null
 var unit_hit = false
 var target = null
 var battle_mode = "Charge"
-const base_speed = 50
-const bullet_speed = 10
-const bullet_damage = 20
+const base_speed = 75
+const bullet_speed = 18
+const bullet_damage = 50
 
 func _process(delta: float) -> void:
 	queue_redraw()
@@ -154,4 +154,4 @@ func set_battle_mode(new_mode):
 	battle_mode = new_mode
 
 func set_unit_colour(colour_index):
-	$Sprite2D.frame = (colour_index + 1) * 9 + 5
+	$Sprite2D.frame = (colour_index + 1) * 9 + 6

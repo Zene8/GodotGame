@@ -1,0 +1,57 @@
+[gd_scene load_steps=7 format=3 uid="uid://dwx3fc7kl44of"]
+
+[ext_resource type="Texture2D" uid="uid://c6n0wot20j1gx" path="res://Assets/main_spritesheet.png" id="1_khtev"]
+[ext_resource type="Script" uid="uid://n62o3sctiqk2" path="res://units/medic_template/medic_template.gd" id="1_q77ye"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_q77ye"]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qu1yr"]
+radius = 8.06226
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_o01du"]
+radius = 68.1836
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g56st"]
+radius = 36.0
+
+[node name="medic_template" type="CharacterBody2D"]
+script = ExtResource("1_q77ye")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_khtev")
+hframes = 9
+vframes = 7
+frame = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_q77ye")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_qu1yr")
+
+[node name="Vision" type="Area2D" parent="."]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Vision"]
+shape = SubResource("CircleShape2D_o01du")
+
+[node name="Reload" type="Timer" parent="."]
+
+[node name="Heal" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[node name="heal_area" type="Area2D" parent="."]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="heal_area"]
+shape = SubResource("CircleShape2D_g56st")
+
+[connection signal="area_entered" from="Vision" to="." method="_on_vision_area_entered"]
+[connection signal="area_exited" from="Vision" to="." method="_on_vision_area_exited"]
+[connection signal="timeout" from="Reload" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="Heal" to="." method="_on_heal_timeout"]
