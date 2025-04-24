@@ -34,3 +34,8 @@ func _input(event: InputEvent) -> void:
 			startpos = position
 	if event.is_action_released("L_click"):
 		dragging = false
+
+func set_camera_limits(map_limits):
+	print(map_limits)
+	limit.x = map_limits.x * 16 - 150
+	limit.y = map_limits.y * 16 - 40

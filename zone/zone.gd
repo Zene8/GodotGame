@@ -3,24 +3,25 @@ signal Buy(amount)
 signal attacked(attacked_zone)
 enum Owners{RED,BLUE,YELLOW,GREEN,PURPLE,ORANGE}
 const OwnerColours = [Color(1,0,0,0.4),Color(0,0,1,0.4),Color(1,1,0.2,0.4),Color(0,1,0,0.4),Color(1,0,1,0.4),Color(1,0.4,0.1,0.4)]
-var troops = {"Basic":0,"Advanced":0,"Ranged":0,"Medic":0,"Tank":0}
+@export var troops = {"Basic":1,"Advanced":0,"Ranged":0,"Medic":0,"Tank":0,"Elite":0}
 var Money
 var basic
 var advanced
 var ranged
 var medic
 var tank
-var costs = {"Basic":10,"Advanced":15,"Ranged":12,"Medic":10,"Tank":30}
+var elite
+var costs = {"Basic":10,"Advanced":15,"Ranged":12,"Medic":10,"Tank":30,"Elite":20}
 var MoneyLabel
 var TroopCountLabel
-var owner_colour = Owners["RED"]
+@export var owner_colour = Owners["RED"]
 var colour:
 	get:
 		return OwnerColours[owner_colour]
 var phase
 var sprite
-var selected := false
-var targeted := false
+@export var selected := false
+@export var targeted := false
 var shifting
 
 # Called when the node enters the scene tree for the first time.
@@ -30,10 +31,13 @@ func _ready() -> void:
 	ranged = $CanvasLayer/Main_panel/MainV/Troops/Ranged/Rnumber
 	medic = $CanvasLayer/Main_panel/MainV/Troops/Medic/Mnumber
 	tank = $CanvasLayer/Main_panel/MainV/Troops/Tank/Tnumber
+	elite = $CanvasLayer/Main_panel/MainV/Troops/Elite/Enumber
 	MoneyLabel = $"CanvasLayer/Main_panel/MainV/Shop/HBoxContainer/MoneyLabel"
 	$"CanvasLayer/Main_panel".visible=false
 	TroopCountLabel = $TroopCount
 	sprite = $Sprite2D
+	var title = $CanvasLayer/Main_panel/MainV/Header/Title
+	title.text = self.name
 	
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("shift"):
@@ -44,13 +48,14 @@ func _input(event: InputEvent) -> void:
 func _process(_delta: float) -> void:
 	var parent = get_parent().get_parent()
 	if parent != null:
-		Money = parent.Money
+		Money = parent.player_money[owner_colour]
 		phase = parent.phase
 		basic.text = str(troops["Basic"])
 		advanced.text = str(troops["Advanced"])
 		ranged.text = str(troops["Ranged"])
 		medic.text = str(troops["Medic"])
 		tank.text = str(troops["Tank"])
+		elite.text = str(troops["Elite"])
 		MoneyLabel.text = str(Money)
 	TroopCountLabel.text = str(TroopCount())
 	sprite.frame = 9*(owner_colour+1) + 3
@@ -64,7 +69,7 @@ func _draw() -> void:
 
 func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event.is_action_pressed("L_click"):
-		if get_parent().get_parent().player_colour == owner_colour:
+		if get_parent().get_parent().player_colour == owner_colour and owner_colour == multiplayer.get_unique_id() -1:
 			if phase == "Buy Phase":
 				for zone in get_parent().get_children():
 					zone.get_node("CanvasLayer").get_node("Main_panel").visible = false	
@@ -75,7 +80,7 @@ func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int
 						zone.selected = false
 				selected = true
 		else:
-			if phase == "Attack Phase" and targeted:
+			if phase == "Attack Phase" and targeted and owner_colour == multiplayer.get_unique_id():
 				attacked.emit(self)
 			
 
@@ -104,6 +109,10 @@ func _on_t_button_pressed() -> void:
 		troops["Tank"] +=1
 		Buy.emit(-costs["Tank"])
 	
+func _on_e_button_pressed() -> void:
+	if Money >= costs["Elite"]:
+		troops["Elite"] +=1
+		Buy.emit(-costs["Elite"])
 	
 func _on_exit_pressed() -> void:
 	$"CanvasLayer/Main_panel".visible=false

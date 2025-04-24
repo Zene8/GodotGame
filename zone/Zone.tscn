@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bij712nq680ap"]
+[gd_scene load_steps=10 format=3 uid="uid://bij712nq680ap"]
 
 [ext_resource type="Script" uid="uid://bn7xidv22h4qw" path="res://zone/zone.gd" id="1_bj4vl"]
 [ext_resource type="Texture2D" uid="uid://c6n0wot20j1gx" path="res://Assets/main_spritesheet.png" id="2_vcget"]
@@ -25,6 +25,20 @@ font_color = Color(0.345098, 0.541176, 0.411765, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_8sry5"]
 font_size = 17
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_vcget"]
+properties/0/path = NodePath(".:owner_colour")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:selected")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:troops")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath(".:targeted")
+properties/3/spawn = true
+properties/3/replication_mode = 1
 
 [node name="Zone" type="Node2D"]
 script = ExtResource("1_bj4vl")
@@ -168,6 +182,19 @@ size_flags_horizontal = 8
 text = "0"
 horizontal_alignment = 2
 
+[node name="Elite" type="HBoxContainer" parent="CanvasLayer/Main_panel/MainV/Troops"]
+layout_mode = 2
+
+[node name="Etext" type="Label" parent="CanvasLayer/Main_panel/MainV/Troops/Elite"]
+layout_mode = 2
+text = "Elite"
+
+[node name="Enumber" type="Label" parent="CanvasLayer/Main_panel/MainV/Troops/Elite"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "0"
+horizontal_alignment = 2
+
 [node name="VSplitContainer" type="VSplitContainer" parent="CanvasLayer/Main_panel/MainV"]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
@@ -244,6 +271,18 @@ layout_mode = 2
 text = "30
 "
 
+[node name="Elite" type="HBoxContainer" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops"]
+layout_mode = 2
+
+[node name="EText" type="Label" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Elite"]
+layout_mode = 2
+text = "Elite"
+
+[node name="EButton" type="Button" parent="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Elite"]
+layout_mode = 2
+text = "20
+"
+
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Main_panel/MainV/Shop"]
 layout_mode = 2
 alignment = 2
@@ -259,6 +298,9 @@ size_flags_horizontal = 8
 text = "100"
 vertical_alignment = 1
 
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_vcget")
+
 [connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]
 [connection signal="pressed" from="CanvasLayer/Main_panel/MainV/Header/Exit" to="." method="_on_exit_pressed"]
 [connection signal="pressed" from="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Basic/BButton" to="." method="_on_b_button_pressed"]
@@ -266,3 +308,4 @@ vertical_alignment = 1
 [connection signal="pressed" from="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Ranged/RButton" to="." method="_on_r_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Medic/MButton" to="." method="_on_m_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Tank/TButton" to="." method="_on_t_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Main_panel/MainV/Shop/Shop Troops/Elite/EButton" to="." method="_on_e_button_pressed"]

@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
-const TYPE = "advanced"
-const max_health := 150.0
-var health := 150.0:
+const TYPE = "medic"
+const max_health := 50.0
+var health := 50.0:
 	set(value):
 		health = clamp(value,0,max_health)
 var selected := false
@@ -20,10 +20,10 @@ var rng = RandomNumberGenerator.new()
 var target_unit = null
 var unit_hit = false
 var target = null
-var battle_mode = "Charge"
+var battle_mode = "Follow"
 const base_speed = 50
-const bullet_speed = 10
-const bullet_damage = 20
+const bullet_speed = 15
+const bullet_damage = 5
 
 func _process(delta: float) -> void:
 	queue_redraw()
@@ -36,13 +36,16 @@ func _ready() -> void:
 		vision_detection.set_collision_mask_value(1, false)
 		$Area2D.set_collision_layer_value(1, true)
 		$Area2D.set_collision_layer_value(2, false)
+		$heal_area.set_collision_mask_value(1, true)
+		$heal_area.set_collision_mask_value(2, false)
 	else:
 		player = 2
 		vision_detection.set_collision_mask_value(1, true)
 		vision_detection.set_collision_mask_value(2, false)
 		$Area2D.set_collision_layer_value(2, true)
 		$Area2D.set_collision_layer_value(1, false)
-	
+		$heal_area.set_collision_mask_value(2, true)
+		$heal_area.set_collision_mask_value(1, false)
 func _physics_process(delta: float) -> void:
 	if moving:
 		if shooting:
@@ -103,7 +106,7 @@ func set_moving(val):
 	moving = val
 
 func _on_vision_area_entered(area: Area2D) -> void:
-	if $Reload.time_left == 0.0:
+	if $Reload.time_left == 0.0 and area.get_parent().get_parent().name != "Player" + str(player):
 		if target_unit == null:
 			target_unit = area.get_parent()
 		shooting = (area.get_parent().position - position).rotated(-rotation+rng.randf_range(-bloom, bloom))
@@ -153,5 +156,11 @@ func damage(damage):
 func set_battle_mode(new_mode):
 	battle_mode = new_mode
 
+func _on_heal_timeout() -> void:
+	if $heal_area.has_overlapping_areas():
+		for area in $heal_area.get_overlapping_areas():
+			area.get_parent().damage(-10)
+	$Heal.start()
+
 func set_unit_colour(colour_index):
-	$Sprite2D.frame = (colour_index + 1) * 9 + 5
+	$Sprite2D.frame = (colour_index + 1) * 9 + 8
