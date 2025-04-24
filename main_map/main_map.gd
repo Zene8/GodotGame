@@ -6,7 +6,10 @@ const OwnerColours = [Color(1,0,0,0.7),Color(0,0,1,0.7),Color(1,1,0.2,0.7),Color
 var colour:
 	get:
 		return OwnerColours[player_colour]
-var player_money = [0,0,0,0,0,0]
+var multiplayer_colour:
+	get:
+		return OwnerColours[multiplayer_id]
+@export var player_money = [0,0,0,0,0,0]
 var Start_Money = 100
 var edges
 var phase = "Buy Phase"
@@ -16,9 +19,12 @@ var zones
 var players = 2
 var attackpanel
 var targeted_zone
+@onready var multiplayer_id = multiplayer.get_unique_id() - 1
 # Called when the node enters the tree for the first time.
 
 func _ready() -> void:
+	var panel = $CanvasLayer/Player_colour
+	panel.get("theme_override_styles/panel").border_color = multiplayer_colour
 	for i in range(len(player_money)):
 		player_money[i] = Start_Money
 	edges = [[$Zones/nw_africa,$Zones/western_europe,0],[$Zones/western_europe,$Zones/UK,0],[$Zones/western_europe,$Zones/ne_europe,0],[$Zones/west_russia,$Zones/ne_europe,0],[$Zones/west_russia,$Zones/russia_stan,0],[$Zones/west_russia,$Zones/scandanavia,0],[$Zones/middle_east,$Zones/ne_europe,0],[$Zones/UK,$Zones/greenland,1],[$Zones/UK,$Zones/scandanavia,1],[$Zones/nw_africa,$Zones/ne_africa,0],[$Zones/ne_africa,$Zones/s_africa,0],[$Zones/sw_africa,$Zones/ne_africa,0],[$Zones/sw_africa,$Zones/nw_africa,0],[$Zones/sw_africa,$Zones/s_africa,0],[$Zones/middle_east,$Zones/ne_africa,0],[$Zones/sw_africa,$Zones/nw_africa,0],[$Zones/russia_stan,$Zones/west_russia,0],[$Zones/north_russia,$Zones/russia_stan,0],[$Zones/russia_stan,$Zones/russia_mongolia,0],[$Zones/north_russia,$Zones/russia_mongolia,0],[$Zones/north_russia,$Zones/far_east,0],[$Zones/far_east,$Zones/russia_mongolia,0],[$Zones/middle_east,$Zones/india,0],[$Zones/china,$Zones/india,0],[$Zones/china,$Zones/russia_mongolia,0],[$Zones/china,$Zones/islands,0],[$Zones/india,$Zones/islands,0],[$Zones/west_australia,$Zones/islands,1],[$Zones/east_australia,$Zones/islands,1],[$Zones/west_australia,$Zones/east_australia,0],[$Zones/ne_south_america,$Zones/nw_south_america,0],[$Zones/s_south_america,$Zones/nw_south_america,0],[$Zones/s_south_america,$Zones/ne_south_america,0],[$Zones/sw_africa,$Zones/ne_south_america,1],[$Zones/west_america,$Zones/nw_south_america,0],[$Zones/west_america,$Zones/canada,0],[$Zones/west_america,$Zones/east_america,0],[$Zones/east_america,$Zones/greenland,0],[$Zones/canada,$Zones/greenland,0],[$Zones/russia_stan,$Zones/india,0]]
@@ -50,7 +56,7 @@ func _process(delta: float) -> void:
 				
 	queue_redraw()
 	if win:
-		end_game()
+		end_game.rpc()
 	
 func _draw() -> void:
 	for edge in edges:
@@ -62,11 +68,12 @@ func _draw() -> void:
 			draw_line(edge[0].position,edge[1].position,Color.BLUE,3)
 			
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("L_click"):
-		var mousepos = get_global_mouse_position()
-	if event.is_action_pressed("R_click") and phase == "Attack Phase":
-		for zone in zones.get_children():
-			zone.selected = false
+	if player_colour == multiplayer_id:
+		if event.is_action_pressed("L_click"):
+			var mousepos = get_global_mouse_position()
+		if event.is_action_pressed("R_click") and phase == "Attack Phase":
+			for zone in zones.get_children():
+				zone.selected = false
 			
 func change_money(amount):
 	player_money[player_colour] += amount
@@ -169,6 +176,7 @@ func handle_battle(Win,amount):
 		targeted_zone.troops["Tank"] = amount[4]
 		targeted_zone.troops["Elite"] = amount[5]
 
+@rpc("call_local")
 func end_game():
 	pass
 
@@ -178,6 +186,7 @@ func territories_owned(player):
 		if zone.owner_colour == player:
 			count += 1
 	return count
+
 
 func add_money():
 	for i in range(players):

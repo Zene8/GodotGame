@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://bca11qet1it2i"]
+[gd_scene load_steps=41 format=3 uid="uid://bca11qet1it2i"]
 
 [ext_resource type="Script" uid="uid://bficd2k176r4b" path="res://main_map/main_map.gd" id="1_igodi"]
 [ext_resource type="Texture2D" uid="uid://c8vd6ne6h853c" path="res://main_map/assets/map biomes.png" id="2_k1ppp"]
@@ -35,6 +35,14 @@
 [ext_resource type="Texture2D" uid="uid://p70n4n3ebbqq" path="res://zone/assets/menu_confirm.png" id="33_vweho"]
 [ext_resource type="Texture2D" uid="uid://dyxmiirfqk67s" path="res://zone/assets/Menu_Exit.png" id="34_innk3"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vweho"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+draw_center = false
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+
 [sub_resource type="LabelSettings" id="LabelSettings_ob7o4"]
 font_size = 27
 
@@ -53,6 +61,11 @@ corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_vweho"]
+properties/0/path = NodePath(".:player_money")
+properties/0/spawn = true
+properties/0/replication_mode = 1
 
 [node name="Main_map" type="Node2D"]
 script = ExtResource("1_igodi")
@@ -323,6 +336,16 @@ script = ExtResource("6_rf157")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
+[node name="Player_colour" type="Panel" parent="CanvasLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_vweho")
+
 [node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
 anchors_preset = 10
 anchor_right = 1.0
@@ -377,6 +400,9 @@ icon = ExtResource("33_vweho")
 [node name="Cancel" type="Button" parent="CanvasLayer/attack_panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 icon = ExtResource("34_innk3")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_vweho")
 
 [connection signal="state_changed" from="CanvasLayer/PanelContainer/ProgressBar" to="." method="_on_progress_bar_state_changed"]
 [connection signal="pressed" from="CanvasLayer/attack_panel/VBoxContainer/HBoxContainer/Confirm" to="." method="_on_confirm_pressed"]

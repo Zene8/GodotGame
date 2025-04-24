@@ -3,7 +3,7 @@ signal Buy(amount)
 signal attacked(attacked_zone)
 enum Owners{RED,BLUE,YELLOW,GREEN,PURPLE,ORANGE}
 const OwnerColours = [Color(1,0,0,0.4),Color(0,0,1,0.4),Color(1,1,0.2,0.4),Color(0,1,0,0.4),Color(1,0,1,0.4),Color(1,0.4,0.1,0.4)]
-var troops = {"Basic":1,"Advanced":0,"Ranged":0,"Medic":0,"Tank":0,"Elite":0}
+@export var troops = {"Basic":1,"Advanced":0,"Ranged":0,"Medic":0,"Tank":0,"Elite":0}
 var Money
 var basic
 var advanced
@@ -14,14 +14,14 @@ var elite
 var costs = {"Basic":10,"Advanced":15,"Ranged":12,"Medic":10,"Tank":30,"Elite":20}
 var MoneyLabel
 var TroopCountLabel
-var owner_colour = Owners["RED"]
+@export var owner_colour = Owners["RED"]
 var colour:
 	get:
 		return OwnerColours[owner_colour]
 var phase
 var sprite
-var selected := false
-var targeted := false
+@export var selected := false
+@export var targeted := false
 var shifting
 
 # Called when the node enters the scene tree for the first time.
@@ -69,7 +69,7 @@ func _draw() -> void:
 
 func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event.is_action_pressed("L_click"):
-		if get_parent().get_parent().player_colour == owner_colour:
+		if get_parent().get_parent().player_colour == owner_colour and owner_colour == multiplayer.get_unique_id() -1:
 			if phase == "Buy Phase":
 				for zone in get_parent().get_children():
 					zone.get_node("CanvasLayer").get_node("Main_panel").visible = false	
@@ -80,7 +80,7 @@ func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int
 						zone.selected = false
 				selected = true
 		else:
-			if phase == "Attack Phase" and targeted:
+			if phase == "Attack Phase" and targeted and owner_colour == multiplayer.get_unique_id():
 				attacked.emit(self)
 			
 
