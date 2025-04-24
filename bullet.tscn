@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://bfhot2v8m2tus"]
+
+[ext_resource type="Script" uid="uid://bxj4co7vq7kme" path="res://bullet.gd" id="1_v7oki"]
+[ext_resource type="Texture2D" uid="uid://bkxvo4hoqu17v" path="res://New Piskel-1.png.png" id="2_v8qja"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_t4vbm"]
+radius = 2.0
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_v7oki"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:speed")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:rotation")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath(".:shooter_id")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+
+[node name="Bullet" type="Area2D"]
+script = ExtResource("1_v7oki")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(1.6, 1.6)
+shape = SubResource("CircleShape2D_t4vbm")
+
+[node name="BulletSync" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_v7oki")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_v8qja")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

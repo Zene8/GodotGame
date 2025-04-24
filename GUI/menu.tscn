@@ -1,11 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://26f3hx8n0hyk"]
+[gd_scene load_steps=14 format=3 uid="uid://26f3hx8n0hyk"]
 
 [ext_resource type="Script" uid="uid://5kbvpjb0f2un" path="res://GUI/menu.gd" id="1_o1bug"]
 [ext_resource type="FontFile" uid="uid://bm23rhih55byl" path="res://ArchitectsDaughter.ttf" id="2_bi43m"]
 [ext_resource type="Texture2D" uid="uid://b1eiw26vec2x8" path="res://Assets/mainMenu.jpg" id="4_ar3vo"]
-[ext_resource type="PackedScene" uid="uid://c7osil6s5ri2r" path="res://GUI/option_container.tscn" id="5_go3ra"]
+[ext_resource type="PackedScene" uid="uid://c7osil6s5ri2r" path="res://GUI/settings.tscn" id="5_go3ra"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ytr4m"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ldfg3"]
 bg_color = Color(0.278431, 0.109804, 0.0509804, 0.752941)
 border_color = Color(0.8, 0.8, 0.8, 0)
 corner_radius_top_left = 5
@@ -15,7 +15,7 @@ corner_radius_bottom_left = 5
 shadow_size = 2
 shadow_offset = Vector2(2, -2)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l48gv"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o1bug"]
 bg_color = Color(0.278431, 0.109804, 0.0509804, 0.905882)
 border_color = Color(0.8, 0.8, 0.8, 0)
 corner_radius_top_left = 5
@@ -25,7 +25,7 @@ corner_radius_bottom_left = 5
 shadow_size = 2
 shadow_offset = Vector2(2, -2)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ecwwl"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bi43m"]
 bg_color = Color(0.278431, 0.109804, 0.0509804, 0.568627)
 border_color = Color(0.8, 0.8, 0.8, 0)
 corner_radius_top_left = 5
@@ -49,11 +49,9 @@ Button/colors/icon_hover_color = Color(1, 1, 1, 0)
 Button/colors/icon_hover_pressed_color = Color(1, 1, 1, 0)
 Button/colors/icon_normal_color = Color(1, 1, 1, 0)
 Button/colors/icon_pressed_color = Color(1, 1, 1, 0)
-Button/styles/focus = SubResource("StyleBoxFlat_ytr4m")
-Button/styles/hover = SubResource("StyleBoxFlat_l48gv")
-Button/styles/normal = SubResource("StyleBoxFlat_ecwwl")
-
-[sub_resource type="GDScript" id="GDScript_o1bug"]
+Button/styles/focus = SubResource("StyleBoxFlat_ldfg3")
+Button/styles/hover = SubResource("StyleBoxFlat_o1bug")
+Button/styles/normal = SubResource("StyleBoxFlat_bi43m")
 
 [sub_resource type="Animation" id="Animation_l48gv"]
 length = 0.001
@@ -158,6 +156,7 @@ mouse_filter = 1
 script = ExtResource("1_o1bug")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
 
 [node name="MainMenuCont" type="VBoxContainer" parent="CanvasLayer"]
 unique_name_in_owner = true
@@ -176,7 +175,6 @@ layout_mode = 2
 focus_neighbor_top = NodePath("../Exit")
 focus_neighbor_bottom = NodePath("../Multiplayer")
 text = "Singleplayer"
-script = SubResource("GDScript_o1bug")
 
 [node name="Multiplayer" type="Button" parent="CanvasLayer/MainMenuCont"]
 layout_mode = 2
@@ -228,7 +226,7 @@ libraries = {
 &"": SubResource("AnimationLibrary_ecwwl")
 }
 
-[node name="background1" type="TextureRect" parent="CanvasLayer"]
+[node name="background" type="TextureRect" parent="CanvasLayer"]
 z_index = -1
 anchors_preset = 15
 anchor_right = 1.0
@@ -247,26 +245,6 @@ visible = true
 offset_top = -269.5
 offset_bottom = 269.5
 mouse_filter = 2
-
-[node name="gameListNode" type="Control" parent="CanvasLayer"]
-unique_name_in_owner = true
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(11.46, 16.2026)
-
-[node name="gameList" type="ItemList" parent="CanvasLayer/gameListNode"]
-layout_mode = 0
-offset_left = 28.7086
-offset_top = 5.06092
-offset_right = 71.7085
-offset_bottom = 35.0609
-theme_override_font_sizes/font_size = 3
-auto_width = true
-wraparound_items = false
 
 [connection signal="pressed" from="CanvasLayer/MainMenuCont/Singleplayer" to="." method="_on_singleplayer_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenuCont/Multiplayer" to="." method="_on_multiplayer_pressed"]

@@ -92,3 +92,8 @@ func _on_apply_button_pressed():
 
 func _on_vsync_option_button_item_selected(index):
 	vsync = index
+
+
+func _on_return_button_pressed() -> void:
+	
+	pass # Replace with function body.

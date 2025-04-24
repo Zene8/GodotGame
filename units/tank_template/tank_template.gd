@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+const TYPE = "tank"
 const max_health := 500.0
 var health := 500:
 	set(value):
@@ -22,6 +23,7 @@ var target = null
 var battle_mode = "Charge"
 const base_speed = 25
 const bullet_speed = 10
+const bullet_damage = 100
 
 func _ready() -> void:
 	var vision_detection = $Vision
@@ -76,11 +78,11 @@ func _draw() -> void:
 		if Vector2(shooting*(bullet_distance-0.9)).length() >= Vector2(target).length():
 			shooting = false
 			unit_hit = false
-			if target_unit.get("health") <= 100:
-				target_unit.damage(100)
+			if target_unit.get("health") <= bullet_damage:
+				target_unit.damage(bullet_damage)
 				target_unit = null
 			else:
-				target_unit.damage(100)
+				target_unit.damage(bullet_damage)
 			
 	
 func _input(event: InputEvent) -> void:

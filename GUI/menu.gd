@@ -6,17 +6,17 @@ extends Control
 @onready var OptionsContainer = get_node("%OptionContainer")
 @onready var button = get_node("CanvasLayer/OptionContainer/Container/Apply_button")
 @onready var button2 = get_node("CanvasLayer/OptionContainer/Container/Return_button")
-@onready var GameList = get_node("%gameListNode")
-@onready var lobby_scene = preload("res://Multiplayer/multiplayer.tscn") 
+@onready var lobby_scene = preload("res://Multiplayer/multiplayer.tscn")  # Load the lobby scene
 
 	
 
 
 func _ready():
+	
+
 	button.pressed.connect(_on_child_button_pressed)
 	button2.pressed.connect(_on_child_button_pressed)
 	OptionsContainer.visible = false
-	GameList.visible = false
 	main_container.get_node("Singleplayer").grab_focus()
 	
 
@@ -76,14 +76,18 @@ func _on_quit_confirmed():
 
 
 
-
 func _on_create_game_pressed() -> void:
-	var response = NetworkManager.host_game()  # Calls the host function from NetworkManager
-	if(response):
+	var error = NetworkManager.host_game()
+	if error:
+		print("❌ Failed to host game. Error code:", error)
+	else:
 		get_tree().change_scene_to_packed(lobby_scene)  # Switch to the lobby
 
 
+
 func _on_join_game_pressed() -> void:
-	var response = NetworkManager.join_game()  # Calls the host function from NetworkManager
-	if(response):
+	var error = NetworkManager.join_game()
+	if error:
+		print("❌ Failed to join game. Error code:", error)
+	else:
 		get_tree().change_scene_to_packed(lobby_scene)  # Switch to the lobby

@@ -1,0 +1,59 @@
+[gd_scene load_steps=2 format=3 uid="uid://bjipf33trn6xx"]
+
+[ext_resource type="Script" uid="uid://bq51mfhri6rpv" path="res://GUI/player_list.gd" id="1_2drdv"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="PlayerList" type="Control" parent="."]
+z_index = 10
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+metadata/_edit_lock_ = true
+
+[node name="PlayerList" type="CanvasLayer" parent="PlayerList"]
+follow_viewport_enabled = true
+script = ExtResource("1_2drdv")
+
+[node name="Panel" type="Panel" parent="PlayerList/PlayerList"]
+offset_left = 179.0
+offset_right = 1001.0
+offset_bottom = 464.0
+mouse_filter = 1
+
+[node name="StartGame" type="Button" parent="PlayerList/PlayerList/Panel"]
+layout_mode = 0
+offset_left = 636.0
+offset_top = 404.0
+offset_right = 789.0
+offset_bottom = 447.0
+text = "Start Game"
+
+[node name="Disconnect" type="Button" parent="PlayerList/PlayerList/Panel"]
+layout_mode = 0
+offset_left = 44.0
+offset_top = 404.0
+offset_right = 197.0
+offset_bottom = 447.0
+text = "Disconnnect"
+
+[node name="PlayerList" type="ItemList" parent="PlayerList/PlayerList/Panel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 13.0
+offset_top = 16.0
+offset_right = -13.0
+offset_bottom = -74.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[connection signal="pressed" from="PlayerList/PlayerList/Panel/StartGame" to="PlayerList/PlayerList" method="_on_start_game_pressed"]
+[connection signal="pressed" from="PlayerList/PlayerList/Panel/Disconnect" to="PlayerList/PlayerList" method="_on_disconnect_pressed"]

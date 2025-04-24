@@ -1,53 +1,78 @@
-[gd_scene load_steps=4 format=3 uid="uid://2di75bhoq6qp"]
+[gd_scene load_steps=9 format=3 uid="uid://2di75bhoq6qp"]
 
-[ext_resource type="Script" uid="uid://b7ac210h2k2e5" path="res://Multiplayer/network.gd" id="1_lykk2"]
-[ext_resource type="PackedScene" uid="uid://bjipf33trn6xx" path="res://player_list.tscn" id="2_vctqx"]
+[ext_resource type="Script" uid="uid://by533e7pjwwlq" path="res://Multiplayer/multiplayer.gd" id="1_vctqx"]
+[ext_resource type="PackedScene" uid="uid://cqq2hhmfu7rgp" path="res://tank_player.tscn" id="2_5njq1"]
+[ext_resource type="PackedScene" uid="uid://bjipf33trn6xx" path="res://GUI/player_list.tscn" id="2_vctqx"]
 [ext_resource type="Texture2D" uid="uid://c8vd6ne6h853c" path="res://main_map/assets/map biomes.png" id="3_vctqx"]
+[ext_resource type="PackedScene" uid="uid://bfhot2v8m2tus" path="res://bullet.tscn" id="3_wt4ht"]
 
-[node name="Multiplayer" type="Node"]
-script = ExtResource("1_lykk2")
+[sub_resource type="GDScript" id="GDScript_wt4ht"]
+script/source = "extends Node2D
+
+@export var tank_scene: PackedScene
+@onready var minigame_container = get_node(\".\")
+
+# Spawning all tanks for the players
+func _ready():
+	if multiplayer.is_server():
+		# Wait until all players are loaded before spawning tanks
+		NetworkManager.player_connected.connect(_on_peer_connected)
+
+# Function to spawn a specific player's tank
+@rpc(\"authority\")
+func spawn_tank(id):
+	if multiplayer.is_server():
+		if tank_scene == null:
+			print(\"❌ Error: tank_scene is not set!\")
+			return
+
+		print(\"✅ Spawning tank for player:\", id)
+		var tank = tank_scene.instantiate()  # Local instantiation within function
+		tank.set_multiplayer_authority(id)  # Assign correct authority
+		minigame_container.add_child(tank)  # Add tank to minigame container
+
+# Server-side function to spawn tanks for all players
+func spawn_all_tanks():
+	print(\"Spawning tanks for all players...\")
+	# Ensure all players are fully loaded before spawning
+	for peer_id in multiplayer.get_peers():
+		spawn_tank(peer_id)  # Spawn tank for each peer (player)
+
+# Handle the player load notification
+@rpc(\"any_peer\", \"reliable\", \"call_local\")
+func player_loaded():
+	if multiplayer.is_server():
+		# This will call spawn_all_tanks once all players have loaded
+		print(\"All players loaded, spawning tanks...\")
+		spawn_all_tanks()
+
+# When a new player connects, we can check if all players are ready
+func _on_peer_connected(id):
+	# Send a signal to notify this player that they have finished loading
+	print(\"Player %d connected, notifying that they are ready.\" % id)
+	player_loaded()  # Send the player_loaded notification to all peers
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wt4ht"]
+size = Vector2(953, 492)
+
+[sub_resource type="GDScript" id="GDScript_5njq1"]
+script/source = "extends MultiplayerSpawner
+
+func get_spawn_position() -> Vector2:
+	var spawn_points = get_children().filter(func(c): return c is Marker2D)
+	if spawn_points.is_empty():
+		return Vector2(randf_range(0, 1024), randf_range(0, 600))
+	return spawn_points.pick_random().global_position
+"
+
+[node name="LobbyScene" type="Node2D"]
+script = ExtResource("1_vctqx")
+tank_scene = ExtResource("2_5njq1")
+bullet_scene = ExtResource("3_wt4ht")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="UI" type="Control" parent="CanvasLayer"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-scale = Vector2(11.46, 16.2026)
-
-[node name="PlayerList" parent="CanvasLayer/UI" instance=ExtResource("2_vctqx")]
-layout_mode = 1
-
-[node name="Disconnect" type="Button" parent="CanvasLayer"]
-anchors_preset = -1
-anchor_left = 0.326
-anchor_top = 0.92
-anchor_right = 0.326
-anchor_bottom = 0.92
-offset_left = -362.552
-offset_top = -3.16003
-offset_right = -255.552
-offset_bottom = 38.84
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-text = "Disconnect"
-
-[node name="Start Game" type="Button" parent="CanvasLayer"]
-anchors_preset = -1
-anchor_left = 0.326
-anchor_top = 0.92
-anchor_right = 0.326
-anchor_bottom = 0.92
-offset_left = 647.448
-offset_top = -4.16003
-offset_right = 754.448
-offset_bottom = 37.84
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-text = "Start Game"
+follow_viewport_enabled = true
 
 [node name="background" type="TextureRect" parent="CanvasLayer"]
 z_index = -11
@@ -61,4 +86,37 @@ size_flags_vertical = 3
 texture = ExtResource("3_vctqx")
 metadata/_edit_lock_ = true
 
-[connection signal="pressed" from="CanvasLayer/Disconnect" to="." method="_on_disconnect_pressed"]
+[node name="tankGame" type="Area2D" parent="CanvasLayer"]
+position = Vector2(585, 326)
+script = SubResource("GDScript_wt4ht")
+tank_scene = ExtResource("2_5njq1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/tankGame"]
+position = Vector2(-6, -10)
+shape = SubResource("RectangleShape2D_wt4ht")
+
+[node name="PlayerList" parent="CanvasLayer" instance=ExtResource("2_vctqx")]
+z_index = 6
+scale = Vector2(11.46, 16.2026)
+
+[node name="TankSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("uid://cqq2hhmfu7rgp")
+spawn_path = NodePath("../CanvasLayer/tankGame")
+script = SubResource("GDScript_5njq1")
+
+[node name="Marker2D" type="Marker2D" parent="TankSpawner"]
+position = Vector2(911, 125)
+
+[node name="Marker2D2" type="Marker2D" parent="TankSpawner"]
+position = Vector2(132, 122)
+
+[node name="Marker2D3" type="Marker2D" parent="TankSpawner"]
+position = Vector2(585, 358)
+
+[node name="Marker2D4" type="Marker2D" parent="TankSpawner"]
+position = Vector2(1017, 489)
+
+[node name="BulletSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("uid://bfhot2v8m2tus")
+spawn_path = NodePath("../CanvasLayer/tankGame")
+script = SubResource("GDScript_5njq1")

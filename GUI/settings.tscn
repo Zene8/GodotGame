@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c7osil6s5ri2r"]
 
-[ext_resource type="Script" uid="uid://dw0jrpwj763h4" path="res://GUI/option_container.gd" id="1_d7bti"]
+[ext_resource type="Script" uid="uid://dw0jrpwj763h4" path="res://GUI/settings.gd" id="1_lc11d"]
 
 [node name="OptionContainer" type="VBoxContainer"]
 visible = false
@@ -16,7 +16,7 @@ offset_right = 250.0
 offset_bottom = 250.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_d7bti")
+script = ExtResource("1_lc11d")
 
 [node name="TabContainer" type="TabContainer" parent="."]
 custom_minimum_size = Vector2(0, 500)
