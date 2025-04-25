@@ -16,29 +16,37 @@ var phase = "Buy Phase"
 var player_colour = Owners["RED"]
 var pb
 var zones
-var players = 2
+var players = 0
 var attackpanel
 var targeted_zone
-@onready var multiplayer_id = multiplayer.get_unique_id() - 1
+var player_colours = []
+@onready var multiplayer_id = NetworkManager.players[multiplayer.get_unique_id()].color
 # Called when the node enters the tree for the first time.
 
 func _ready() -> void:
-	var panel = $CanvasLayer/Player_colour
-	panel.get("theme_override_styles/panel").border_color = multiplayer_colour
+	var panel_parent = $CanvasLayer/panel_parent
+	for panel in panel_parent.get_children():
+		panel.get("theme_override_styles/panel").border_color = multiplayer_colour
 	for i in range(len(player_money)):
 		player_money[i] = Start_Money
 	edges = [[$Zones/nw_africa,$Zones/western_europe,0],[$Zones/western_europe,$Zones/UK,0],[$Zones/western_europe,$Zones/ne_europe,0],[$Zones/west_russia,$Zones/ne_europe,0],[$Zones/west_russia,$Zones/russia_stan,0],[$Zones/west_russia,$Zones/scandanavia,0],[$Zones/middle_east,$Zones/ne_europe,0],[$Zones/UK,$Zones/greenland,1],[$Zones/UK,$Zones/scandanavia,1],[$Zones/nw_africa,$Zones/ne_africa,0],[$Zones/ne_africa,$Zones/s_africa,0],[$Zones/sw_africa,$Zones/ne_africa,0],[$Zones/sw_africa,$Zones/nw_africa,0],[$Zones/sw_africa,$Zones/s_africa,0],[$Zones/middle_east,$Zones/ne_africa,0],[$Zones/sw_africa,$Zones/nw_africa,0],[$Zones/russia_stan,$Zones/west_russia,0],[$Zones/north_russia,$Zones/russia_stan,0],[$Zones/russia_stan,$Zones/russia_mongolia,0],[$Zones/north_russia,$Zones/russia_mongolia,0],[$Zones/north_russia,$Zones/far_east,0],[$Zones/far_east,$Zones/russia_mongolia,0],[$Zones/middle_east,$Zones/india,0],[$Zones/china,$Zones/india,0],[$Zones/china,$Zones/russia_mongolia,0],[$Zones/china,$Zones/islands,0],[$Zones/india,$Zones/islands,0],[$Zones/west_australia,$Zones/islands,1],[$Zones/east_australia,$Zones/islands,1],[$Zones/west_australia,$Zones/east_australia,0],[$Zones/ne_south_america,$Zones/nw_south_america,0],[$Zones/s_south_america,$Zones/nw_south_america,0],[$Zones/s_south_america,$Zones/ne_south_america,0],[$Zones/sw_africa,$Zones/ne_south_america,1],[$Zones/west_america,$Zones/nw_south_america,0],[$Zones/west_america,$Zones/canada,0],[$Zones/west_america,$Zones/east_america,0],[$Zones/east_america,$Zones/greenland,0],[$Zones/canada,$Zones/greenland,0],[$Zones/russia_stan,$Zones/india,0]]
 	zones = $Zones
 	attackpanel = $CanvasLayer/attack_panel
 	attackpanel.visible = false
+	rpc("create_colour_list")
 	for zone in zones.get_children():
-		zone.owner_colour = Owners.values()[randi_range(0, players - 1)]
+		zone.owner_colour = player_colours[randi_range(0, players - 1)]
 		zone.Buy.connect(change_money)
 		zone.attacked.connect(attacking)
 	pb = $CanvasLayer/PanelContainer/ProgressBar
 	pb.get("theme_override_styles/fill").bg_color = colour
 
-
+@rpc("authority","call_local")
+func create_colour_list():
+	for player in NetworkManager.players:
+		player_colours.append(NetworkManager.players[player].color)
+		players += 1
+		
 func _process(delta: float) -> void:
 	var win = true
 	for zone in zones.get_children():

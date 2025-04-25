@@ -336,11 +336,43 @@ script = ExtResource("6_rf157")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Player_colour" type="Panel" parent="CanvasLayer"]
-visible = false
+[node name="panel_parent" type="Node" parent="CanvasLayer"]
+
+[node name="Player_colour" type="Panel" parent="CanvasLayer/panel_parent"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_bottom = -638.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_vweho")
+
+[node name="Player_colour2" type="Panel" parent="CanvasLayer/panel_parent"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 638.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_vweho")
+
+[node name="Player_colour3" type="Panel" parent="CanvasLayer/panel_parent"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1142.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_vweho")
+
+[node name="Player_colour4" type="Panel" parent="CanvasLayer/panel_parent"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1142.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1

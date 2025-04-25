@@ -189,3 +189,8 @@ func release_colour(player_id):
 		players[player_id]["color"] = null
 	else:
 		print("❌ Tried to release color for a player not found: ", player_id)
+
+@rpc("call_local")
+func start_minigame():
+	print("Network manager executes start")
+	get_tree().change_scene_to_file("res://SceneChanger/SceneChanger.tscn")

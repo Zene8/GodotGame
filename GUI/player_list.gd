@@ -75,7 +75,7 @@ func _on_start_game_pressed() -> void:
 	print("🎮 Start Game button pressed!")
 	# Ask server to actually start the minigame
 	# (Requires a corresponding RPC on the server side)
-	NetworkManager.rpc_id(1, "start_minigame")
+	NetworkManager.rpc("start_minigame")
 
 
 func _on_disconnect_pressed() -> void:
